@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumière | کلینیک زیبایی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAFAF6;--bg2:#F4EFE7;--white:#FFFFFF;
+  --dark:#141210;--dark2:#2C2820;
+  --gold:#B8873A;--gold-l:#D4A95E;--gold-xl:#F0D4A0;--gold-d:#8A6028;
+  --sage:#7A9E84;--blush:#E8C4C8;
+  --txt:#1C1A16;--txt-m:#6A6058;--txt-l:#A09888;
+  --bdr:#EAE4D8;--bdr2:#D8D0C4;
+  --shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 16px 48px rgba(0,0,0,.14);
+  --r:16px;--r-sm:10px;
+  --fa:'Vazirmatn',Tahoma,sans-serif;
+  --en:'Cormorant Garamond',Georgia,serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;line-height:1.75;overflow-x:hidden}
+.container{max-width:1240px;margin:0 auto;padding:0 32px}
+.sp{padding:100px 0}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--gold)}
+.sh{text-align:center;margin-bottom:64px}
+.sh h2{font-size:2.5rem;font-weight:700;line-height:1.22;color:var(--dark)}
+.sh h2 em{font-style:italic;font-family:var(--en);font-weight:600;color:var(--gold)}
+.sh p{color:var(--txt-m);margin-top:10px;font-size:.94rem}
+.gd{display:flex;justify-content:center;align-items:center;gap:8px;margin:16px auto 0}
+.gd::before,.gd::after{content:'';width:32px;height:1px;background:linear-gradient(to left,var(--gold),transparent)}
+.gd i{width:5px;height:5px;border-radius:50%;background:var(--gold);display:block}
+
+.rv{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+.rv.in{opacity:1;transform:none}
+.rl{opacity:0;transform:translateX(-24px);transition:opacity .65s ease,transform .65s ease}
+.rl.in{opacity:1;transform:none}
+.rr{opacity:0;transform:translateX(24px);transition:opacity .65s ease,transform .65s ease}
+.rr.in{opacity:1;transform:none}
+
+.btn-d{display:inline-flex;align-items:center;gap:8px;background:var(--dark);color:#FFF;border:none;padding:14px 36px;border-radius:4px;font-family:var(--fa);font-size:.92rem;font-weight:600;cursor:pointer;transition:all .3s}
+.btn-d:hover{background:var(--dark2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(20,18,16,.25)}
+.btn-g{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#FFF;border:none;padding:14px 36px;border-radius:4px;font-family:var(--fa);font-size:.92rem;font-weight:600;cursor:pointer;transition:all .3s}
+.btn-g:hover{background:var(--gold-d);transform:translateY(-2px);box-shadow:0 8px 24px rgba(184,135,58,.35)}
+.btn-o{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--dark);border:1.5px solid var(--bdr2);padding:13px 34px;border-radius:4px;font-family:var(--fa);font-size:.92rem;cursor:pointer;transition:all .3s}
+.btn-o:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+
+/* ── NAVBAR ── */
+.navbar{position:fixed;top:0;width:100%;z-index:999;transition:all .35s}
+.navbar.scrolled{background:rgba(250,250,246,.96);backdrop-filter:blur(16px);box-shadow:0 1px 0 var(--bdr)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:76px;padding:0 40px}
+.nav-logo{display:flex;align-items:center;gap:14px;text-decoration:none}
+.logo-mark{width:42px;height:42px;border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.logo-mark svg{width:18px;height:18px}
+.logo-en{font-family:var(--en);font-size:1.55rem;font-weight:700;color:var(--dark);letter-spacing:.04em;line-height:1}
+.logo-fa{font-size:.65rem;color:var(--gold);letter-spacing:.1em;margin-top:2px;display:block}
+.nav-links{display:flex;gap:34px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--txt-m);font-size:.88rem;font-weight:500;transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;right:0;width:0;height:1.5px;background:var(--gold);transition:width .25s;border-radius:1px}
+.nav-links a:hover{color:var(--dark)}
+.nav-links a:hover::after{width:100%}
+.nav-act{display:flex;align-items:center;gap:12px}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{width:22px;height:1.5px;background:var(--dark);border-radius:2px;transition:all .3s;display:block}
+.nav-mobile{display:none}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding-top:76px;background:var(--white);position:relative;overflow:hidden}
+.hero-dot-bg{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(184,135,58,.07) 1px,transparent 0);background-size:38px 38px;pointer-events:none}
+.hero-text{padding:80px 56px 80px 40px;position:relative;z-index:1}
+.hero-badge-pill{display:inline-flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--bdr);border-radius:50px;padding:6px 14px;font-size:.76rem;color:var(--txt-m);margin-bottom:28px}
+.hero-dot{width:7px;height:7px;border-radius:50%;background:var(--sage);flex-shrink:0}
+.hero-h1{font-size:3.8rem;font-weight:700;line-height:1.12;color:var(--dark);margin-bottom:8px}
+.hero-h1 .cursive{font-family:var(--en);font-style:italic;font-weight:600;color:var(--gold);font-size:4.6rem;line-height:.9;display:block;margin-bottom:6px}
+.hero-bar{width:52px;height:2px;background:var(--gold);margin:22px 0;border-radius:2px}
+.hero-p{font-size:1.01rem;color:var(--txt-m);max-width:420px;margin-bottom:34px;line-height:1.85}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:48px}
+.hero-stats{display:flex;gap:40px;padding-top:32px;border-top:1px solid var(--bdr)}
+.sv{font-size:2rem;font-weight:700;color:var(--dark);line-height:1}
+.sl{font-size:.75rem;color:var(--txt-l);margin-top:4px}
+
+/* Hero photo side — CSS portrait */
+.hero-photo{position:relative;height:100vh;overflow:hidden;background:linear-gradient(160deg,#1A1814 0%,#2C2420 60%,#3A3028 100%)}
+.hero-photo-skin{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:380px}
+.hero-photo-glow{position:absolute;top:15%;left:50%;transform:translateX(-50%);width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(240,210,175,.18) 0%,transparent 70%);pointer-events:none}
+.hero-photo-chip{position:absolute;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-radius:var(--r);padding:14px 18px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-lg);border:1px solid var(--bdr)}
+.chip-ico{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.chip-txt strong{font-size:.85rem;display:block;color:var(--dark)}
+.chip-txt span{font-size:.73rem;color:var(--txt-l)}
+.chip-award{bottom:56px;right:32px;animation:float 5s ease-in-out infinite}
+.chip-rate{top:56px;left:28px;animation:float 7s ease-in-out infinite reverse}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* ── STATS STRIP ── */
+.strip{background:var(--dark);padding:44px 0}
+.strip-row{display:flex;align-items:center;justify-content:space-between}
+.strip-it{text-align:center}
+.sv2{font-size:2rem;font-weight:700;color:var(--gold-l)}
+.sl2{font-size:.76rem;color:rgba(255,255,255,.4);margin-top:4px}
+.strip-sep{width:1px;height:48px;background:rgba(255,255,255,.1)}
+
+/* ── SERVICES ── */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--bdr)}
+.svc-item{background:var(--white);padding:38px 34px;transition:background .3s;cursor:pointer;position:relative;overflow:hidden}
+.svc-item::after{content:'';position:absolute;bottom:0;right:0;width:3px;height:0;background:var(--gold);transition:height .4s}
+.svc-item:hover{background:var(--bg)}
+.svc-item:hover::after{height:100%}
+.svc-n{font-family:var(--en);font-size:.76rem;color:var(--txt-l);margin-bottom:18px}
+.svc-emoji{font-size:1.6rem;display:block;margin-bottom:14px}
+.svc-item h3{font-size:1.02rem;font-weight:700;margin-bottom:8px;color:var(--dark)}
+.svc-item p{font-size:.84rem;color:var(--txt-m);line-height:1.7;margin-bottom:18px}
+.svc-a{font-size:.8rem;color:var(--gold);font-weight:600;display:inline-flex;align-items:center;gap:5px}
+.svc-hot{display:inline-block;background:var(--gold);color:#fff;font-size:.63rem;padding:2px 7px;border-radius:2px;margin-bottom:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+
+/* ── ABOUT ── */
+.about{background:var(--white)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+
+/* CSS portrait frames */
+.portrait-frame{border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-lg);position:relative}
+.portrait-frame svg{display:block;width:100%}
+.portrait-big{aspect-ratio:3/4}
+.portrait-small{position:absolute;bottom:-28px;left:-28px;width:55%;border:6px solid var(--white);border-radius:var(--r);box-shadow:var(--shadow-lg)}
+.about-award-badge{position:absolute;top:28px;right:-20px;background:var(--dark);color:#fff;border-radius:var(--r);padding:16px 20px;text-align:center;box-shadow:var(--shadow-lg)}
+.ab-num{font-size:1.6rem;font-weight:700;color:var(--gold-l)}
+.ab-lbl{font-size:.68rem;color:rgba(255,255,255,.55);margin-top:2px}
+
+.about-text .eyebrow{margin-bottom:16px}
+.about-text h2{font-size:2.2rem;font-weight:700;line-height:1.3;margin-bottom:20px;color:var(--dark)}
+.about-text h2 em{font-style:italic;font-family:var(--en);color:var(--gold)}
+.about-text p{font-size:.92rem;color:var(--txt-m);line-height:1.85;margin-bottom:14px}
+.about-feats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 30px}
+.af{display:flex;align-items:flex-start;gap:12px}
+.af-ico{width:36px;height:36px;min-width:36px;border-radius:8px;background:var(--bg2);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:.88rem}
+.af-t strong{font-size:.84rem;display:block;color:var(--dark)}
+.af-t span{font-size:.77rem;color:var(--txt-l)}
+
+/* ── BEFORE / AFTER ── */
+.gallery{background:var(--bg2)}
+.ba-row{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.ba-card{border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-lg);background:var(--white)}
+.ba-wrap{position:relative;cursor:col-resize;user-select:none;aspect-ratio:3/4;overflow:hidden}
+.ba-side{position:absolute;inset:0;overflow:hidden}
+.ba-side svg{width:100%;height:100%}
+.ba-side.after-side{clip-path:inset(0 50% 0 0)}
+.ba-handle{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:2px;background:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;z-index:10}
+.ba-knob{width:38px;height:38px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.25);cursor:col-resize;font-size:.88rem;border:2px solid var(--gold);color:var(--gold-d)}
+.ba-labels{display:flex;justify-content:space-between;padding:12px 16px;background:var(--white)}
+.ba-lbl-it{display:flex;align-items:center;gap:6px;font-size:.77rem;color:var(--txt-m)}
+.ba-lbl-it span{width:8px;height:8px;border-radius:50%;display:block}
+.ba-service-row{padding:12px 16px 16px;border-top:1px solid var(--bdr)}
+.ba-sname{font-size:.88rem;font-weight:700;color:var(--dark)}
+.ba-sdesc{font-size:.77rem;color:var(--txt-l);margin-top:2px}
+
+/* ── TEAM ── */
+.team{background:var(--white)}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.team-card{background:var(--white);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;transition:transform .35s,box-shadow .35s}
+.team-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.team-photo{width:100%;aspect-ratio:3/4;overflow:hidden;position:relative}
+.team-photo svg{width:100%;height:100%;display:block}
+.team-overlay{position:absolute;bottom:0;left:0;right:0;padding:20px;background:linear-gradient(to top,rgba(20,18,16,.72),transparent)}
+.team-nm{color:#fff;font-size:1.02rem;font-weight:700}
+.team-sp{color:rgba(255,255,255,.68);font-size:.77rem;margin-top:2px}
+.team-body{padding:20px}
+.team-exp{font-size:.79rem;color:var(--txt-l);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.team-exp::before{content:'';width:14px;height:1px;background:var(--gold)}
+.team-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.team-tag{font-size:.71rem;padding:3px 10px;border:1px solid var(--bdr);border-radius:3px;color:var(--txt-m);background:var(--bg)}
+
+/* ── PROCESS ── */
+.process{background:var(--bg2)}
+.proc-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;margin-top:20px}
+.proc-row::before{content:'';position:absolute;top:32px;right:10%;left:10%;height:1px;background:var(--bdr2)}
+.proc-it{text-align:center;padding:0 20px;position:relative}
+.proc-circle{width:64px;height:64px;border-radius:50%;background:var(--white);border:1.5px solid var(--bdr2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:var(--en);font-size:1.1rem;font-weight:700;color:var(--txt-l);position:relative;z-index:1;transition:all .35s;cursor:default}
+.proc-it:hover .proc-circle,.proc-it.active .proc-circle{background:var(--dark);border-color:var(--dark);color:var(--gold-l);box-shadow:0 4px 18px rgba(20,18,16,.25)}
+.proc-it h4{font-size:.9rem;font-weight:700;margin-bottom:6px;color:var(--dark)}
+.proc-it p{font-size:.79rem;color:var(--txt-m)}
+
+/* ── REVIEWS ── */
+.reviews{background:var(--white)}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.rev-card{border:1px solid var(--bdr);border-radius:var(--r);padding:28px;transition:box-shadow .3s,border-color .3s}
+.rev-card:hover{box-shadow:var(--shadow);border-color:var(--bdr2)}
+.rev-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.rev-avatar-css{width:44px;height:44px;border-radius:50%;border:2px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;flex-shrink:0;color:#fff}
+.rev-info strong{font-size:.87rem;display:block;color:var(--dark)}
+.rev-info span{font-size:.73rem;color:var(--txt-l)}
+.rev-stars{color:var(--gold);font-size:.86rem;letter-spacing:2px}
+.rev-q{font-size:2.4rem;font-family:Georgia,serif;color:var(--gold);opacity:.22;line-height:.8;margin-bottom:8px}
+.rev-txt{font-size:.87rem;color:var(--txt-m);line-height:1.75}
+.rev-tag{display:inline-block;font-size:.71rem;padding:3px 10px;background:var(--bg2);border-radius:3px;color:var(--txt-l);margin-top:14px;border:1px solid var(--bdr)}
+
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:64px;align-items:start}
+.c-info h2{font-size:1.9rem;font-weight:700;margin-bottom:10px;color:var(--dark)}
+.c-info p{font-size:.91rem;color:var(--txt-m);margin-bottom:30px}
+.c-item{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px}
+.c-ico{width:44px;height:44px;min-width:44px;background:var(--white);border:1px solid var(--bdr);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:1rem;box-shadow:var(--shadow)}
+.c-lbl{font-size:.74rem;color:var(--txt-l);display:block;margin-bottom:2px}
+.c-val{font-size:.91rem;color:var(--dark);font-weight:500}
+.soc-row{display:flex;gap:10px;margin-top:26px}
+.soc-b{width:40px;height:40px;border-radius:50%;border:1px solid var(--bdr);background:var(--white);display:flex;align-items:center;justify-content:center;font-size:.9rem;cursor:pointer;transition:all .25s;box-shadow:var(--shadow)}
+.soc-b:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px)}
+.form-card{background:var(--white);border-radius:var(--r);padding:40px;box-shadow:var(--shadow-lg);border:1px solid var(--bdr)}
+.form-ttl{font-size:1.18rem;font-weight:700;margin-bottom:4px;color:var(--dark)}
+.form-sub{font-size:.8rem;color:var(--txt-l);margin-bottom:26px}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg label{font-size:.79rem;font-weight:600;color:var(--txt-m)}
+.fg input,.fg select,.fg textarea{background:var(--bg);border:1.5px solid var(--bdr);border-radius:var(--r-sm);padding:11px 14px;font-family:var(--fa);font-size:.9rem;color:var(--dark);outline:none;transition:border-color .25s,box-shadow .25s;width:100%}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(184,135,58,.1)}
+.fg textarea{resize:vertical;min-height:92px}
+
+/* ── FOOTER ── */
+.footer{background:var(--dark);color:rgba(255,255,255,.7);padding:64px 0 28px}
+.footer-inner{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:44px}
+.f-brand .f-en{font-family:var(--en);font-size:1.75rem;font-weight:700;color:#fff;display:block;margin-bottom:10px}
+.f-brand p{font-size:.82rem;color:rgba(255,255,255,.4);line-height:1.75;max-width:240px}
+.f-soc-row{display:flex;gap:8px;margin-top:16px}
+.f-soc{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:.78rem;color:rgba(255,255,255,.5);text-decoration:none;transition:all .25s}
+.f-soc:hover{background:var(--gold);border-color:var(--gold);color:#fff}
+.f-col h4{font-size:.8rem;font-weight:700;color:#fff;margin-bottom:16px;text-transform:uppercase;letter-spacing:.1em}
+.f-col ul{list-style:none}
+.f-col li{margin-bottom:10px}
+.f-col a{font-size:.81rem;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s}
+.f-col a:hover{color:var(--gold-l)}
+.footer-bot{border-top:1px solid rgba(255,255,255,.07);padding-top:22px;display:flex;justify-content:space-between;align-items:center}
+.footer-bot p,.footer-bot span{font-size:.75rem;color:rgba(255,255,255,.28)}
+
+/* ── FLOATS ── */
+.floats{position:fixed;bottom:28px;left:22px;display:flex;flex-direction:column;gap:10px;z-index:888}
+.float-btn{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;font-size:1.1rem;transition:transform .25s,box-shadow .25s;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.float-btn:hover{transform:scale(1.1)}
+.f-wa{background:#25D366;color:#fff}
+.f-top{background:var(--white);color:var(--dark);border:1px solid var(--bdr)}
+.promo{position:fixed;bottom:28px;right:22px;background:var(--white);border:1px solid var(--bdr);border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow-lg);z-index:888;max-width:290px;transform:translateY(120%);opacity:0;transition:all .5s cubic-bezier(.34,1.56,.64,1)}
+.promo.show{transform:none;opacity:1}
+.promo-x{position:absolute;top:10px;left:12px;background:none;border:none;font-size:.88rem;cursor:pointer;color:var(--txt-l)}
+.promo-in{display:flex;align-items:center;gap:12px}
+.promo-badge{width:48px;height:48px;min-width:48px;border-radius:50%;background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:var(--gold-l)}
+.promo-text h4{font-size:.87rem;font-weight:700;color:var(--dark);margin-bottom:3px}
+.promo-text p{font-size:.75rem;color:var(--txt-m)}
+.promo-cta{display:block;margin-top:12px;background:var(--dark);color:#fff;border:none;border-radius:var(--r-sm);padding:9px 18px;font-family:var(--fa);font-size:.82rem;font-weight:600;cursor:pointer;width:100%}
+.promo-cta:hover{background:var(--dark2)}
+
+@media(max-width:1024px){
+  .hero{grid-template-columns:1fr}
+  .hero-photo{height:480px;grid-row:1}
+  .hero-text{padding:40px 32px}
+  .hero-h1{font-size:2.8rem}
+  .hero-h1 .cursive{font-size:3.4rem}
+  .about-grid{grid-template-columns:1fr;gap:48px}
+  .contact-grid{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr 1fr}
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .team-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .nav-links,.nav-act .btn-d,.nav-act .btn-o{display:none}
+  .hamburger{display:flex}
+  .nav-mobile.open{display:block;position:absolute;top:76px;right:0;left:0;background:rgba(250,250,246,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--bdr);padding:16px 24px}
+  .nav-mobile ul{list-style:none;display:flex;flex-direction:column;gap:2px}
+  .nav-mobile a{display:block;padding:12px 0;border-bottom:1px solid var(--bdr);color:var(--txt-m);text-decoration:none;font-size:.95rem}
+  .hero-h1{font-size:2.2rem}.hero-h1 .cursive{font-size:2.8rem}
+  .svc-grid,.team-grid,.rev-grid,.ba-row,.proc-row{grid-template-columns:1fr}
+  .proc-row::before{display:none}
+  .footer-inner{grid-template-columns:1fr}
+  .frow{grid-template-columns:1fr}
+  .hero-stats{gap:22px}
+  .strip-row{flex-wrap:wrap;gap:24px;justify-content:center}
+  .strip-sep{display:none}
+  .portrait-small{display:none}
+  .about-award-badge{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round">
+          <path d="M12 2a5 5 0 0 1 5 5c0 4-5 9-5 9S7 11 7 7a5 5 0 0 1 5-5z"/><circle cx="12" cy="7" r="2"/>
+        </svg>
+      </div>
+      <div><div class="logo-en">Lumière</div><span class="logo-fa">کلینیک لومیر</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">خدمات</a></li>
+      <li><a href="#about">درباره ما</a></li>
+      <li><a href="#team">پزشکان</a></li>
+      <li><a href="#gallery">نمونه‌کارها</a></li>
+      <li><a href="#contact">تماس</a></li>
+    </ul>
+    <div class="nav-act">
+      <button class="btn-o" onclick="go('contact')">مشاوره رایگان</button>
+      <button class="btn-d" onclick="go('contact')">رزرو نوبت ←</button>
+    </div>
+    <button class="hamburger" id="menuBtn"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="nav-mobile" id="mobileMenu">
+    <ul>
+      <li><a href="#services">خدمات</a></li><li><a href="#about">درباره ما</a></li>
+      <li><a href="#team">پزشکان</a></li><li><a href="#gallery">نمونه‌کارها</a></li>
+      <li><a href="#contact">تماس</a></li>
+    </ul>
+  </nav>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-dot-bg"></div>
+  <div class="hero-text">
+    <div class="hero-badge-pill"><span class="hero-dot"></span>کلینیک تخصصی زیبایی، پوست و مو</div>
+    <h1 class="hero-h1"><span class="cursive">Beauté</span>زیبایی<br>طبیعی شما</h1>
+    <div class="hero-bar"></div>
+    <p class="hero-p">با تیم متخصص لومیر از پیشرفته‌ترین روش‌های جوان‌سازی، لیزر و زیبایی بهره‌مند شوید. جایی که علم پزشکی در خدمت طبیعی‌ترین نسخه شماست.</p>
+    <div class="hero-btns">
+      <button class="btn-d" onclick="go('contact')">رزرو رایگان ←</button>
+      <button class="btn-o" onclick="go('gallery')">نمونه‌کارها</button>
+    </div>
+    <div class="hero-stats rv">
+      <div><div class="sv" data-count="800">۰</div><div class="sl">مراجع راضی</div></div>
+      <div><div class="sv" data-count="15">۰</div><div class="sl">سال تجربه</div></div>
+      <div><div class="sv" data-count="98">۰</div><div class="sl">٪ رضایت</div></div>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <div class="hero-photo-glow"></div>
+    <!-- Full detailed woman portrait SVG -->
+    <svg class="hero-photo-skin" viewBox="0 0 380 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="hsk" cx="50%" cy="38%" r="55%"><stop offset="0%" stop-color="#F5E0C8"/><stop offset="100%" stop-color="#E8C8A0"/></radialGradient>
+        <radialGradient id="hhr" cx="50%" cy="15%" r="65%"><stop offset="0%" stop-color="#2A1A0C"/><stop offset="70%" stop-color="#1A0E06"/><stop offset="100%" stop-color="#0E0804"/></radialGradient>
+        <radialGradient id="hbg" cx="50%" cy="100%" r="80%"><stop offset="0%" stop-color="#C8976A" stop-opacity=".3"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+        <filter id="sf"><feGaussianBlur stdDeviation="1.5"/></filter>
+        <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+      </defs>
+      <!-- Ambient glow at feet -->
+      <ellipse cx="190" cy="595" rx="160" ry="40" fill="url(#hbg)"/>
+      <!-- Dress/clothing -->
+      <path d="M60 520 Q100 490 140 510 Q160 518 190 516 Q220 518 240 510 Q280 490 320 520 L340 620 L40 620Z" fill="#1A1520"/>
+      <path d="M140 510 Q160 480 190 472 Q220 480 240 510" fill="#1A1520"/>
+      <!-- Neck -->
+      <rect x="164" y="388" width="52" height="92" rx="14" fill="url(#hsk)"/>
+      <!-- Shoulders -->
+      <ellipse cx="100" cy="500" rx="70" ry="30" fill="#E8C8A0"/>
+      <ellipse cx="280" cy="500" rx="70" ry="30" fill="#E8C8A0"/>
+      <!-- Hair back volume -->
+      <ellipse cx="190" cy="160" rx="130" ry="150" fill="url(#hhr)"/>
+      <!-- Hair sides flowing down -->
+      <path d="M68 130 Q45 200 52 320 Q55 370 70 400" stroke="#1A0E06" stroke-width="32" fill="none" stroke-linecap="round" opacity=".95"/>
+      <path d="M312 130 Q335 200 328 320 Q325 370 310 400" stroke="#1A0E06" stroke-width="32" fill="none" stroke-linecap="round" opacity=".95"/>
+      <path d="M80 120 Q52 190 58 300" stroke="#2A1A0C" stroke-width="18" fill="none" stroke-linecap="round" opacity=".7"/>
+      <path d="M300 120 Q328 190 322 300" stroke="#2A1A0C" stroke-width="18" fill="none" stroke-linecap="round" opacity=".7"/>
+      <!-- Face -->
+      <ellipse cx="190" cy="248" rx="118" ry="140" fill="url(#hsk)"/>
+      <!-- Facial highlights -->
+      <ellipse cx="190" cy="195" rx="58" ry="38" fill="rgba(255,250,240,.38)"/>
+      <ellipse cx="190" cy="170" rx="32" ry="18" fill="rgba(255,252,245,.28)"/>
+      <!-- Cheek blush -->
+      <ellipse cx="110" cy="268" rx="34" ry="22" fill="rgba(220,148,138,.12)"/>
+      <ellipse cx="270" cy="268" rx="34" ry="22" fill="rgba(220,148,138,.12)"/>
+      <!-- Ear left -->
+      <ellipse cx="74" cy="258" rx="16" ry="22" fill="#E8C8A0"/>
+      <ellipse cx="74" cy="258" rx="9" ry="14" fill="#DDB890"/>
+      <!-- Ear right -->
+      <ellipse cx="306" cy="258" rx="16" ry="22" fill="#E8C8A0"/>
+      <ellipse cx="306" cy="258" rx="9" ry="14" fill="#DDB890"/>
+      <!-- Gold earring left -->
+      <circle cx="74" cy="272" r="6" fill="none" stroke="#C8976A" stroke-width="2"/>
+      <circle cx="74" cy="280" r="3" fill="#C8976A"/>
+      <!-- Gold earring right -->
+      <circle cx="306" cy="272" r="6" fill="none" stroke="#C8976A" stroke-width="2"/>
+      <circle cx="306" cy="280" r="3" fill="#C8976A"/>
+      <!-- LEFT EYE AREA -->
+      <ellipse cx="148" cy="242" rx="28" ry="17" fill="rgba(240,220,200,.55)"/>
+      <ellipse cx="148" cy="242" rx="23" ry="13" fill="#FFF9F3"/>
+      <circle cx="148" cy="242" r="11" fill="#2A1510"/>
+      <circle cx="148" cy="242" r="5.5" fill="#080402"/>
+      <circle cx="154" cy="237" r="3.5" fill="rgba(255,255,255,.95)"/>
+      <circle cx="145" cy="246" r="1.5" fill="rgba(255,255,255,.6)"/>
+      <!-- left lid crease -->
+      <path d="M127 236 Q148 228 169 236" stroke="rgba(180,130,100,.35)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <!-- left lashes top -->
+      <path d="M124 234 Q148 224 172 234" stroke="#1A0C06" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+      <!-- left lash details -->
+      <path d="M126 231 L120 222" stroke="#1A0C06" stroke-width="2" stroke-linecap="round"/>
+      <path d="M133 228 L129 218" stroke="#1A0C06" stroke-width="2" stroke-linecap="round"/>
+      <path d="M141 225 L139 215" stroke="#1A0C06" stroke-width="2" stroke-linecap="round"/>
+      <path d="M148 224 L148 214" stroke="#1A0C06" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M155 225 L157 215" stroke="#1A0C06" stroke-width="2" stroke-linecap="round"/>
+      <path d="M162 228 L166 219" stroke="#1A0C06" stroke-width="2" stroke-linecap="round"/>
+      <!-- RIGHT EYE AREA -->
+      <ellipse cx="232" cy="242" rx="28" ry="17" fill="rgba(240,220,200,.55)"/>
+      <ellipse cx="232" cy="242" rx="23" ry="13" fill="#FFF9F3"/>
+      <circle cx="232" cy="242" r="11" fill="#2A1510"/>
+      <circle cx="232" cy="242" r="5.5" fill="#080402"/>
+      <circle cx="238" cy="237" r="3.5" fill="rgba(255,255,255,.95)"/>
+      <circle cx="229" cy="246" r="1.5" fill="rgba(255,255,255,.6)"/>
+      <path d="M211 236 Q232 228 253 236" stroke="rgba(180,130,100,.35)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M208 234 Q232 224 256 234" stroke="#1A0C06" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+      <path d="M210 231 L204 222" stroke="#1A0C06" stroke-width="2" stroke-linecap="round"/>
+      <path d="M217 228 L213 218" stroke="#1A0C06" stroke-width="2" stroke-linecap="round"/>
+      <path d="M225 225 L223 215" stroke="#1A0C06" stroke-width="2" stroke-linecap="round"/>
+      <path d="M232 224 L232 214" stroke="#1A0C06" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M239 225 L241 215" stroke="#1A0C06" stroke-width="2" stroke-linecap="round"/>
+      <path d="M246 228 L250 219" stroke="#1A0C06" stroke-width="2" stroke-linecap="round"/>
+      <!-- EYEBROWS -->
+      <path d="M122 218 Q148 208 174 218" stroke="#1A0C06" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <path d="M206 218 Q232 208 258 218" stroke="#1A0C06" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <!-- brow fill shade -->
+      <path d="M124 218 Q148 210 172 218" stroke="#2A1A0C" stroke-width="9" fill="none" stroke-linecap="round" opacity=".4"/>
+      <path d="M208 218 Q232 210 256 218" stroke="#2A1A0C" stroke-width="9" fill="none" stroke-linecap="round" opacity=".4"/>
+      <!-- NOSE -->
+      <path d="M182 260 Q186 286 182 298 Q190 303 198 298 Q194 286 198 260" stroke="rgba(165,115,80,.28)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="182" cy="300" rx="9" ry="6.5" fill="rgba(175,125,90,.2)"/>
+      <ellipse cx="198" cy="300" rx="9" ry="6.5" fill="rgba(175,125,90,.2)"/>
+      <!-- nose bridge shadow -->
+      <path d="M186 254 Q190 262 190 272" stroke="rgba(160,110,78,.15)" stroke-width="3" fill="none"/>
+      <!-- LIPS -->
+      <path d="M162 326 Q178 316 190 319 Q202 316 218 326" stroke="#C06878" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M186 319 Q190 311 194 319" stroke="#C06878" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M159 331 Q190 356 221 331" fill="rgba(200,105,118,.55)" stroke="#CC7888" stroke-width="4" stroke-linecap="round"/>
+      <path d="M174 335 Q190 330 206 335" stroke="rgba(255,205,210,.58)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <!-- lip highlight -->
+      <ellipse cx="190" cy="332" rx="14" ry="5" fill="rgba(255,220,225,.22)"/>
+      <!-- Chin shadow -->
+      <path d="M148 380 Q190 396 232 380" stroke="rgba(160,110,80,.12)" stroke-width="12" fill="none" stroke-linecap="round"/>
+      <!-- Jaw definition -->
+      <path d="M88 240 Q82 310 120 370 Q155 400 190 406 Q225 400 260 370 Q298 310 292 240" stroke="rgba(200,160,120,.08)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <!-- Hair highlight strands -->
+      <path d="M90 80 Q72 150 78 240" stroke="rgba(80,50,25,.45)" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <path d="M105 65 Q88 140 95 220" stroke="rgba(80,50,25,.35)" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <path d="M290 80 Q308 150 302 240" stroke="rgba(80,50,25,.45)" stroke-width="6" fill="none" stroke-linecap="round"/>
+    </svg>
+    <!-- Floating chips -->
+    <div class="hero-photo-chip chip-award rv">
+      <div class="chip-ico" style="background:var(--gold-xl)">🏆</div>
+      <div class="chip-txt"><strong>برترین کلینیک ۱۴۰۳</strong><span>انجمن پوست ایران</span></div>
+    </div>
+    <div class="hero-photo-chip chip-rate rv">
+      <div class="chip-ico" style="background:#E8F4EC">⭐</div>
+      <div class="chip-txt"><strong>امتیاز ۴.۹ از ۵</strong><span>بر اساس ۸۰۰+ نظر</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="container">
+    <div class="strip-row">
+      <div class="strip-it"><div class="sv2" data-count="800">۰</div><div class="sl2">مراجع راضی</div></div>
+      <div class="strip-sep"></div>
+      <div class="strip-it"><div class="sv2" data-count="15">۰</div><div class="sl2">سال سابقه</div></div>
+      <div class="strip-sep"></div>
+      <div class="strip-it"><div class="sv2" data-count="6">۰</div><div class="sl2">متخصص ارشد</div></div>
+      <div class="strip-sep"></div>
+      <div class="strip-it"><div class="sv2" data-count="12">۰</div><div class="sl2">نوع خدمات</div></div>
+      <div class="strip-sep"></div>
+      <div class="strip-it"><div class="sv2">۹۸٪</div><div class="sl2">رضایت‌مندی</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="sp" id="services">
+  <div class="container">
+    <div class="sh rv">
+      <span class="eyebrow">خدمات ما</span>
+      <h2>درمان‌های <em>تخصصی</em></h2>
+      <p>با پیشرفته‌ترین تکنولوژی روز دنیا و دست‌های متخصص‌ترین پزشکان</p>
+      <div class="gd"><i></i></div>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-item rv"><div class="svc-n">۰۱</div><div class="svc-hot">محبوب‌ترین</div><span class="svc-emoji">💉</span><h3>بوتاکس پزشکی</h3><p>کاهش چین و چروک با دقیق‌ترین تکنیک‌های تزریق. نتایج طبیعی تا ۶ ماه.</p><span class="svc-a">بیشتر بدانید →</span></div>
+      <div class="svc-item rv"><div class="svc-n">۰۲</div><span class="svc-emoji">💋</span><h3>فیلر هیالورونیک</h3><p>حجم‌دهی و کانتور لب، گونه و زیر چشم با فیلرهای اروپایی. تا ۱۸ ماه ماندگاری.</p><span class="svc-a">بیشتر بدانید →</span></div>
+      <div class="svc-item rv"><div class="svc-n">۰۳</div><div class="svc-hot">جدید</div><span class="svc-emoji">⚡</span><h3>لیزر پیشرفته</h3><p>لیزر نسل جدید برای موهای زائد، لک و اسکار. بدون درد، نتیجه دائمی.</p><span class="svc-a">بیشتر بدانید →</span></div>
+      <div class="svc-item rv"><div class="svc-n">۰۴</div><span class="svc-emoji">🌿</span><h3>جوان‌سازی RF/HIFU</h3><p>بازسازی عمیق پوست با تکنولوژی فرکانس رادیویی و اولتراسوند متمرکز.</p><span class="svc-a">بیشتر بدانید →</span></div>
+      <div class="svc-item rv"><div class="svc-n">۰۵</div><span class="svc-emoji">🌱</span><h3>کاشت مو FUE</h3><p>جدیدترین روش کاشت مو با تکنیک DHI. نتیجه طبیعی، دائمی، حداقل ریکاوری.</p><span class="svc-a">بیشتر بدانید →</span></div>
+      <div class="svc-item rv"><div class="svc-n">۰۶</div><span class="svc-emoji">💧</span><h3>مزوتراپی</h3><p>تزریق کوکتل ویتامین و پپتید به لایه درم. تغذیه عمیق و درخشش فوری پوست.</p><span class="svc-a">بیشتر بدانید →</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about sp" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div style="position:relative;padding-bottom:28px" class="rl">
+        <!-- Main portrait -->
+        <div class="portrait-frame portrait-big">
+          <svg viewBox="0 0 400 540" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="abg1" cx="50%" cy="30%" r="70%"><stop offset="0%" stop-color="#E8E4F0"/><stop offset="100%" stop-color="#C8C0D8"/></radialGradient>
+              <radialGradient id="ask1" cx="50%" cy="38%" r="55%"><stop offset="0%" stop-color="#F0D8C0"/><stop offset="100%" stop-color="#E0C0A0"/></radialGradient>
+              <radialGradient id="ahr1" cx="50%" cy="15%" r="60%"><stop offset="0%" stop-color="#2A1A0C"/><stop offset="100%" stop-color="#0E0804"/></radialGradient>
+            </defs>
+            <rect width="400" height="540" fill="url(#abg1)"/>
+            <!-- subtle bokeh -->
+            <circle cx="50" cy="80" r="60" fill="rgba(255,255,255,.08)"/>
+            <circle cx="360" cy="420" r="80" fill="rgba(255,255,255,.06)"/>
+            <circle cx="320" cy="60" r="40" fill="rgba(255,255,255,.1)"/>
+            <!-- Body/shoulders -->
+            <path d="M50 540 Q110 480 160 500 Q180 508 200 506 Q220 508 240 500 Q290 480 350 540Z" fill="#2C2438"/>
+            <path d="M150 502 Q170 470 200 462 Q230 470 250 502" fill="#2C2438"/>
+            <!-- Neck -->
+            <rect x="174" y="390" width="52" height="80" rx="12" fill="url(#ask1)"/>
+            <!-- Hair volume -->
+            <ellipse cx="200" cy="155" rx="125" ry="145" fill="url(#ahr1)"/>
+            <path d="M82 125 Q60 200 66 310" stroke="#1A0E06" stroke-width="28" fill="none" stroke-linecap="round" opacity=".9"/>
+            <path d="M318 125 Q340 200 334 310" stroke="#1A0E06" stroke-width="28" fill="none" stroke-linecap="round" opacity=".9"/>
+            <!-- Face -->
+            <ellipse cx="200" cy="248" rx="112" ry="132" fill="url(#ask1)"/>
+            <ellipse cx="200" cy="198" rx="54" ry="36" fill="rgba(255,250,242,.36)"/>
+            <!-- Blush -->
+            <ellipse cx="122" cy="265" rx="30" ry="20" fill="rgba(218,142,132,.12)"/>
+            <ellipse cx="278" cy="265" rx="30" ry="20" fill="rgba(218,142,132,.12)"/>
+            <!-- LEFT EYE -->
+            <ellipse cx="156" cy="240" rx="25" ry="15" fill="#FFF9F3"/>
+            <circle cx="156" cy="240" r="10.5" fill="#28140C"/><circle cx="156" cy="240" r="5" fill="#060302"/>
+            <circle cx="162" cy="235" r="3.2" fill="rgba(255,255,255,.95)"/>
+            <path d="M132 232 Q156 222 180 232" stroke="#1A0C06" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path d="M134 229 Q156 218 178 229" stroke="#1A0C06" stroke-width="7" fill="none" stroke-linecap="round" opacity=".35"/>
+            <!-- RIGHT EYE -->
+            <ellipse cx="244" cy="240" rx="25" ry="15" fill="#FFF9F3"/>
+            <circle cx="244" cy="240" r="10.5" fill="#28140C"/><circle cx="244" cy="240" r="5" fill="#060302"/>
+            <circle cx="250" cy="235" r="3.2" fill="rgba(255,255,255,.95)"/>
+            <path d="M220 232 Q244 222 268 232" stroke="#1A0C06" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path d="M222 229 Q244 218 266 229" stroke="#1A0C06" stroke-width="7" fill="none" stroke-linecap="round" opacity=".35"/>
+            <!-- Brows -->
+            <path d="M130 220 Q156 210 182 220" stroke="#1A0C06" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+            <path d="M218 220 Q244 210 270 220" stroke="#1A0C06" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+            <!-- Nose -->
+            <ellipse cx="191" cy="296" rx="8" ry="5.5" fill="rgba(175,125,90,.2)"/>
+            <ellipse cx="209" cy="296" rx="8" ry="5.5" fill="rgba(175,125,90,.2)"/>
+            <!-- Lips -->
+            <path d="M172 320 Q186 311 200 314 Q214 311 228 320" stroke="#C06878" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M170 325 Q200 348 230 325" fill="rgba(198,104,116,.52)" stroke="#C87888" stroke-width="3.5" stroke-linecap="round"/>
+            <!-- white coat -->
+            <path d="M30 540 Q90 500 150 505 Q200 508 250 505 Q310 500 370 540" fill="rgba(238,238,248,.92)" stroke="rgba(200,200,215,.5)" stroke-width="1"/>
+            <!-- stethoscope hint -->
+            <path d="M168 460 Q200 445 232 460" stroke="#C8A88A" stroke-width="3" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <!-- Small accent portrait -->
+        <div class="portrait-frame portrait-small">
+          <svg viewBox="0 0 220 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="abg2" cx="50%" cy="30%" r="70%"><stop offset="0%" stop-color="#D8E8E0"/><stop offset="100%" stop-color="#B8D0C8"/></radialGradient>
+              <radialGradient id="ask2" cx="50%" cy="38%" r="55%"><stop offset="0%" stop-color="#F2D8BC"/><stop offset="100%" stop-color="#E0C098"/></radialGradient>
+            </defs>
+            <rect width="220" height="280" fill="url(#abg2)"/>
+            <path d="M30 280 Q70 255 110 260 Q150 255 190 280Z" fill="#1A1520"/>
+            <rect x="96" y="192" width="28" height="50" rx="8" fill="url(#ask2)"/>
+            <ellipse cx="110" cy="88" rx="75" ry="82" fill="#1A0E08"/>
+            <path d="M42 80 Q28 130 34 180" stroke="#1A0E06" stroke-width="18" fill="none" stroke-linecap="round" opacity=".9"/>
+            <path d="M178 80 Q192 130 186 180" stroke="#1A0E06" stroke-width="18" fill="none" stroke-linecap="round" opacity=".9"/>
+            <ellipse cx="110" cy="128" rx="64" ry="76" fill="url(#ask2)"/>
+            <ellipse cx="110" cy="106" rx="32" ry="22" fill="rgba(255,250,242,.3)"/>
+            <ellipse cx="80" cy="128" rx="14" ry="9" fill="#FFF8F0"/>
+            <circle cx="80" cy="128" r="6" fill="#28140C"/><circle cx="83" cy="125" r="2" fill="#fff" opacity=".9"/>
+            <ellipse cx="140" cy="128" rx="14" ry="9" fill="#FFF8F0"/>
+            <circle cx="140" cy="128" r="6" fill="#28140C"/><circle cx="143" cy="125" r="2" fill="#fff" opacity=".9"/>
+            <path d="M66 116 Q80 110 94 116" stroke="#1A0C06" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <path d="M126 116 Q140 110 154 116" stroke="#1A0C06" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <path d="M94 152 Q110 162 126 152" stroke="#B86070" stroke-width="2" fill="rgba(192,100,112,.45)" stroke-linecap="round"/>
+            <path d="M16 280 Q60 258 110 262 Q160 258 204 280" fill="rgba(235,238,248,.9)"/>
+          </svg>
+        </div>
+        <!-- Award badge -->
+        <div class="about-award-badge">
+          <div class="ab-num">+۸۰۰</div>
+          <div class="ab-lbl">مراجع راضی</div>
+        </div>
+      </div>
+      <div class="about-text rr">
+        <span class="eyebrow">درباره لومیر</span>
+        <h2>زیبایی یک <em>علم</em> است،<br>نه تصادف</h2>
+        <p>ما باور داریم هر پوستی داستان منحصربه‌فردی دارد. در لومیر، ترکیب آخرین تحقیقات پزشکی با درک عمیق از زیبایی فردی را فلسفه کار خود می‌دانیم.</p>
+        <p>هر درمان با ارزیابی جامع آغاز و با پروتکل کاملاً شخصی‌سازی‌شده ادامه می‌یابد. هدف ما زیبایی طبیعی است، نه تغییر هویت شما.</p>
+        <div class="about-feats">
+          <div class="af"><div class="af-ico">🔬</div><div class="af-t"><strong>مبتنی بر علم</strong><span>Evidence-based medicine</span></div></div>
+          <div class="af"><div class="af-ico">🌿</div><div class="af-t"><strong>مواد اصل</strong><span>گواهی‌شده CE و FDA</span></div></div>
+          <div class="af"><div class="af-ico">✨</div><div class="af-t"><strong>شخصی‌سازی</strong><span>پروتکل منحصر برای شما</span></div></div>
+          <div class="af"><div class="af-ico">🛡️</div><div class="af-t"><strong>کاملاً ایمن</strong><span>استانداردهای بین‌المللی</span></div></div>
+        </div>
+        <button class="btn-d" onclick="go('contact')">مشاوره رایگان بگیرید ←</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="gallery sp" id="gallery">
+  <div class="container">
+    <div class="sh rv">
+      <span class="eyebrow">نمونه کارها</span>
+      <h2>نتایج <em>واقعی</em></h2>
+      <p>نوار وسط را بکشید تا تفاوت قبل و بعد از درمان را ببینید</p>
+      <div class="gd"><i></i></div>
+    </div>
+    <div class="ba-row">
+      <!-- Card 1 -->
+      <div class="ba-card rv">
+        <div class="ba-wrap" data-ba>
+          <!-- BEFORE -->
+          <div class="ba-side">
+            <svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" fill="none">
+              <defs>
+                <radialGradient id="b1bg" cx="50%" cy="30%" r="70%"><stop offset="0%" stop-color="#D4C4B0"/><stop offset="100%" stop-color="#B8A890"/></radialGradient>
+                <radialGradient id="b1sk" cx="50%" cy="42%" r="55%"><stop offset="0%" stop-color="#D8B890"/><stop offset="100%" stop-color="#C8A878"/></radialGradient>
+              </defs>
+              <rect width="300" height="400" fill="url(#b1bg)"/>
+              <ellipse cx="150" cy="85" rx="90" ry="88" fill="#1A0E08"/>
+              <path d="M68 78 Q52 145 58 225" stroke="#1A0E06" stroke-width="22" fill="none" stroke-linecap="round" opacity=".9"/>
+              <path d="M232 78 Q248 145 242 225" stroke="#1A0E06" stroke-width="22" fill="none" stroke-linecap="round" opacity=".9"/>
+              <ellipse cx="150" cy="188" rx="88" ry="108" fill="url(#b1sk)"/>
+              <!-- aged skin - dull tone -->
+              <ellipse cx="150" cy="155" rx="40" ry="28" fill="rgba(220,195,165,.2)"/>
+              <!-- dark circles under eyes -->
+              <ellipse cx="108" cy="176" rx="22" ry="10" fill="rgba(130,100,70,.25)"/>
+              <ellipse cx="192" cy="176" rx="22" ry="10" fill="rgba(130,100,70,.25)"/>
+              <!-- Eye left -->
+              <ellipse cx="108" cy="172" rx="18" ry="11" fill="#FFF0E5"/>
+              <circle cx="108" cy="172" r="8.5" fill="#28140C"/><circle cx="113" cy="168" r="2.5" fill="rgba(255,255,255,.88)"/>
+              <path d="M90 165 Q108 157 126 165" stroke="#1A0C06" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <!-- Eye right -->
+              <ellipse cx="192" cy="172" rx="18" ry="11" fill="#FFF0E5"/>
+              <circle cx="192" cy="172" r="8.5" fill="#28140C"/><circle cx="197" cy="168" r="2.5" fill="rgba(255,255,255,.88)"/>
+              <path d="M174 165 Q192 157 210 165" stroke="#1A0C06" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <!-- Brows -->
+              <path d="M88 157 Q108 149 128 157" stroke="#1A0C06" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+              <path d="M172 157 Q192 149 212 157" stroke="#1A0C06" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+              <!-- Forehead wrinkles (before) -->
+              <path d="M120 138 Q150 134 180 138" stroke="rgba(160,120,80,.3)" stroke-width="1.5" fill="none"/>
+              <path d="M115 144 Q150 140 185 144" stroke="rgba(160,120,80,.25)" stroke-width="1.2" fill="none"/>
+              <!-- eye wrinkles -->
+              <path d="M124 176 Q130 179 126 183" stroke="rgba(160,120,80,.4)" stroke-width="1.2" fill="none"/>
+              <path d="M172 176 Q168 179 172 183" stroke="rgba(160,120,80,.4)" stroke-width="1.2" fill="none"/>
+              <!-- Nasolabial (before) -->
+              <path d="M116 208 Q108 228 112 248" stroke="rgba(150,110,78,.3)" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M184 208 Q192 228 188 248" stroke="rgba(150,110,78,.3)" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Lips -->
+              <path d="M120 258 Q135 250 150 252 Q165 250 180 258" stroke="#B06070" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M118 263 Q150 282 182 263" fill="rgba(185,95,108,.48)" stroke="#BE7480" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <!-- AFTER -->
+          <div class="ba-side after-side" data-overlay>
+            <svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" fill="none">
+              <defs>
+                <radialGradient id="a1bg" cx="50%" cy="30%" r="70%"><stop offset="0%" stop-color="#E8E0D8"/><stop offset="100%" stop-color="#D0C8BC"/></radialGradient>
+                <radialGradient id="a1sk" cx="50%" cy="42%" r="55%"><stop offset="0%" stop-color="#F2D8B8"/><stop offset="100%" stop-color="#E8C8A0"/></radialGradient>
+              </defs>
+              <rect width="300" height="400" fill="url(#a1bg)"/>
+              <ellipse cx="150" cy="85" rx="90" ry="88" fill="#1A0E08"/>
+              <path d="M68 78 Q52 145 58 225" stroke="#1A0E06" stroke-width="22" fill="none" stroke-linecap="round" opacity=".9"/>
+              <path d="M232 78 Q248 145 242 225" stroke="#1A0E06" stroke-width="22" fill="none" stroke-linecap="round" opacity=".9"/>
+              <ellipse cx="150" cy="188" rx="88" ry="108" fill="url(#a1sk)"/>
+              <!-- glowing skin highlight (after) -->
+              <ellipse cx="150" cy="155" rx="48" ry="32" fill="rgba(255,248,235,.42)"/>
+              <ellipse cx="150" cy="140" rx="28" ry="16" fill="rgba(255,250,240,.28)"/>
+              <!-- healthy cheeks (after) -->
+              <ellipse cx="100" cy="200" rx="26" ry="16" fill="rgba(222,148,138,.14)"/>
+              <ellipse cx="200" cy="200" rx="26" ry="16" fill="rgba(222,148,138,.14)"/>
+              <!-- Eye left -->
+              <ellipse cx="108" cy="172" rx="18" ry="11" fill="#FFF8F2"/>
+              <circle cx="108" cy="172" r="8.5" fill="#28140C"/><circle cx="113" cy="168" r="2.5" fill="rgba(255,255,255,.95)"/>
+              <path d="M90 165 Q108 157 126 165" stroke="#1A0C06" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <!-- Eye right -->
+              <ellipse cx="192" cy="172" rx="18" ry="11" fill="#FFF8F2"/>
+              <circle cx="192" cy="172" r="8.5" fill="#28140C"/><circle cx="197" cy="168" r="2.5" fill="rgba(255,255,255,.95)"/>
+              <path d="M174 165 Q192 157 210 165" stroke="#1A0C06" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <!-- Brows -->
+              <path d="M88 157 Q108 149 128 157" stroke="#1A0C06" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+              <path d="M172 157 Q192 149 212 157" stroke="#1A0C06" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+              <!-- NO wrinkles (after) -->
+              <!-- fuller lips (after) -->
+              <path d="M118 258 Q134 248 150 251 Q166 248 182 258" stroke="#C06878" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <path d="M116 263 Q150 285 184 263" fill="rgba(198,105,118,.56)" stroke="#CC7888" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M135 267 Q150 262 165 267" stroke="rgba(255,210,215,.55)" stroke-width="2" fill="none"/>
+            </svg>
+          </div>
+          <div class="ba-handle" data-handle><div class="ba-knob">⟺</div></div>
+        </div>
+        <div class="ba-labels">
+          <div class="ba-lbl-it before"><span style="background:var(--txt-l)"></span>قبل</div>
+          <div class="ba-lbl-it after"><span style="background:var(--sage)"></span>بعد</div>
+        </div>
+        <div class="ba-service-row"><div class="ba-sname">بوتاکس + فیلر لب</div><div class="ba-sdesc">جوان‌سازی صورت، ناحیه چشم و لب</div></div>
+      </div>
+      <!-- Card 2 -->
+      <div class="ba-card rv">
+        <div class="ba-wrap" data-ba>
+          <div class="ba-side">
+            <svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" fill="none">
+              <defs>
+                <radialGradient id="b2bg" cx="50%" cy="25%" r="70%"><stop offset="0%" stop-color="#B8C8C0"/><stop offset="100%" stop-color="#98B0A8"/></radialGradient>
+                <radialGradient id="b2sk" cx="50%" cy="42%" r="55%"><stop offset="0%" stop-color="#D8C0A0"/><stop offset="100%" stop-color="#C8A880"/></radialGradient>
+              </defs>
+              <rect width="300" height="400" fill="url(#b2bg)"/>
+              <ellipse cx="150" cy="80" rx="95" ry="92" fill="#3A2218"/>
+              <path d="M62 75 Q44 150 50 230" stroke="#3A2218" stroke-width="24" fill="none" stroke-linecap="round" opacity=".9"/>
+              <path d="M238 75 Q256 150 250 230" stroke="#3A2218" stroke-width="24" fill="none" stroke-linecap="round" opacity=".9"/>
+              <ellipse cx="150" cy="192" rx="88" ry="108" fill="url(#b2sk)"/>
+              <!-- dark spots on skin (before) -->
+              <circle cx="122" cy="168" r="5" fill="rgba(130,90,55,.32)"/>
+              <circle cx="168" cy="162" r="4" fill="rgba(130,90,55,.28)"/>
+              <circle cx="108" cy="182" r="4.5" fill="rgba(130,90,55,.3)"/>
+              <circle cx="186" cy="178" r="3.5" fill="rgba(130,90,55,.26)"/>
+              <circle cx="140" cy="156" r="3" fill="rgba(130,90,55,.22)"/>
+              <!-- uneven skin tone patches -->
+              <ellipse cx="115" cy="192" rx="20" ry="14" fill="rgba(140,100,65,.15)"/>
+              <ellipse cx="185" cy="188" rx="18" ry="12" fill="rgba(140,100,65,.12)"/>
+              <!-- Eyes -->
+              <ellipse cx="108" cy="174" rx="18" ry="11" fill="#FFF0E4"/>
+              <circle cx="108" cy="174" r="8.5" fill="#28140C"/><circle cx="113" cy="170" r="2.5" fill="rgba(255,255,255,.88)"/>
+              <path d="M90 167 Q108 159 126 167" stroke="#1A0C06" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="192" cy="174" rx="18" ry="11" fill="#FFF0E4"/>
+              <circle cx="192" cy="174" r="8.5" fill="#28140C"/><circle cx="197" cy="170" r="2.5" fill="rgba(255,255,255,.88)"/>
+              <path d="M174 167 Q192 159 210 167" stroke="#1A0C06" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <path d="M88 158 Q108 150 128 158" stroke="#1A0C06" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+              <path d="M172 158 Q192 150 212 158" stroke="#1A0C06" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+              <path d="M120 260 Q135 252 150 254 Q165 252 180 260" stroke="#B06070" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M118 265 Q150 284 182 265" fill="rgba(185,95,108,.48)" stroke="#BE7480" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="ba-side after-side" data-overlay>
+            <svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" fill="none">
+              <defs>
+                <radialGradient id="a2bg" cx="50%" cy="25%" r="70%"><stop offset="0%" stop-color="#D8E8E4"/><stop offset="100%" stop-color="#C0D8D2"/></radialGradient>
+                <radialGradient id="a2sk" cx="50%" cy="42%" r="55%"><stop offset="0%" stop-color="#F5E0C0"/><stop offset="100%" stop-color="#EAD0A8"/></radialGradient>
+              </defs>
+              <rect width="300" height="400" fill="url(#a2bg)"/>
+              <ellipse cx="150" cy="80" rx="95" ry="92" fill="#3A2218"/>
+              <path d="M62 75 Q44 150 50 230" stroke="#3A2218" stroke-width="24" fill="none" stroke-linecap="round" opacity=".9"/>
+              <path d="M238 75 Q256 150 250 230" stroke="#3A2218" stroke-width="24" fill="none" stroke-linecap="round" opacity=".9"/>
+              <ellipse cx="150" cy="192" rx="88" ry="108" fill="url(#a2sk)"/>
+              <!-- clear, glowing skin (after) -->
+              <ellipse cx="150" cy="160" rx="50" ry="34" fill="rgba(255,248,235,.44)"/>
+              <!-- healthy glow -->
+              <ellipse cx="108" cy="198" rx="24" ry="15" fill="rgba(220,148,138,.14)"/>
+              <ellipse cx="192" cy="198" rx="24" ry="15" fill="rgba(220,148,138,.14)"/>
+              <!-- Eyes -->
+              <ellipse cx="108" cy="174" rx="18" ry="11" fill="#FFF8F2"/>
+              <circle cx="108" cy="174" r="8.5" fill="#28140C"/><circle cx="113" cy="170" r="2.5" fill="rgba(255,255,255,.95)"/>
+              <path d="M90 167 Q108 159 126 167" stroke="#1A0C06" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="192" cy="174" rx="18" ry="11" fill="#FFF8F2"/>
+              <circle cx="192" cy="174" r="8.5" fill="#28140C"/><circle cx="197" cy="170" r="2.5" fill="rgba(255,255,255,.95)"/>
+              <path d="M174 167 Q192 159 210 167" stroke="#1A0C06" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <path d="M88 158 Q108 150 128 158" stroke="#1A0C06" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+              <path d="M172 158 Q192 150 212 158" stroke="#1A0C06" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+              <!-- NO spots, NO patches -->
+              <path d="M118 260 Q134 250 150 252 Q166 250 182 260" stroke="#C06878" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <path d="M116 265 Q150 286 184 265" fill="rgba(200,108,120,.55)" stroke="#CC7888" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M135 269 Q150 264 165 269" stroke="rgba(255,210,215,.55)" stroke-width="2" fill="none"/>
+            </svg>
+          </div>
+          <div class="ba-handle" data-handle><div class="ba-knob">⟺</div></div>
+        </div>
+        <div class="ba-labels">
+          <div class="ba-lbl-it before"><span style="background:var(--txt-l)"></span>قبل</div>
+          <div class="ba-lbl-it after"><span style="background:var(--sage)"></span>بعد</div>
+        </div>
+        <div class="ba-service-row"><div class="ba-sname">لیزر و جوان‌سازی</div><div class="ba-sdesc">از بین بردن لک، یکنواختی و شفافیت پوست</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team sp" id="team">
+  <div class="container">
+    <div class="sh rv">
+      <span class="eyebrow">تیم ما</span>
+      <h2>متخصصان <em>لومیر</em></h2>
+      <p>تجربه، دانش و دلسوزی در کنار هم</p>
+      <div class="gd"><i></i></div>
+    </div>
+    <div class="team-grid">
+      <!-- Doctor 1 -->
+      <div class="team-card rv">
+        <div class="team-photo">
+          <svg viewBox="0 0 300 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="d1bg" cx="50%" cy="25%" r="72%"><stop offset="0%" stop-color="#E0E8F0"/><stop offset="100%" stop-color="#C4D0DC"/></radialGradient>
+              <radialGradient id="d1sk" cx="50%" cy="40%" r="56%"><stop offset="0%" stop-color="#F0D8C0"/><stop offset="100%" stop-color="#DEC0A0"/></radialGradient>
+            </defs>
+            <rect width="300" height="400" fill="url(#d1bg)"/>
+            <circle cx="240" cy="60" r="50" fill="rgba(255,255,255,.08)"/>
+            <path d="M20 400 Q80 355 150 360 Q220 355 280 400Z" fill="#2C2438"/>
+            <path d="M128 362 Q148 335 150 325 Q152 335 172 362" fill="#2C2438"/>
+            <rect x="136" y="295" width="28" height="44" rx="8" fill="url(#d1sk)"/>
+            <ellipse cx="150" cy="100" rx="90" ry="96" fill="#2A1A0C"/>
+            <path d="M68 92 Q50 160 56 240" stroke="#1A0E06" stroke-width="20" fill="none" stroke-linecap="round" opacity=".92"/>
+            <path d="M232 92 Q250 160 244 240" stroke="#1A0E06" stroke-width="20" fill="none" stroke-linecap="round" opacity=".92"/>
+            <ellipse cx="150" cy="200" rx="90" ry="108" fill="url(#d1sk)"/>
+            <ellipse cx="150" cy="168" rx="48" ry="34" fill="rgba(255,250,240,.38)"/>
+            <ellipse cx="100" cy="218" rx="28" ry="18" fill="rgba(220,148,138,.12)"/>
+            <ellipse cx="200" cy="218" rx="28" ry="18" fill="rgba(220,148,138,.12)"/>
+            <ellipse cx="110" cy="192" rx="20" ry="12" fill="#FFF8F2"/>
+            <circle cx="110" cy="192" r="9" fill="#28140C"/><circle cx="115" cy="188" r="2.8" fill="rgba(255,255,255,.95)"/>
+            <path d="M92 183 Q110 175 128 183" stroke="#1A0C06" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <ellipse cx="190" cy="192" rx="20" ry="12" fill="#FFF8F2"/>
+            <circle cx="190" cy="192" r="9" fill="#28140C"/><circle cx="195" cy="188" r="2.8" fill="rgba(255,255,255,.95)"/>
+            <path d="M172 183 Q190 175 208 183" stroke="#1A0C06" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path d="M90 170 Q110 161 130 170" stroke="#1A0C06" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M170 170 Q190 161 210 170" stroke="#1A0C06" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <ellipse cx="141" cy="222" rx="8" ry="5.5" fill="rgba(175,125,90,.2)"/>
+            <ellipse cx="159" cy="222" rx="8" ry="5.5" fill="rgba(175,125,90,.2)"/>
+            <path d="M124 248 Q137 240 150 242 Q163 240 176 248" stroke="#C06878" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+            <path d="M122 252 Q150 272 178 252" fill="rgba(195,102,115,.52)" stroke="#C87888" stroke-width="3" stroke-linecap="round"/>
+            <!-- White coat -->
+            <path d="M10 400 Q65 360 130 364 Q150 366 170 364 Q235 360 290 400" fill="rgba(238,240,250,.94)" stroke="rgba(200,205,220,.5)" stroke-width="1"/>
+          </svg>
+          <div class="team-overlay"><div class="team-nm">دکتر مریم نوری</div><div class="team-sp">متخصص پوست و مو</div></div>
+        </div>
+        <div class="team-body">
+          <div class="team-exp">۱۵ سال تجربه · فلوشیپ آمریکا</div>
+          <div class="team-tags"><span class="team-tag">بوتاکس</span><span class="team-tag">فیلر</span><span class="team-tag">لیزر</span></div>
+          <button class="btn-o" style="width:100%;justify-content:center;font-size:.82rem;padding:10px">مشاهده پروفایل</button>
+        </div>
+      </div>
+      <!-- Doctor 2 -->
+      <div class="team-card rv">
+        <div class="team-photo">
+          <svg viewBox="0 0 300 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="d2bg" cx="50%" cy="25%" r="72%"><stop offset="0%" stop-color="#E4E0D8"/><stop offset="100%" stop-color="#C8C4B8"/></radialGradient>
+              <radialGradient id="d2sk" cx="50%" cy="40%" r="56%"><stop offset="0%" stop-color="#ECCFA8"/><stop offset="100%" stop-color="#D8B888"/></radialGradient>
+            </defs>
+            <rect width="300" height="400" fill="url(#d2bg)"/>
+            <circle cx="60" cy="80" r="55" fill="rgba(255,255,255,.06)"/>
+            <path d="M20 400 Q80 355 150 360 Q220 355 280 400Z" fill="#1A1520"/>
+            <path d="M128 362 Q148 335 150 325 Q152 335 172 362" fill="#1A1520"/>
+            <rect x="136" y="295" width="28" height="44" rx="8" fill="url(#d2sk)"/>
+            <ellipse cx="150" cy="96" rx="88" ry="90" fill="#1A0E08"/>
+            <path d="M70 88 Q52 155 58 238" stroke="#1A0E06" stroke-width="18" fill="none" stroke-linecap="round" opacity=".9"/>
+            <path d="M230 88 Q248 155 242 238" stroke="#1A0E06" stroke-width="18" fill="none" stroke-linecap="round" opacity=".9"/>
+            <ellipse cx="150" cy="200" rx="88" ry="108" fill="url(#d2sk)"/>
+            <ellipse cx="150" cy="168" rx="46" ry="32" fill="rgba(255,248,235,.36)"/>
+            <ellipse cx="98" cy="218" rx="26" ry="17" fill="rgba(218,140,130,.1)"/>
+            <ellipse cx="202" cy="218" rx="26" ry="17" fill="rgba(218,140,130,.1)"/>
+            <ellipse cx="108" cy="192" rx="20" ry="12" fill="#FFF8F0"/>
+            <circle cx="108" cy="192" r="9" fill="#1A0A04"/><circle cx="113" cy="188" r="2.8" fill="rgba(255,255,255,.92)"/>
+            <path d="M90 182 Q108 174 126 182" stroke="#1A0C06" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+            <ellipse cx="192" cy="192" rx="20" ry="12" fill="#FFF8F0"/>
+            <circle cx="192" cy="192" r="9" fill="#1A0A04"/><circle cx="197" cy="188" r="2.8" fill="rgba(255,255,255,.92)"/>
+            <path d="M174 182 Q192 174 210 182" stroke="#1A0C06" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+            <path d="M88 169 Q108 160 128 169" stroke="#1A0C06" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+            <path d="M172 169 Q192 160 212 169" stroke="#1A0C06" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+            <path d="M122 250 Q136 241 150 243 Q164 241 178 250" stroke="#B06070" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+            <path d="M120 255 Q150 274 180 255" fill="rgba(190,100,112,.5)" stroke="#C07888" stroke-width="3" stroke-linecap="round"/>
+            <path d="M10 400 Q65 360 130 364 Q150 366 170 364 Q235 360 290 400" fill="rgba(238,240,250,.94)"/>
+          </svg>
+          <div class="team-overlay"><div class="team-nm">دکتر علی رضایی</div><div class="team-sp">جراح پلاستیک</div></div>
+        </div>
+        <div class="team-body">
+          <div class="team-exp">۱۲ سال تجربه · بورد تخصصی</div>
+          <div class="team-tags"><span class="team-tag">جراحی</span><span class="team-tag">کاشت مو</span><span class="team-tag">جوان‌سازی</span></div>
+          <button class="btn-o" style="width:100%;justify-content:center;font-size:.82rem;padding:10px">مشاهده پروفایل</button>
+        </div>
+      </div>
+      <!-- Doctor 3 -->
+      <div class="team-card rv">
+        <div class="team-photo">
+          <svg viewBox="0 0 300 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="d3bg" cx="50%" cy="25%" r="72%"><stop offset="0%" stop-color="#D8E4E0"/><stop offset="100%" stop-color="#BCCCC8"/></radialGradient>
+              <radialGradient id="d3sk" cx="50%" cy="40%" r="56%"><stop offset="0%" stop-color="#F5DEC8"/><stop offset="100%" stop-color="#E8CAA8"/></radialGradient>
+            </defs>
+            <rect width="300" height="400" fill="url(#d3bg)"/>
+            <circle cx="260" cy="350" r="60" fill="rgba(255,255,255,.07)"/>
+            <path d="M20 400 Q80 355 150 360 Q220 355 280 400Z" fill="#1C2830"/>
+            <path d="M128 362 Q148 335 150 325 Q152 335 172 362" fill="#1C2830"/>
+            <rect x="136" y="295" width="28" height="44" rx="8" fill="url(#d3sk)"/>
+            <ellipse cx="150" cy="98" rx="92" ry="96" fill="#3A2218"/>
+            <path d="M66 90 Q46 158 52 240" stroke="#3A2218" stroke-width="22" fill="none" stroke-linecap="round" opacity=".92"/>
+            <path d="M234 90 Q254 158 248 240" stroke="#3A2218" stroke-width="22" fill="none" stroke-linecap="round" opacity=".92"/>
+            <ellipse cx="150" cy="200" rx="88" ry="108" fill="url(#d3sk)"/>
+            <ellipse cx="150" cy="168" rx="48" ry="34" fill="rgba(255,250,240,.4)"/>
+            <ellipse cx="96" cy="218" rx="26" ry="17" fill="rgba(220,148,138,.13)"/>
+            <ellipse cx="204" cy="218" rx="26" ry="17" fill="rgba(220,148,138,.13)"/>
+            <ellipse cx="108" cy="192" rx="20" ry="12" fill="#FFF8F2"/>
+            <circle cx="108" cy="192" r="9" fill="#28140C"/><circle cx="113" cy="188" r="2.8" fill="rgba(255,255,255,.95)"/>
+            <path d="M90 182 Q108 173 126 182" stroke="#1A0C06" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <ellipse cx="192" cy="192" rx="20" ry="12" fill="#FFF8F2"/>
+            <circle cx="192" cy="192" r="9" fill="#28140C"/><circle cx="197" cy="188" r="2.8" fill="rgba(255,255,255,.95)"/>
+            <path d="M174 182 Q192 173 210 182" stroke="#1A0C06" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path d="M88 169 Q108 160 128 169" stroke="#1A0C06" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M172 169 Q192 160 212 169" stroke="#1A0C06" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M122 250 Q136 241 150 243 Q164 241 178 250" stroke="#C06878" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+            <path d="M120 255 Q150 274 180 255" fill="rgba(198,108,118,.54)" stroke="#CC7888" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M135 259 Q150 254 165 259" stroke="rgba(255,208,212,.52)" stroke-width="2" fill="none"/>
+            <path d="M10 400 Q65 360 130 364 Q150 366 170 364 Q235 360 290 400" fill="rgba(238,240,250,.94)"/>
+          </svg>
+          <div class="team-overlay"><div class="team-nm">دکتر سارا احمدی</div><div class="team-sp">متخصص لیزر</div></div>
+        </div>
+        <div class="team-body">
+          <div class="team-exp">۱۰ سال تجربه · PhD پوست</div>
+          <div class="team-tags"><span class="team-tag">لیزر</span><span class="team-tag">مزوتراپی</span><span class="team-tag">RF</span></div>
+          <button class="btn-o" style="width:100%;justify-content:center;font-size:.82rem;padding:10px">مشاهده پروفایل</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process sp">
+  <div class="container">
+    <div class="sh rv"><span class="eyebrow">فرایند کار</span><h2>از مشاوره تا <em>نتیجه</em></h2><div class="gd"><i></i></div></div>
+    <div class="proc-row">
+      <div class="proc-it active rv"><div class="proc-circle">۰۱</div><h4>مشاوره آنلاین</h4><p>ارزیابی اولیه از طریق تماس ویدیویی</p></div>
+      <div class="proc-it rv"><div class="proc-circle">۰۲</div><h4>ویزیت حضوری</h4><p>معاینه دقیق و طراحی پروتکل شخصی</p></div>
+      <div class="proc-it rv"><div class="proc-circle">۰۳</div><h4>درمان</h4><p>اجرای دقیق با تجهیزات پیشرفته</p></div>
+      <div class="proc-it rv"><div class="proc-circle">۰۴</div><h4>پیگیری</h4><p>پشتیبانی کامل و ارزیابی نتایج</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews sp" id="reviews">
+  <div class="container">
+    <div class="sh rv"><span class="eyebrow">نظرات</span><h2>تجربه <em>مراجعین</em></h2><p>آنچه مراجعین واقعی لومیر می‌گویند</p><div class="gd"><i></i></div></div>
+    <div class="rev-grid">
+      <div class="rev-card rv">
+        <div class="rev-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="rev-avatar-css" style="background:linear-gradient(135deg,#E8A0B0,#C87888)">م</div>
+            <div class="rev-info"><strong>مریم صادقی</strong><span>بوتاکس · ۴ ماه پیش</span></div>
+          </div>
+          <div class="rev-stars">★★★★★</div>
+        </div>
+        <div class="rev-q">"</div>
+        <p class="rev-txt">بعد از بوتاکس انگار ۱۰ سال جوون‌تر شدم. دکتر نوری با دقت فوق‌العاده کار کرد. نتیجه کاملاً طبیعی بود و هیچ‌کس متوجه نشد!</p>
+        <span class="rev-tag">بوتاکس</span>
+      </div>
+      <div class="rev-card rv">
+        <div class="rev-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="rev-avatar-css" style="background:linear-gradient(135deg,#8AB0C8,#5A8898)">ر</div>
+            <div class="rev-info"><strong>رضا کریمی</strong><span>کاشت مو · ۸ ماه پیش</span></div>
+          </div>
+          <div class="rev-stars">★★★★★</div>
+        </div>
+        <div class="rev-q">"</div>
+        <p class="rev-txt">کاشت موی FUE با دکتر رضایی انجام دادم. جراحی بدون درد بود و ۸ ماه بعد نتیجه خیره‌کننده‌ای دارم. از همه دوستانم توصیه کردم.</p>
+        <span class="rev-tag">کاشت مو FUE</span>
+      </div>
+      <div class="rev-card rv">
+        <div class="rev-top">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="rev-avatar-css" style="background:linear-gradient(135deg,#A8C8A0,#688E68)">س</div>
+            <div class="rev-info"><strong>سارا محمودی</strong><span>لیزر · ۲ ماه پیش</span></div>
+          </div>
+          <div class="rev-stars">★★★★★</div>
+        </div>
+        <div class="rev-q">"</div>
+        <p class="rev-txt">لیزر رو از چند کلینیک امتحان کرده بودم ولی لومیر واقعاً متفاوت بود. بدون درد، بدون تحریک و نتیجه عالی در ۶ جلسه.</p>
+        <span class="rev-tag">لیزر</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sp" id="contact" style="background:var(--bg2)">
+  <div class="container">
+    <div class="sh rv"><span class="eyebrow">تماس با ما</span><h2>مشاوره <em>رایگان</em> بگیرید</h2><p>در کمتر از ۲۴ ساعت پاسخگو هستیم</p><div class="gd"><i></i></div></div>
+    <div class="contact-grid">
+      <div class="rr">
+        <div class="c-info"><h2>با ما در تماس باشید</h2><p>آماده‌ایم بهترین برنامه درمانی را برای شما طراحی کنیم.</p></div>
+        <div class="c-item"><div class="c-ico">📞</div><div><span class="c-lbl">تلفن</span><span class="c-val">۰۲۱-۸۸۷۷۶۶۵۵</span></div></div>
+        <div class="c-item"><div class="c-ico">📍</div><div><span class="c-lbl">آدرس</span><span class="c-val">تهران، خیابان ولیعصر، پلاک ۱۲۳</span></div></div>
+        <div class="c-item"><div class="c-ico">🕐</div><div><span class="c-lbl">ساعات کاری</span><span class="c-val">شنبه–چهارشنبه: ۹ تا ۲۰ | پنجشنبه: ۹ تا ۱۴</span></div></div>
+        <div class="c-item"><div class="c-ico">📧</div><div><span class="c-lbl">ایمیل</span><span class="c-val">info@lumiere.clinic</span></div></div>
+        <div class="soc-row"><button class="soc-b">📸</button><button class="soc-b">✈️</button><button class="soc-b">💬</button></div>
+      </div>
+      <div class="rl">
+        <div class="form-card">
+          <div class="form-ttl">فرم رزرو مشاوره</div>
+          <div class="form-sub">رایگان، بدون تعهد — در ۲۴ ساعت پاسخگوییم</div>
+          <form onsubmit="sf(event)">
+            <div class="frow">
+              <div class="fg"><label>نام و نام خانوادگی</label><input type="text" placeholder="علی احمدی" required></div>
+              <div class="fg"><label>شماره موبایل</label><input type="tel" placeholder="۰۹۱۲..." required></div>
+            </div>
+            <div class="fg"><label>خدمات مورد نظر</label><select><option value="">انتخاب کنید...</option><option>بوتاکس</option><option>فیلر</option><option>لیزر</option><option>جوان‌سازی</option><option>کاشت مو</option><option>مزوتراپی</option></select></div>
+            <div class="fg"><label>پیام (اختیاری)</label><textarea placeholder="توضیحاتی که می‌خواهید پزشک بداند..."></textarea></div>
+            <button class="btn-d" type="submit" style="width:100%;justify-content:center;padding:15px;margin-top:4px;border-radius:var(--r-sm)">ثبت درخواست مشاوره رایگان ←</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="f-brand">
+        <span class="f-en">Lumière</span>
+        <p>کلینیک تخصصی زیبایی لومیر — علم، هنر و مراقبت در خدمت طبیعی‌ترین نسخه شما.</p>
+        <div class="f-soc-row"><a class="f-soc" href="#">📸</a><a class="f-soc" href="#">✈️</a><a class="f-soc" href="#">💬</a></div>
+      </div>
+      <div class="f-col"><h4>خدمات</h4><ul><li><a href="#">بوتاکس</a></li><li><a href="#">فیلر</a></li><li><a href="#">لیزر</a></li><li><a href="#">کاشت مو</a></li><li><a href="#">مزوتراپی</a></li></ul></div>
+      <div class="f-col"><h4>کلینیک</h4><ul><li><a href="#">درباره ما</a></li><li><a href="#">تیم پزشکان</a></li><li><a href="#">نمونه‌کارها</a></li><li><a href="#">وبلاگ</a></li></ul></div>
+      <div class="f-col"><h4>پشتیبانی</h4><ul><li><a href="#">سوالات متداول</a></li><li><a href="#">حریم خصوصی</a></li><li><a href="#">شرایط استفاده</a></li><li><a href="#">تماس</a></li></ul></div>
+    </div>
+    <div class="footer-bot"><p>© ۱۴۰۳ کلینیک لومیر — تمامی حقوق محفوظ است</p><span>طراحی با ❤️</span></div>
+  </div>
+</footer>
+
+<div class="floats">
+  <button class="float-btn f-wa" onclick="window.open('https://wa.me/989120000000')" title="واتساپ">💬</button>
+  <button class="float-btn f-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="بالا">↑</button>
+</div>
+<div class="promo" id="promo">
+  <button class="promo-x" id="promoX">✕</button>
+  <div class="promo-in"><div class="promo-badge">٪۲۰</div><div class="promo-text"><h4>تخفیف ویژه اولین مراجعه</h4><p>فرم رزرو را پر کنید و ۲۰٪ تخفیف بگیرید</p></div></div>
+  <button class="promo-cta" onclick="go('contact');document.getElementById('promo').classList.remove('show')">دریافت تخفیف ←</button>
+</div>
+
+<script>
+function go(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>30));
+document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('mobileMenu').classList.toggle('open'));
+document.querySelectorAll('#mobileMenu a').forEach(a=>a.addEventListener('click',()=>document.getElementById('mobileMenu').classList.remove('open')));
+
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const els=[...e.target.parentElement.querySelectorAll('.rv,.rl,.rr')];
+    els.forEach((s,i)=>{if(!s.classList.contains('in'))setTimeout(()=>s.classList.add('in'),i*100)});
+  });
+},{threshold:.1});
+document.querySelectorAll('.rv,.rl,.rr').forEach(el=>io.observe(el));
+
+const co=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const t=+e.target.dataset.count,s=performance.now();
+    const t2=n=>{const p=Math.min((n-s)/2000,1),ease=1-Math.pow(1-p,3);e.target.textContent=Math.floor(ease*t).toLocaleString('fa-IR');if(p<1)requestAnimationFrame(t2);else e.target.textContent=t.toLocaleString('fa-IR');};
+    requestAnimationFrame(t2);co.unobserve(e.target);
+  });
+},{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
+
+document.querySelectorAll('[data-ba]').forEach(w=>{
+  const h=w.querySelector('[data-handle]'),ov=w.querySelector('[data-overlay]');
+  let on=false;
+  const mv=x=>{const r=w.getBoundingClientRect(),p=Math.max(2,Math.min(98,(x-r.left)/r.width*100));h.style.left=p+'%';ov.style.clipPath=`inset(0 ${100-p}% 0 0)`;};
+  h.addEventListener('mousedown',()=>on=true);
+  window.addEventListener('mouseup',()=>on=false);
+  window.addEventListener('mousemove',e=>on&&mv(e.clientX));
+  h.addEventListener('touchstart',e=>{on=true;e.preventDefault();},{passive:false});
+  window.addEventListener('touchend',()=>on=false);
+  window.addEventListener('touchmove',e=>on&&mv(e.touches[0].clientX));
+});
+
+document.querySelectorAll('.proc-it').forEach(s=>{s.addEventListener('mouseenter',()=>{document.querySelectorAll('.proc-it').forEach(x=>x.classList.remove('active'));s.classList.add('active');});});
+setTimeout(()=>document.getElementById('promo').classList.add('show'),5000);
+document.getElementById('promoX').addEventListener('click',()=>document.getElementById('promo').classList.remove('show'));
+function sf(e){e.preventDefault();const b=e.target.querySelector('button[type=submit]');b.textContent='✓ درخواست شما ثبت شد!';b.style.background='#4A8A60';setTimeout(()=>{b.textContent='ثبت درخواست مشاوره رایگان ←';b.style.background='';e.target.reset();},3500);}
+</script>
+</body>
+</html>
