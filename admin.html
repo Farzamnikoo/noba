@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>پنل ادمین — NOBA Clinic</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Vazirmatn',Tahoma,sans-serif;background:#EEF3EE;display:flex;min-height:100vh;direction:rtl;color:#1A201A}
+
+/* ── Sidebar ── */
+.sb{width:230px;min-height:100vh;background:#1E2B1E;display:flex;flex-direction:column;position:fixed;right:0;top:0;z-index:100;overflow-y:auto}
+.sb-logo{padding:22px 18px 18px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.sb-logo-en{font-size:1.35rem;font-weight:700;color:#8DB89A;letter-spacing:.06em}
+.sb-logo-fa{font-size:.78rem;color:rgba(255,255,255,.4);margin-top:2px}
+.sb-nav{flex:1;padding:12px 0}
+.sb-a{display:flex;align-items:center;gap:9px;padding:10px 18px;color:rgba(255,255,255,.62);font-size:.85rem;text-decoration:none;cursor:pointer;border-right:3px solid transparent;transition:.18s;user-select:none}
+.sb-a:hover{background:rgba(255,255,255,.05);color:#fff}
+.sb-a.act{background:rgba(107,158,122,.18);color:#8DB89A;border-right-color:#6B9E7A}
+.sb-a .ico{font-size:1rem;width:22px;text-align:center}
+.sb-badge{margin-right:auto;background:#C0594A;color:#fff;font-size:.68rem;font-weight:700;border-radius:20px;padding:1px 7px;min-width:18px;text-align:center;line-height:1.5}
+.sb-sep{height:1px;background:rgba(255,255,255,.07);margin:8px 0}
+.sb-bottom{padding:14px;flex-shrink:0;border-top:1px solid rgba(255,255,255,.08)}
+.sb-save{width:100%;padding:11px;background:#6B9E7A;color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:.88rem;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.sb-save:hover{background:#4A7A5C}
+.sb-preview{display:block;text-align:center;padding:9px;color:rgba(255,255,255,.48);font-size:.78rem;text-decoration:none;margin-top:8px;border-radius:8px;border:1px solid rgba(255,255,255,.1);transition:.2s}
+.sb-preview:hover{color:#8DB89A;border-color:rgba(107,158,122,.4)}
+
+/* ── Main ── */
+.main{margin-right:230px;flex:1;padding:28px 32px;max-width:860px}
+.page-title{font-size:1.3rem;font-weight:700;color:#1A201A;margin-bottom:6px}
+.page-sub{font-size:.82rem;color:#7A9080;margin-bottom:24px}
+
+/* ── Panel ── */
+.panel{background:#fff;border-radius:16px;padding:26px;margin-bottom:22px;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.panel-hd{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid #EBF2EB}
+.ph-icon{width:38px;height:38px;border-radius:9px;background:#E8F4EC;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.ph-title{font-size:.98rem;font-weight:600}
+.ph-sub{font-size:.76rem;color:#7A9080;margin-top:1px}
+
+/* ── Form ── */
+.fg{margin-bottom:15px}
+.fg label{display:block;font-size:.8rem;font-weight:500;color:#4A5E50;margin-bottom:5px}
+.fg input,.fg textarea,.fg select{width:100%;padding:9px 13px;border:1.5px solid #CDD9CC;border-radius:9px;font-family:inherit;font-size:.87rem;color:#1A201A;background:#FAFCFA;transition:.18s;outline:none}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:#6B9E7A;background:#fff;box-shadow:0 0 0 3px rgba(107,158,122,.12)}
+.fg textarea{min-height:78px;resize:vertical;line-height:1.7}
+.fg input[type=color]{padding:4px;height:42px;cursor:pointer}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+hr.sep{border:none;border-top:1px solid #EBF2EB;margin:18px 0}
+.sec-label{font-size:.72rem;font-weight:600;color:#6B9E7A;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+
+/* ── Image field ── */
+.img-row{display:flex;gap:10px;align-items:center}
+.img-row input{flex:1}
+.img-thumb{width:50px;height:50px;border-radius:8px;object-fit:cover;border:1.5px solid #CDD9CC;background:#F0F4F0;flex-shrink:0}
+
+/* ── Card list ── */
+.card-list{display:flex;flex-direction:column;gap:14px}
+.ci{border:1.5px solid #DCE9DC;border-radius:12px;padding:16px;background:#FAFCFA}
+.ci-hd{font-size:.8rem;font-weight:600;color:#4A7A5C;margin-bottom:13px;display:flex;align-items:center;justify-content:space-between}
+.ci-hd .badge{background:#E8F4EC;color:#4A7A5C;padding:2px 9px;border-radius:20px;font-size:.72rem}
+
+/* ── Appointments ── */
+.apt-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.apt-count{font-size:.8rem;color:#7A9080}
+.apt-count b{color:#1A201A;font-weight:700}
+.apt-clear{background:#FBEAE7;color:#C0594A;border:1px solid #F2D2CC;padding:8px 16px;border-radius:9px;font-family:inherit;font-size:.78rem;cursor:pointer;transition:.2s}
+.apt-clear:hover{background:#C0594A;color:#fff;border-color:#C0594A}
+.apt-card{border:1.5px solid #DCE9DC;border-radius:12px;padding:16px 18px;background:#FAFCFA;display:flex;flex-direction:column;gap:9px}
+.apt-row1{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.apt-name{font-size:.92rem;font-weight:700;color:#1A201A}
+.apt-tag{display:inline-block;background:#E8F4EC;color:#4A7A5C;font-size:.7rem;font-weight:600;padding:3px 11px;border-radius:20px}
+.apt-status{display:inline-block;font-size:.7rem;font-weight:600;padding:3px 11px;border-radius:20px;background:#FCEFD8;color:#A0824A}
+.apt-meta{display:flex;flex-wrap:wrap;gap:14px;font-size:.78rem;color:#7A9080}
+.apt-meta span{display:inline-flex;align-items:center;gap:4px}
+.apt-msg{font-size:.83rem;color:#4A5E50;line-height:1.8;background:#fff;border:1px solid #EBF2EB;border-radius:9px;padding:11px 13px}
+.apt-actions{display:flex;gap:8px;justify-content:flex-end}
+.apt-del{background:#FBEAE7;color:#C0594A;border:1px solid #F2D2CC;padding:6px 14px;border-radius:8px;font-family:inherit;font-size:.74rem;cursor:pointer;transition:.2s}
+.apt-del:hover{background:#C0594A;color:#fff}
+.apt-empty{text-align:center;padding:50px 20px;color:#9CB0A2}
+.apt-empty .ic{font-size:2.4rem;display:block;margin-bottom:12px;opacity:.5}
+
+/* ── Blog admin ── */
+.bk-card{border:1.5px solid #DCE9DC;border-radius:12px;padding:16px 18px;background:#FAFCFA}
+.bk-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;gap:10px}
+.bk-hd .ttl{font-size:.84rem;font-weight:600;color:#4A7A5C}
+.feat-lbl{display:flex;align-items:center;gap:7px;font-size:.78rem;color:#4A5E50;cursor:pointer;background:#fff;border:1.5px solid #DCE9DC;border-radius:20px;padding:6px 14px;user-select:none;transition:.18s}
+.feat-lbl:has(input:checked){background:#E8F4EC;border-color:#6B9E7A;color:#4A7A5C;font-weight:600}
+.feat-lbl input{accent-color:#6B9E7A;width:15px;height:15px;cursor:pointer}
+.bk-note{display:flex;align-items:center;gap:8px;background:#FCF6E8;border:1px solid #F0E2C0;color:#A0824A;border-radius:10px;padding:11px 15px;font-size:.78rem;margin-bottom:18px}
+.bk-note b{font-weight:700}
+
+/* ── Toast ── */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:#1E2B1E;color:#8DB89A;padding:11px 22px;border-radius:10px;font-size:.85rem;transition:.25s;z-index:9999;opacity:0;pointer-events:none;display:flex;align-items:center;gap:7px}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* ── Scroll indicator ── */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#C4D8C4;border-radius:10px}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sb">
+  <div class="sb-logo">
+    <div class="sb-logo-en">NOBA</div>
+    <div class="sb-logo-fa">پنل مدیریت محتوا</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-a act" onclick="show('general')"><span class="ico">⚙️</span>تنظیمات عمومی</div>
+    <div class="sb-a" onclick="show('appointments')"><span class="ico">📋</span>نوبت‌های درخواستی<span class="sb-badge" id="apptBadge" style="display:none">0</span></div>
+    <div class="sb-a" onclick="show('hero')"><span class="ico">🖼️</span>بخش هرو</div>
+    <div class="sb-a" onclick="show('about')"><span class="ico">ℹ️</span>درباره ما</div>
+    <div class="sb-a" onclick="show('services')"><span class="ico">💼</span>خدمات</div>
+    <div class="sb-a" onclick="show('gallery')"><span class="ico">📸</span>قبل و بعد</div>
+    <div class="sb-a" onclick="show('team')"><span class="ico">🩺</span>تیم پزشکان</div>
+    <div class="sb-a" onclick="show('reviews')"><span class="ico">⭐</span>نظرات</div>
+    <div class="sb-a" onclick="show('blog')"><span class="ico">📝</span>مدیریت وبلاگ</div>
+    <div class="sb-a" onclick="show('contact')"><span class="ico">📞</span>تماس و فوتر</div>
+  </nav>
+  <div class="sb-bottom">
+    <button class="sb-save" onclick="saveAll()">💾 ذخیره تغییرات</button>
+    <a href="lumiere-clinic.html" target="_blank" class="sb-preview">👁 پیش‌نمایش سایت</a>
+  </div>
+</aside>
+
+<main class="main">
+<div class="toast" id="toast">✓ تغییرات ذخیره شد</div>
+
+<!-- ═══════════ GENERAL ═══════════ -->
+<div id="sec-general" class="panel">
+  <div class="panel-hd"><div class="ph-icon">⚙️</div><div><div class="ph-title">تنظیمات عمومی</div><div class="ph-sub">اطلاعات پایه کلینیک</div></div></div>
+  <div class="frow">
+    <div class="fg"><label>نام کلینیک (فارسی)</label><input id="clinic_name_fa" value="نوبا"></div>
+    <div class="fg"><label>نام کلینیک (انگلیسی)</label><input id="clinic_name_en" value="NOBA"></div>
+  </div>
+  <div class="fg"><label>فایل لوگو (نام فایل در پوشه پروژه)</label>
+    <div class="img-row"><input id="logo_src" value="Noba clinic-03.png"><img class="img-thumb" id="logo_prev"></div>
+  </div>
+  <hr class="sep">
+  <div class="sec-label">اطلاعات تماس</div>
+  <div class="frow">
+    <div class="fg"><label>شماره تلفن</label><input id="contact_phone" value="۰۲۱-۸۸۷۷۶۶۵۵"></div>
+    <div class="fg"><label>ایمیل</label><input id="contact_email" value="info@noba.clinic"></div>
+  </div>
+  <div class="fg"><label>آدرس</label><input id="contact_address" value="تهران، خیابان ولیعصر، پلاک ۱۲۳"></div>
+  <div class="fg"><label>ساعات کاری</label><input id="contact_hours" value="شنبه–چهارشنبه: ۹ تا ۲۰ | پنجشنبه: ۹ تا ۱۴"></div>
+  <hr class="sep">
+  <div class="sec-label">شبکه‌های اجتماعی</div>
+  <div class="frow">
+    <div class="fg"><label>لینک واتساپ</label><input id="wa_link" value="https://wa.me/989120000000"></div>
+    <div class="fg"><label>لینک اینستاگرام</label><input id="ig_link" value="#"></div>
+  </div>
+</div>
+
+<!-- ═══════════ APPOINTMENTS ═══════════ -->
+<div id="sec-appointments" class="panel" style="display:none">
+  <div class="panel-hd"><div class="ph-icon">📋</div><div><div class="ph-title">نوبت‌های درخواستی</div><div class="ph-sub">درخواست‌های ثبت‌شده از فرم تماس سایت</div></div></div>
+  <div class="apt-toolbar">
+    <div class="apt-count">تعداد کل: <b id="apt-total">۰</b></div>
+    <button class="apt-clear" onclick="clearAppointments()">🗑 پاک‌کردن همه</button>
+  </div>
+  <div class="card-list" id="apt-list"></div>
+</div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div id="sec-hero" class="panel" style="display:none">
+  <div class="panel-hd"><div class="ph-icon">🖼️</div><div><div class="ph-title">بخش هرو</div><div class="ph-sub">اولین چیزی که بازدیدکننده می‌بیند</div></div></div>
+  <div class="fg"><label>بِیج بالای عنوان</label><input id="hero_badge" value="کلینیک تخصصی زیبایی، پوست و مو"></div>
+  <div class="frow">
+    <div class="fg"><label>عنوان — خط اول</label><input id="hero_title1" value="زیبایی"></div>
+    <div class="fg"><label>عنوان — خط دوم</label><input id="hero_title2" value="طبیعی شما"></div>
+  </div>
+  <div class="fg"><label>متن توضیحی</label><textarea id="hero_subtitle">با تیم متخصص نوبا از پیشرفته‌ترین روش‌های جوان‌سازی، لیزر و زیبایی بهره‌مند شوید. جایی که علم پزشکی در خدمت طبیعی‌ترین نسخه شماست.</textarea></div>
+  <div class="frow">
+    <div class="fg"><label>دکمه اصلی (رزرو)</label><input id="hero_btn1" value="رزرو رایگان ←"></div>
+    <div class="fg"><label>دکمه ثانویه</label><input id="hero_btn2" value="نمونه‌کارها"></div>
+  </div>
+  <div class="fg"><label>عکس هرو (نام فایل)</label>
+    <div class="img-row"><input id="hero_img" value="noba.landing (1).png"><img class="img-thumb" id="hero_img_prev"></div>
+  </div>
+  <hr class="sep">
+  <div class="sec-label">آمار زیر عنوان</div>
+  <div class="frow3">
+    <div class="fg"><label>عدد ۱</label><input id="stat1_num" value="800"></div>
+    <div class="fg"><label>برچسب ۱</label><input id="stat1_lbl" value="مراجع راضی"></div>
+    <div class="fg"></div>
+  </div>
+  <div class="frow3">
+    <div class="fg"><label>عدد ۲</label><input id="stat2_num" value="15"></div>
+    <div class="fg"><label>برچسب ۲</label><input id="stat2_lbl" value="سال تجربه"></div>
+    <div class="fg"></div>
+  </div>
+  <div class="frow3">
+    <div class="fg"><label>عدد ۳</label><input id="stat3_num" value="98"></div>
+    <div class="fg"><label>برچسب ۳</label><input id="stat3_lbl" value="٪ رضایت"></div>
+    <div class="fg"></div>
+  </div>
+  <hr class="sep">
+  <div class="sec-label">کارت‌های شناور</div>
+  <div class="frow">
+    <div class="fg"><label>جایزه — عنوان</label><input id="chip_award1" value="برترین کلینیک ۱۴۰۳"></div>
+    <div class="fg"><label>جایزه — زیرعنوان</label><input id="chip_award2" value="انجمن پوست ایران"></div>
+  </div>
+  <div class="frow">
+    <div class="fg"><label>امتیاز — عنوان</label><input id="chip_rate1" value="امتیاز ۴.۹ از ۵"></div>
+    <div class="fg"><label>امتیاز — زیرعنوان</label><input id="chip_rate2" value="بر اساس ۸۰۰+ نظر"></div>
+  </div>
+</div>
+
+<!-- ═══════════ ABOUT ═══════════ -->
+<div id="sec-about" class="panel" style="display:none">
+  <div class="panel-hd"><div class="ph-icon">ℹ️</div><div><div class="ph-title">درباره ما</div><div class="ph-sub">بخش معرفی کلینیک</div></div></div>
+  <div class="frow3">
+    <div class="fg"><label>عنوان — قسمت اول</label><input id="about_h1" value="زیبایی یک"></div>
+    <div class="fg"><label>کلمه ایتالیک</label><input id="about_em" value="علم"></div>
+    <div class="fg"><label>عنوان — ادامه</label><input id="about_h2" value="است، نه تصادف"></div>
+  </div>
+  <div class="fg"><label>پاراگراف اول</label><textarea id="about_p1">ما باور داریم هر پوستی داستان منحصربه‌فردی دارد. در نوبا، ترکیب آخرین تحقیقات پزشکی با درک عمیق از زیبایی فردی را فلسفه کار خود می‌دانیم.</textarea></div>
+  <div class="fg"><label>پاراگراف دوم</label><textarea id="about_p2">هر درمان با ارزیابی جامع آغاز و با پروتکل کاملاً شخصی‌سازی‌شده ادامه می‌یابد. هدف ما زیبایی طبیعی است، نه تغییر هویت شما.</textarea></div>
+  <div class="fg"><label>متن دکمه</label><input id="about_btn" value="مشاوره رایگان بگیرید ←"></div>
+  <hr class="sep">
+  <div class="sec-label">تصاویر</div>
+  <div class="frow">
+    <div class="fg"><label>عکس اصلی</label>
+      <div class="img-row"><input id="about_img1" value="IMG_0047.PNG"><img class="img-thumb" id="about_img1_prev"></div>
+    </div>
+    <div class="fg"><label>عکس کوچک</label>
+      <div class="img-row"><input id="about_img2" value="IMG_0050.PNG"><img class="img-thumb" id="about_img2_prev"></div>
+    </div>
+  </div>
+  <hr class="sep">
+  <div class="sec-label">بِیج آمار</div>
+  <div class="frow">
+    <div class="fg"><label>عدد</label><input id="about_badge_num" value="+۸۰۰"></div>
+    <div class="fg"><label>برچسب</label><input id="about_badge_lbl" value="مراجع راضی"></div>
+  </div>
+</div>
+
+<!-- ═══════════ SERVICES ═══════════ -->
+<div id="sec-services" class="panel" style="display:none">
+  <div class="panel-hd"><div class="ph-icon">💼</div><div><div class="ph-title">خدمات</div><div class="ph-sub">۶ کارت خدمت</div></div></div>
+  <div class="card-list" id="svc-list"></div>
+</div>
+
+<!-- ═══════════ GALLERY ═══════════ -->
+<div id="sec-gallery" class="panel" style="display:none">
+  <div class="panel-hd"><div class="ph-icon">📸</div><div><div class="ph-title">نمونه‌کارها — قبل و بعد</div><div class="ph-sub">۲ کارت اسلایدر</div></div></div>
+  <div id="ba-list"></div>
+</div>
+
+<!-- ═══════════ TEAM ═══════════ -->
+<div id="sec-team" class="panel" style="display:none">
+  <div class="panel-hd"><div class="ph-icon">🩺</div><div><div class="ph-title">تیم پزشکان</div><div class="ph-sub">۳ کارت پزشک</div></div></div>
+  <div class="card-list" id="team-list"></div>
+</div>
+
+<!-- ═══════════ REVIEWS ═══════════ -->
+<div id="sec-reviews" class="panel" style="display:none">
+  <div class="panel-hd"><div class="ph-icon">⭐</div><div><div class="ph-title">نظرات مشتریان</div><div class="ph-sub">۳ نظر</div></div></div>
+  <div class="card-list" id="rev-list"></div>
+</div>
+
+<!-- ═══════════ BLOG ═══════════ -->
+<div id="sec-blog" class="panel" style="display:none">
+  <div class="panel-hd"><div class="ph-icon">📝</div><div><div class="ph-title">مدیریت وبلاگ</div><div class="ph-sub">ویرایش پست‌ها و انتخاب پست‌های نمایش داده‌شده در صفحه اصلی</div></div></div>
+  <div class="bk-note">💡 <span><b>حداکثر ۳ پست</b> را به‌عنوان «ویژه» انتخاب کنید — همان‌ها در بخش «وبلاگ» صفحه اصلی نمایش داده می‌شوند. (انتخاب فعلی: <b id="featCount">0</b> از ۳)</span></div>
+  <div class="card-list" id="blog-list"></div>
+</div>
+
+<!-- ═══════════ CONTACT / FOOTER ═══════════ -->
+<div id="sec-contact" class="panel" style="display:none">
+  <div class="panel-hd"><div class="ph-icon">📞</div><div><div class="ph-title">تماس و فوتر</div><div class="ph-sub">پایین صفحه</div></div></div>
+  <div class="sec-label">فوتر</div>
+  <div class="fg"><label>متن توضیح فوتر</label><textarea id="footer_text">کلینیک تخصصی زیبایی نوبا — علم، هنر و مراقبت در خدمت طبیعی‌ترین نسخه شما.</textarea></div>
+  <div class="fg"><label>متن کپی‌رایت</label><input id="footer_copy" value="© ۱۴۰۳ کلینیک نوبا — تمامی حقوق محفوظ است"></div>
+  <hr class="sep">
+  <div class="sec-label">پاپ‌آپ تخفیف</div>
+  <div class="frow">
+    <div class="fg"><label>درصد تخفیف</label><input id="promo_pct" value="٪۲۰"></div>
+    <div class="fg"><label>عنوان</label><input id="promo_title" value="تخفیف ویژه اولین مراجعه"></div>
+  </div>
+  <div class="fg"><label>متن</label><input id="promo_text" value="فرم رزرو را پر کنید و ۲۰٪ تخفیف بگیرید"></div>
+</div>
+
+</main>
+
+<script>
+// ─── Default data ─────────────────────────────────────────
+const DEF = {
+  services:[
+    {emoji:'💉',num:'۰۱',badge:'محبوب‌ترین',title:'بوتاکس پزشکی',desc:'کاهش چین و چروک با دقیق‌ترین تکنیک‌های تزریق. نتایج طبیعی تا ۶ ماه.'},
+    {emoji:'💋',num:'۰۲',badge:'',title:'فیلر هیالورونیک',desc:'حجم‌دهی و کانتور لب، گونه و زیر چشم با فیلرهای اروپایی. تا ۱۸ ماه ماندگاری.'},
+    {emoji:'⚡',num:'۰۳',badge:'جدید',title:'لیزر پیشرفته',desc:'لیزر نسل جدید برای موهای زائد، لک و اسکار. بدون درد، نتیجه دائمی.'},
+    {emoji:'🌿',num:'۰۴',badge:'',title:'جوان‌سازی RF/HIFU',desc:'بازسازی عمیق پوست با تکنولوژی فرکانس رادیویی و اولتراسوند متمرکز.'},
+    {emoji:'🌱',num:'۰۵',badge:'',title:'کاشت مو FUE',desc:'جدیدترین روش کاشت مو با تکنیک DHI. نتیجه طبیعی، دائمی، حداقل ریکاوری.'},
+    {emoji:'💧',num:'۰۶',badge:'',title:'مزوتراپی',desc:'تزریق کوکتل ویتامین و پپتید به لایه درم. تغذیه عمیق و درخشش فوری پوست.'}
+  ],
+  ba:[
+    {service:'بوتاکس + فیلر لب',desc:'از بین بردن چروک، حجم‌دهی طبیعی لب',before_img:'IMG_0049_before.png',after_img:'IMG_0049_after.png'},
+    {service:'لیزر و جوان‌سازی',desc:'از بین بردن لک، یکنواختی و شفافیت پوست',before_img:'IMG_0051_before.png',after_img:'IMG_0051_after.png'}
+  ],
+  team:[
+    {name:'دکتر مریم نوری',role:'متخصص پوست و مو',exp:'۱۵ سال تجربه · فلوشیپ آمریکا',tags:'بوتاکس,فیلر,لیزر',img:''},
+    {name:'دکتر علی رضایی',role:'جراح پلاستیک',exp:'۱۲ سال تجربه · بورد تخصصی',tags:'جراحی,کاشت مو,جوان‌سازی',img:''},
+    {name:'دکتر سارا احمدی',role:'متخصص لیزر',exp:'۱۰ سال تجربه · PhD پوست',tags:'لیزر,مزوتراپی,RF',img:''}
+  ],
+  reviews:[
+    {name:'مریم صادقی',service:'بوتاکس',date:'۴ ماه پیش',text:'بعد از بوتاکس انگار ۱۰ سال جوون‌تر شدم. دکتر نوری با دقت فوق‌العاده کار کرد. نتیجه کاملاً طبیعی بود و هیچ‌کس متوجه نشد!'},
+    {name:'رضا کریمی',service:'کاشت مو',date:'۸ ماه پیش',text:'کاشت موی FUE با دکتر رضایی انجام دادم. جراحی بدون درد بود و ۸ ماه بعد نتیجه خیره‌کننده‌ای دارم.'},
+    {name:'سارا محمودی',service:'لیزر',date:'۲ ماه پیش',text:'لیزر رو از چند کلینیک امتحان کرده بودم ولی نوبا واقعاً متفاوت بود. بدون درد، بدون تحریک و نتیجه عالی در ۶ جلسه.'}
+  ],
+  blog_posts:[
+    {id:'p1',cat:'مراقبت از پوست',icon:'☀️',grad:'linear-gradient(135deg,#C4DCC8,#6B9E7A)',read:'۴ دقیقه',featured:true,
+     title:'۷ نکته طلایی برای مراقبت از پوست در تابستان',
+     excerpt:'راهکارهای ساده و مؤثر برای محافظت از پوست شما در برابر گرما، آفتاب و چالش‌های فصل تابستان.',
+     date:'۱۴۰۳/۰۳/۱۸',author:'تیم نوبا',
+     body:[
+      'تابستان فصل نور و گرماست؛ اما همین ویژگی‌ها می‌توانند برای پوست چالش‌برانگیز باشند. افزایش دما، تعریق بیشتر و تابش مستقیم نور خورشید، پوست را در معرض خشکی، تیرگی و پیری زودرس قرار می‌دهند. خبر خوب این است که با چند تغییر کوچک در روتین روزانه، می‌توانید در تمام طول تابستان از پوستی شاداب و سالم لذت ببرید.',
+      'مهم‌ترین قدم، استفاده مداوم از ضدآفتاب با SPF حداقل ۳۰ است؛ حتی در روزهای ابری. ضدآفتاب را ۲۰ دقیقه پیش از خروج از منزل بزنید و هر ۲ تا ۳ ساعت یک‌بار، به‌خصوص بعد از شنا یا تعریق زیاد، آن را تجدید کنید. علاوه بر این، استفاده از کلاه و عینک آفتابی نیز محافظت مضاعفی ایجاد می‌کند.',
+      'در گرما، پوست آب بیشتری از دست می‌دهد؛ بنابراین نوشیدن آب کافی و استفاده از مرطوب‌کننده‌های سبک و فاقد چربی اهمیت زیادی دارد. به‌جای کرم‌های غلیظ زمستانی، از ژل‌ها یا لوسیون‌های آب‌رسان حاوی هیالورونیک اسید استفاده کنید تا پوست بدون احساس سنگینی، رطوبت لازم را دریافت کند.',
+      'لایه‌برداری را به یکی دو بار در هفته محدود کنید تا از تحریک پوست در برابر گرما جلوگیری شود؛ و فراموش نکنید که آنتی‌اکسیدان‌هایی مانند ویتامین C می‌توانند به مقابله با آسیب‌های ناشی از تابش کمک کنند. در نهایت، شست‌وشوی صورت با ژل‌های ملایم و خنک، احساس طراوت را در طول روزهای گرم تابستان برای شما به ارمغان می‌آورد.'
+     ]},
+    {id:'p2',cat:'تزریقات زیبایی',icon:'💉',grad:'linear-gradient(135deg,#F0E2C0,#C4A26A)',read:'۵ دقیقه',featured:true,
+     title:'بوتاکس یا فیلر؛ کدام برای شما مناسب‌تر است؟',
+     excerpt:'تفاوت‌های کلیدی این دو روش محبوب، کاربردها و راهنمای انتخاب گزینه مناسب برای نیاز شما.',
+     date:'۱۴۰۳/۰۳/۱۰',author:'دکتر مریم نوری',
+     body:[
+      'بوتاکس و فیلر، دو محبوب‌ترین روش غیرجراحی جوان‌سازی صورت هستند که گاهی به‌اشتباه به‌جای یکدیگر به کار می‌روند؛ در حالی‌که هر یک، مکانیسم و کاربرد مشخصی دارند. بوتاکس با ریلکس‌کردن موقت عضلات، چین‌و‌چروک‌های دینامیک—یعنی خطوطی که هنگام حرکات صورت مانند اخم‌کردن یا خندیدن ایجاد می‌شوند—را کاهش می‌دهد. فیلر، در مقابل، با تزریق ژل هیالورونیک اسید، حجم از‌دست‌رفته را جبران کرده و به کانتورسازی نواحی مختلف صورت کمک می‌کند.',
+      'بوتاکس معمولاً برای نواحی پیشانی، اطراف چشم (خطوط خنده) و میان ابروها استفاده می‌شود، در حالی‌که فیلر بیشتر برای حجم‌دهی به لب‌ها، گونه‌ها، زیر چشم و نرم‌کردن خطوط اطراف دهان به‌کار می‌رود. انتخاب میان این دو—یا حتی ترکیب هر دو—به ساختار صورت، نوع نگرانی و هدف فرد از انجام درمان بستگی دارد.',
+      'از نظر ماندگاری نیز تفاوت‌هایی وجود دارد: نتایج بوتاکس معمولاً ۴ تا ۶ ماه باقی می‌مانند، در حالی‌که فیلرهای مدرن هیالورونیک اسید می‌توانند بین ۹ تا ۱۸ ماه دوام داشته باشند. هر دو روش، تزریقی، سرپایی و با حداقل زمان ریکاوری هستند و افراد معمولاً بلافاصله پس از جلسه می‌توانند به فعالیت‌های روزمره بازگردند.',
+      'بهترین راه برای انتخاب، مشاوره با پزشک متخصص است. در کلینیک نوبا، پیش از هر اقدامی، ساختار صورت شما به‌دقت بررسی شده و پروتکلی متناسب با اهداف و انتظارات شما طراحی می‌شود تا نتیجه‌ای کاملاً طبیعی و هماهنگ با چهره‌تان به دست آید.'
+     ]},
+    {id:'p3',cat:'کاشت مو',icon:'🌱',grad:'linear-gradient(135deg,#D4E8D8,#8DB89A)',read:'۶ دقیقه',featured:true,
+     title:'همه‌چیز درباره کاشت مو به روش FUE',
+     excerpt:'از مراحل انجام عمل تا دوران نقاهت؛ پاسخ به پرتکرارترین سوالات متقاضیان کاشت مو.',
+     date:'۱۴۰۳/۰۲/۲۸',author:'دکتر علی رضایی',
+     body:[
+      'روش FUE (Follicular Unit Extraction) یکی از پیشرفته‌ترین و محبوب‌ترین تکنیک‌های کاشت مو در جهان است که بدون نیاز به برش یا بخیه انجام می‌شود. در این روش، فولیکول‌های مو به‌صورت تکی از نواحی پُرپشت (معمولاً پشت سر) استخراج و در ناحیه مورد نظر کاشته می‌شوند. نتیجه نهایی، ظاهری کاملاً طبیعی و خط رویش مویی هماهنگ با ساختار صورت است.',
+      'فرایند درمان از یک جلسه مشاوره دقیق آغاز می‌شود؛ جایی که پزشک تراکم مو، ساختار پوست سر و انتظارات فرد را بررسی کرده و طرحی شخصی‌سازی‌شده ارائه می‌دهد. روز عمل، ابتدا ناحیه اهداکننده بی‌حس شده، فولیکول‌ها به‌دقت استخراج و سپس در کانال‌های از‌پیش‌طراحی‌شده با زاویه و جهتی طبیعی کاشته می‌شوند.',
+      'دوران نقاهت معمولاً کوتاه و کم‌دردسر است. ممکن است طی چند روز اول کمی قرمزی یا تورم خفیف مشاهده شود که به‌سرعت برطرف می‌گردد. حدود دو تا سه هفته پس از عمل، موهای کاشته‌شده می‌ریزند—که کاملاً طبیعی است—و فولیکول‌ها وارد مرحله استراحت می‌شوند تا رویش نهایی آغاز شود.',
+      'نتیجه نهایی معمولاً بین ۸ تا ۱۲ ماه پس از عمل به‌طور کامل نمایان می‌شود: موهایی غیرقابل‌تشخیص از موهای طبیعی که به‌صورت دائمی رشد می‌کنند. اگر به فکر بازگرداندن تراکم و اعتمادبه‌نفس از‌دست‌رفته خود هستید، مشاوره با تیم متخصص، نخستین قدم درست است.'
+     ]},
+    {id:'p4',cat:'لیزر',icon:'⚡',grad:'linear-gradient(135deg,#EAF0EA,#A4C0A4)',read:'۴ دقیقه',featured:false,
+     title:'راهنمای کامل لیزر موهای زائد',
+     excerpt:'لیزر چگونه کار می‌کند، چند جلسه نیاز دارید و چه نکاتی پیش و پس از آن باید رعایت شود؟',
+     date:'۱۴۰۳/۰۲/۱۴',author:'دکتر سارا احمدی',
+     body:[
+      'لیزر موهای زائد با هدف‌قراردادن ملانین موجود در فولیکول مو عمل می‌کند: نور لیزر جذب فولیکول شده، به گرما تبدیل می‌شود و رشد مو را در درازمدت کاهش می‌دهد. برخلاف روش‌های سنتی مانند اپیلاسیون یا وکس که نتیجه‌ای موقتی دارند، لیزر در طول چند جلسه به کاهش چشمگیر و پایدار موهای زائد منجر می‌شود.',
+      'از آن‌جا که موها در چرخه‌های رشدی متفاوتی قرار دارند، یک جلسه برای از‌بین‌بردن کامل آن‌ها کافی نیست. معمولاً ۶ تا ۸ جلسه با فاصله ۴ تا ۶ هفته توصیه می‌شود تا لیزر بتواند فولیکول‌ها را در مراحل مختلف رشد هدف قرار دهد. دستگاه‌های نسل جدید با قابلیت تنظیم برای انواع پوست و مو، جلسات را برای اکثر افراد بدون‌درد و سریع می‌کنند.',
+      'پیش از هر جلسه، بهتر است از تابش مستقیم آفتاب و استفاده از کرم‌های ضدآفتاب با SPF بالا غافل نشوید؛ ناحیه مورد نظر را نیز ۲۴ ساعت قبل با تیغ (نه وکس یا اپیلاسیون) آماده کنید. بعد از جلسه نیز ممکن است قرمزی خفیفی مشاهده شود که طی چند ساعت برطرف می‌شود.',
+      'این روش برای اغلب رنگ‌های پوست و مو مناسب است؛ با این حال، بهترین نتیجه معمولاً در ترکیب پوست روشن و موی تیره مشاهده می‌شود. مشاوره اولیه با متخصص به شما کمک می‌کند بدانید این روش تا چه اندازه برای نوع پوست و موی شما مؤثر خواهد بود.'
+     ]},
+    {id:'p5',cat:'راهنما',icon:'💭',grad:'linear-gradient(135deg,#FDF9F3,#D8BA88)',read:'۵ دقیقه',featured:false,
+     title:'۵ افسانه رایج درباره جراحی‌های زیبایی',
+     excerpt:'باورهای نادرستی که ممکن است مانع تصمیم‌گیری آگاهانه شما درباره درمان‌های زیبایی شوند.',
+     date:'۱۴۰۳/۰۲/۰۲',author:'تیم نوبا',
+     body:[
+      'با وجود محبوبیت روزافزون درمان‌های زیبایی، همچنان باورهای نادرست بسیاری درباره آن‌ها رواج دارد که می‌تواند تصمیم‌گیری افراد را تحت‌تاثیر قرار دهد. در این مطلب به بررسی پنج افسانه رایج می‌پردازیم.',
+      '«نتیجه همیشه غیرطبیعی به نظر می‌رسد»: با پیشرفت تکنیک‌ها و موادی مانند فیلرهای نسل جدید، نتایج امروزی کاملاً طبیعی و متناسب با ساختار صورت هر فرد طراحی می‌شوند. هدف اصلی یک متخصص خوب، حفظ هویت چهره و تقویت زیبایی طبیعی است، نه تغییر اساسی آن.',
+      '«فقط مخصوص افراد مسن است»: بسیاری از درمان‌ها مانند مزوتراپی، لیزر یا فیلرهای سبک، برای پیشگیری از علائم پیری در سنین جوانی نیز کاربرد دارند و افراد در دهه‌های ۲۰ و ۳۰ زندگی نیز از آن‌ها بهره می‌برند.',
+      '«دوران نقاهت طولانی و دردناک است»: اغلب درمان‌های مدرن غیرجراحی، سرپایی بوده و فرد می‌تواند به‌سرعت به فعالیت‌های روزمره بازگردد. حتی در روش‌های جراحی مانند کاشت مو نیز پیشرفت تکنیک‌ها، روند بهبودی را به‌طور چشمگیری کوتاه‌تر کرده است.',
+      'و در نهایت، «همه روش‌ها بازگشت‌ناپذیرند»: بسیاری از محبوب‌ترین درمان‌های امروزی—از بوتاکس تا فیلرهای هیالورونیک اسید—موقتی و کاملاً قابل کنترل هستند. مشاوره با متخصص مجرب، بهترین راه برای جدا‌کردن واقعیت از افسانه و تصمیم‌گیری آگاهانه است.'
+     ]},
+    {id:'p6',cat:'مراقبت از پوست',icon:'✨',grad:'linear-gradient(135deg,#F0E2C0,#8DB89A)',read:'۳ دقیقه',featured:false,
+     title:'یک روتین ساده برای پوستی شاداب در طول روز',
+     excerpt:'دو روتین کوتاه صبحگاهی و شامگاهی که با رعایت مداوم آن‌ها، تحول پوست خود را خواهید دید.',
+     date:'۱۴۰۳/۰۱/۲۰',author:'دکتر مریم نوری',
+     body:[
+      'داشتن پوستی شاداب نیازمند یک رژیم پیچیده و چندمرحله‌ای نیست؛ بلکه نتیجه رعایت مداوم چند قدم ساده و درست در طول روز است. در این مطلب، یک روتین کوتاه صبحگاهی و شامگاهی را با شما در میان می‌گذاریم.',
+      'روتین صبحگاهی: روز را با شست‌وشوی ملایم صورت آغاز کنید تا چربی و آلودگی شبانه پاک شود. سپس از یک سرم آنتی‌اکسیدان (مانند ویتامین C) استفاده کنید که به محافظت از پوست در برابر آلودگی و اشعه کمک می‌کند، و در پایان، مرطوب‌کننده و ضدآفتاب را فراموش نکنید—این آخرین و مهم‌ترین قدم صبحگاهی شماست.',
+      'روتین شامگاهی: شب، زمان مناسبی برای پاک‌سازی کامل و بازسازی پوست است. ابتدا آرایش و آلودگی روز را با یک پاک‌کننده مناسب از بین ببرید، سپس (در صورت نیاز، یکی دو بار در هفته) از لایه‌بردار ملایم استفاده کنید. در پایان، سرم شب و مرطوب‌کننده‌ای غنی‌تر، فرصت بازسازی را در طول خواب به پوست شما می‌دهد.',
+      'نکته پایانی اینکه، نتیجه هیچ روتینی یک‌شبه ظاهر نمی‌شود. ثبات و صبر، کلید اصلی موفقیت در مراقبت از پوست است؛ معمولاً بعد از ۴ تا ۶ هفته رعایت منظم، تغییرات محسوسی در شفافیت و طراوت پوست خود مشاهده خواهید کرد.'
+     ]}
+  ]
+};
+
+// ─── State ────────────────────────────────────────────────
+let cfg = {};
+try { cfg = JSON.parse(localStorage.getItem('noba_cfg')||'{}'); } catch(e){}
+
+const g = id => document.getElementById(id);
+const val = id => { const e=g(id); return e?e.value:''; };
+
+// ─── Build dynamic sections ───────────────────────────────
+function buildSvc(){
+  const d = cfg.services||DEF.services;
+  g('svc-list').innerHTML = d.map((s,i)=>`
+    <div class="ci">
+      <div class="ci-hd">${s.num} — ${s.title} <span class="badge">${s.emoji}</span></div>
+      <div class="frow">
+        <div class="fg"><label>ایموجی</label><input id="sv_e${i}" value="${esc(s.emoji)}"></div>
+        <div class="fg"><label>بِیج (اختیاری)</label><input id="sv_b${i}" value="${esc(s.badge)}"></div>
+      </div>
+      <div class="fg"><label>عنوان</label><input id="sv_t${i}" value="${esc(s.title)}"></div>
+      <div class="fg"><label>توضیح</label><textarea id="sv_d${i}">${esc(s.desc)}</textarea></div>
+    </div>`).join('');
+}
+
+function buildBA(){
+  const d = cfg.ba||DEF.ba;
+  g('ba-list').innerHTML = d.map((b,i)=>`
+    <div class="ci" style="margin-bottom:14px">
+      <div class="ci-hd">کارت ${i+1} — ${b.service}</div>
+      <div class="fg"><label>نام سرویس</label><input id="ba_s${i}" value="${esc(b.service)}"></div>
+      <div class="fg"><label>توضیح</label><input id="ba_d${i}" value="${esc(b.desc)}"></div>
+      <div class="frow">
+        <div class="fg"><label>عکس قبل</label>
+          <div class="img-row"><input id="ba_bf${i}" value="${esc(b.before_img)}"><img class="img-thumb" id="ba_bfp${i}"></div>
+        </div>
+        <div class="fg"><label>عکس بعد</label>
+          <div class="img-row"><input id="ba_af${i}" value="${esc(b.after_img)}"><img class="img-thumb" id="ba_afp${i}"></div>
+        </div>
+      </div>
+    </div>`).join('');
+  d.forEach((_,i)=>{ prev(`ba_bf${i}`,`ba_bfp${i}`); prev(`ba_af${i}`,`ba_afp${i}`); });
+}
+
+function buildTeam(){
+  const d = cfg.team||DEF.team;
+  g('team-list').innerHTML = d.map((t,i)=>`
+    <div class="ci">
+      <div class="ci-hd">پزشک ${i+1}</div>
+      <div class="frow">
+        <div class="fg"><label>نام</label><input id="tm_n${i}" value="${esc(t.name)}"></div>
+        <div class="fg"><label>تخصص</label><input id="tm_r${i}" value="${esc(t.role)}"></div>
+      </div>
+      <div class="fg"><label>تجربه</label><input id="tm_e${i}" value="${esc(t.exp)}"></div>
+      <div class="fg"><label>برچسب‌ها (با کاما)</label><input id="tm_g${i}" value="${esc(t.tags)}"></div>
+      <div class="fg"><label>عکس پروفایل</label>
+        <div class="img-row"><input id="tm_i${i}" value="${esc(t.img||'')}"><img class="img-thumb" id="tm_ip${i}"></div>
+      </div>
+    </div>`).join('');
+  d.forEach((_,i)=> prev(`tm_i${i}`,`tm_ip${i}`));
+}
+
+function buildRev(){
+  const d = cfg.reviews||DEF.reviews;
+  g('rev-list').innerHTML = d.map((r,i)=>`
+    <div class="ci">
+      <div class="ci-hd">نظر ${i+1}</div>
+      <div class="frow">
+        <div class="fg"><label>نام</label><input id="rv_n${i}" value="${esc(r.name)}"></div>
+        <div class="fg"><label>خدمت</label><input id="rv_s${i}" value="${esc(r.service)}"></div>
+      </div>
+      <div class="fg"><label>تاریخ</label><input id="rv_dt${i}" value="${esc(r.date)}"></div>
+      <div class="fg"><label>متن نظر</label><textarea id="rv_t${i}">${esc(r.text)}</textarea></div>
+    </div>`).join('');
+}
+
+// ─── Appointments (read from contact-form submissions) ────
+function loadAppointments(){
+  let list = [];
+  try{ list = JSON.parse(localStorage.getItem('noba_appointments')||'[]'); }catch(e){}
+  return Array.isArray(list) ? list : [];
+}
+function buildAppointments(){
+  const list = loadAppointments();
+  g('apt-total').textContent = toFa(list.length);
+  const badge = g('apptBadge');
+  if(list.length){ badge.style.display='inline-flex'; badge.textContent = list.length>99?'99+':toFa(list.length); }
+  else { badge.style.display='none'; }
+
+  if(!list.length){
+    g('apt-list').innerHTML = `<div class="apt-empty"><span class="ic">📭</span>هنوز هیچ درخواست نوبتی ثبت نشده است.<br>درخواست‌های ارسال‌شده از فرم «رزرو مشاوره رایگان» در سایت، همین‌جا نمایش داده می‌شوند.</div>`;
+    return;
+  }
+  g('apt-list').innerHTML = list.map((a,i)=>`
+    <div class="apt-card">
+      <div class="apt-row1">
+        <span class="apt-name">👤 ${esc(a.name||'بدون نام')}</span>
+        <span class="apt-status">🕓 ${esc(a.status||'جدید')}</span>
+      </div>
+      <div class="apt-meta">
+        <span>📞 ${esc(a.phone||'—')}</span>
+        ${a.service ? `<span class="apt-tag">${esc(a.service)}</span>` : ''}
+        <span>📅 ${esc(a.date||'')}${a.time?' ساعت '+esc(a.time):''}</span>
+      </div>
+      ${a.message ? `<div class="apt-msg">«${esc(a.message)}»</div>` : ''}
+      <div class="apt-actions"><button class="apt-del" onclick="delAppointment(${i})">🗑 حذف این درخواست</button></div>
+    </div>`).join('');
+}
+function delAppointment(i){
+  const list = loadAppointments();
+  list.splice(i,1);
+  localStorage.setItem('noba_appointments', JSON.stringify(list));
+  buildAppointments();
+}
+function clearAppointments(){
+  const list = loadAppointments();
+  if(!list.length) return;
+  if(!confirm('همهٔ درخواست‌های نوبت برای همیشه حذف شوند؟ این عملیات قابل بازگشت نیست.')) return;
+  localStorage.setItem('noba_appointments','[]');
+  buildAppointments();
+}
+
+// ─── Blog management ──────────────────────────────────────
+function buildBlog(){
+  const d = cfg.blog_posts||DEF.blog_posts;
+  g('blog-list').innerHTML = d.map((p,i)=>`
+    <div class="ci">
+      <div class="ci-hd">
+        <span>${esc(p.icon||'📝')} پست ${i+1} — ${esc(p.title).slice(0,28)}${esc(p.title).length>28?'…':''}</span>
+        <label class="feat-lbl"><input type="checkbox" id="bp_f${i}" ${p.featured?'checked':''} onchange="onFeatToggle(${i})"> نمایش در صفحه اصلی</label>
+      </div>
+      <div class="frow3">
+        <div class="fg"><label>دسته‌بندی</label><input id="bp_c${i}" value="${esc(p.cat)}"></div>
+        <div class="fg"><label>ایموجی کاور</label><input id="bp_ic${i}" value="${esc(p.icon)}"></div>
+        <div class="fg"><label>زمان مطالعه</label><input id="bp_r${i}" value="${esc(p.read||'')}"></div>
+      </div>
+      <div class="fg"><label>عنوان پست</label><input id="bp_t${i}" value="${esc(p.title)}"></div>
+      <div class="fg"><label>خلاصه (در کارت پیش‌نمایش نشان داده می‌شود)</label><textarea id="bp_e${i}">${esc(p.excerpt)}</textarea></div>
+      <div class="frow">
+        <div class="fg"><label>تاریخ انتشار</label><input id="bp_d${i}" value="${esc(p.date)}"></div>
+        <div class="fg"><label>نویسنده</label><input id="bp_a${i}" value="${esc(p.author)}"></div>
+      </div>
+      <div class="fg"><label>متن کامل مقاله — هر پاراگراف را با یک خط خالی از پاراگراف بعدی جدا کنید</label>
+        <textarea id="bp_body${i}" style="min-height:140px">${esc((p.body||[]).join('\n\n'))}</textarea>
+      </div>
+    </div>`).join('');
+  updateFeatCount();
+}
+function onFeatToggle(i){
+  const checked = document.querySelectorAll('#blog-list input[id^="bp_f"]:checked');
+  if(checked.length > 3){
+    g(`bp_f${i}`).checked = false;
+    updateFeatCount();
+    alert('حداکثر می‌توانید ۳ پست را برای نمایش در صفحه اصلی انتخاب کنید. ابتدا یکی از موارد انتخاب‌شده را بردارید.');
+    return;
+  }
+  updateFeatCount();
+}
+function updateFeatCount(){
+  const n = document.querySelectorAll('#blog-list input[id^="bp_f"]:checked').length;
+  const el = g('featCount');
+  if(el) el.textContent = toFa(n);
+}
+
+// ─── Image preview ────────────────────────────────────────
+function prev(inputId, imgId){
+  const inp=g(inputId), img=g(imgId);
+  if(!inp||!img) return;
+  const update=()=>{ img.src=inp.value; img.style.opacity='.4'; img.onload=()=>img.style.opacity='1'; img.onerror=()=>img.style.opacity='.2'; };
+  update();
+  inp.addEventListener('input', update);
+}
+
+function hookPreviews(){
+  [['logo_src','logo_prev'],['hero_img','hero_img_prev'],
+   ['about_img1','about_img1_prev'],['about_img2','about_img2_prev']
+  ].forEach(([a,b])=> prev(a,b));
+}
+
+// ─── Load saved values ────────────────────────────────────
+function loadFields(){
+  document.querySelectorAll('input[id],textarea[id]').forEach(el=>{
+    // skip dynamic-list fields (they're built from cfg arrays already)
+    if(/^(sv_|ba_|tm_|rv_|bp_)/.test(el.id)) return;
+    if(cfg[el.id]!==undefined) el.value = cfg[el.id];
+  });
+}
+
+// ─── Collect & save ───────────────────────────────────────
+function collectAll(){
+  // simple fields
+  document.querySelectorAll('input[id],textarea[id]').forEach(el=>{
+    if(/^(sv_|ba_|tm_|rv_|bp_)/.test(el.id)) return;
+    cfg[el.id] = el.value;
+  });
+  // services
+  cfg.services = DEF.services.map((s,i)=>({
+    ...s,
+    emoji: val(`sv_e${i}`)||s.emoji,
+    badge: val(`sv_b${i}`),
+    title: val(`sv_t${i}`)||s.title,
+    desc:  val(`sv_d${i}`)||s.desc
+  }));
+  // ba
+  cfg.ba = DEF.ba.map((b,i)=>({
+    service:    val(`ba_s${i}`)||b.service,
+    desc:       val(`ba_d${i}`)||b.desc,
+    before_img: val(`ba_bf${i}`)||b.before_img,
+    after_img:  val(`ba_af${i}`)||b.after_img
+  }));
+  // team
+  cfg.team = DEF.team.map((t,i)=>({
+    name: val(`tm_n${i}`)||t.name,
+    role: val(`tm_r${i}`)||t.role,
+    exp:  val(`tm_e${i}`)||t.exp,
+    tags: val(`tm_g${i}`)||t.tags,
+    img:  val(`tm_i${i}`)
+  }));
+  // reviews
+  cfg.reviews = DEF.reviews.map((r,i)=>({
+    name:    val(`rv_n${i}`)||r.name,
+    service: val(`rv_s${i}`)||r.service,
+    date:    val(`rv_dt${i}`)||r.date,
+    text:    val(`rv_t${i}`)||r.text,
+    rating:  5
+  }));
+  // blog posts — keep id/grad from defaults, collect editable fields + featured flag
+  cfg.blog_posts = DEF.blog_posts.map((p,i)=>{
+    const bodyRaw = val(`bp_body${i}`);
+    const body = bodyRaw
+      ? bodyRaw.split(/\n\s*\n+/).map(s=>s.trim()).filter(Boolean)
+      : p.body;
+    return {
+      id: p.id,
+      grad: p.grad,
+      cat:     val(`bp_c${i}`)||p.cat,
+      icon:    val(`bp_ic${i}`)||p.icon,
+      read:    val(`bp_r${i}`)||p.read,
+      title:   val(`bp_t${i}`)||p.title,
+      excerpt: val(`bp_e${i}`)||p.excerpt,
+      date:    val(`bp_d${i}`)||p.date,
+      author:  val(`bp_a${i}`)||p.author,
+      featured: !!(g(`bp_f${i}`) && g(`bp_f${i}`).checked),
+      body
+    };
+  });
+}
+
+function saveAll(){
+  collectAll();
+  localStorage.setItem('noba_cfg', JSON.stringify(cfg));
+  const t=g('toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2400);
+}
+
+// ─── Navigation ───────────────────────────────────────────
+const SECTIONS = ['general','appointments','hero','about','services','gallery','team','reviews','blog','contact'];
+function show(id){
+  SECTIONS.forEach(s=>{ g('sec-'+s).style.display = s===id?'block':'none'; });
+  document.querySelectorAll('.sb-a').forEach(a=>{
+    a.classList.toggle('act', a.getAttribute('onclick')===`show('${id}')`);
+  });
+  if(id==='appointments') buildAppointments(); // always show freshest submissions
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ─── Helpers ──────────────────────────────────────────────
+function esc(s){ return String(s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+function toFa(n){ return String(n).replace(/[0-9]/g, d=>'۰۱۲۳۴۵۶۷۸۹'[+d]); }
+
+// ─── Init ─────────────────────────────────────────────────
+buildSvc();
+buildBA();
+buildTeam();
+buildRev();
+buildBlog();
+buildAppointments();
+loadFields();
+hookPreviews();
+
+// auto-save with debounce
+let dbt;
+document.addEventListener('input', ()=>{ clearTimeout(dbt); dbt=setTimeout(saveAll,1800); });
+</script>
+</body>
+</html>

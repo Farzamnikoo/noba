@@ -1,3 +1,6 @@
+# Local Claude Code tooling config (machine-specific, not part of the site)
+.claude/
+
 # Logs
 logs
 *.log

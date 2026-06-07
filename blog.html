@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>وبلاگ | NOBA Clinic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7FAF7;--bg2:#EAF0EA;--white:#FFFFFF;--cream:#FDF9F3;
+  --dark:#1A201A;--dark2:#2C382C;
+  --gold:#C4A26A;--gold-l:#D8BA88;--gold-xl:#F0E2C0;--gold-d:#A0824A;
+  --sage:#6B9E7A;--sage-l:#8DB89A;--sage-xl:#C4DCC8;--sage-d:#4A7A5C;
+  --blush:#D4E8D8;
+  --txt:#1A201A;--txt-m:#4A5E50;--txt-l:#7A9080;
+  --bdr:#C4D8C4;--bdr2:#A4C0A4;
+  --shadow:0 4px 24px rgba(0,0,0,.06);--shadow-lg:0 16px 48px rgba(0,0,0,.1);
+  --r:20px;--r-sm:12px;
+  --fa:'Vazirmatn',Tahoma,sans-serif;
+  --en:'Cormorant Garamond',Georgia,serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;line-height:1.75;overflow-x:hidden}
+.container{max-width:1240px;margin:0 auto;padding:0 32px}
+.sp{padding:100px 0}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--gold)}
+.gd{display:flex;justify-content:center;align-items:center;gap:8px;margin:16px auto 0}
+.gd::before,.gd::after{content:'';width:32px;height:1px;background:linear-gradient(to left,var(--gold),transparent)}
+.gd i{width:5px;height:5px;border-radius:50%;background:var(--gold);display:block}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+.rv.in{opacity:1;transform:none}
+
+.btn-d{display:inline-flex;align-items:center;gap:8px;background:var(--sage);color:#FFF;border:none;padding:14px 36px;border-radius:50px;font-family:var(--fa);font-size:.92rem;font-weight:600;cursor:pointer;transition:all .3s;text-decoration:none}
+.btn-d:hover{background:var(--sage-d);transform:translateY(-2px);box-shadow:0 8px 24px rgba(107,158,122,.32)}
+.btn-o{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--sage-d);border:1.5px solid var(--sage-l);padding:13px 34px;border-radius:50px;font-family:var(--fa);font-size:.92rem;cursor:pointer;transition:all .3s;text-decoration:none}
+.btn-o:hover{border-color:var(--sage);color:var(--sage);background:var(--sage-xl);transform:translateY(-2px)}
+
+/* ── NAVBAR (shared) ── */
+.navbar{position:fixed;top:0;width:100%;z-index:999;transition:all .35s;background:rgba(247,250,247,.98);backdrop-filter:blur(16px);box-shadow:0 1px 0 var(--bdr)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:76px;padding:0 40px}
+.nav-logo{display:flex;align-items:center;gap:14px;text-decoration:none}
+.nav-links{display:flex;gap:34px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--txt-m);font-size:.88rem;font-weight:500;transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;right:0;width:0;height:1.5px;background:var(--gold);transition:width .25s;border-radius:1px}
+.nav-links a:hover,.nav-links a.cur{color:var(--dark)}
+.nav-links a:hover::after,.nav-links a.cur::after{width:100%}
+.nav-act{display:flex;align-items:center;gap:12px}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{width:22px;height:1.5px;background:var(--dark);border-radius:2px;transition:all .3s;display:block}
+.nav-mobile{display:none}
+
+/* ── PAGE HEADER ── */
+.bhead{position:relative;padding:168px 0 86px;text-align:center;background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);overflow:hidden}
+.bhead .container{position:relative;z-index:2}
+.bhead h1{font-size:3rem;font-weight:700;color:var(--dark);line-height:1.25}
+.bhead h1 em{font-style:italic;font-family:var(--en);font-weight:600;color:var(--gold)}
+.bhead p{color:var(--txt-m);margin-top:14px;font-size:.98rem;max-width:520px;margin-inline:auto}
+.bhead-crumb{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;color:var(--txt-l);margin-top:22px}
+.bhead-crumb a{color:var(--sage-d);text-decoration:none;font-weight:600}
+.bhead-crumb a:hover{text-decoration:underline}
+
+/* ── FILTER PILLS ── */
+.bfilters{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:54px}
+.bf-pill{border:1.5px solid var(--bdr);background:var(--white);color:var(--txt-m);padding:9px 22px;border-radius:50px;font-family:var(--fa);font-size:.84rem;cursor:pointer;transition:.25s}
+.bf-pill:hover{border-color:var(--sage-l);color:var(--sage-d)}
+.bf-pill.act{background:var(--sage);border-color:var(--sage);color:#fff}
+
+/* ── BLOG GRID ── */
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.bp-card{display:flex;flex-direction:column;background:var(--white);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);text-decoration:none;color:inherit;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s;cursor:pointer;border:none;text-align:right;font-family:var(--fa);width:100%}
+.bp-card:hover{transform:translateY(-7px);box-shadow:var(--shadow-lg)}
+.bp-cover{height:180px;display:flex;align-items:center;justify-content:center;font-size:2.8rem;flex-shrink:0}
+.bp-body{padding:24px 26px 27px;display:flex;flex-direction:column;flex:1}
+.bp-cat{display:inline-block;align-self:flex-start;font-size:.71rem;font-weight:600;color:var(--sage-d);background:var(--sage-xl);padding:4px 13px;border-radius:20px;margin-bottom:13px}
+.bp-body h3{font-size:1.05rem;font-weight:700;line-height:1.6;margin-bottom:9px;color:var(--txt)}
+.bp-body p{font-size:.84rem;color:var(--txt-m);line-height:1.8;margin-bottom:18px;flex:1}
+.bp-meta{display:flex;align-items:center;justify-content:space-between;font-size:.77rem;color:var(--txt-l);padding-top:15px;border-top:1px solid var(--bg2)}
+.bp-arrow{color:var(--sage-d);font-weight:600}
+.bp-empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--txt-l);font-size:.92rem}
+
+/* ── DETAIL OVERLAY ── */
+.ovl{position:fixed;inset:0;z-index:1500;display:flex;justify-content:center;align-items:flex-start;padding:40px 20px;background:rgba(26,32,26,.55);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s;overflow-y:auto}
+.ovl.show{opacity:1;pointer-events:auto}
+.ovl-card{background:var(--white);border-radius:24px;max-width:760px;width:100%;margin:auto;overflow:hidden;transform:translateY(34px) scale(.97);transition:transform .38s cubic-bezier(.2,.8,.2,1);box-shadow:var(--shadow-lg)}
+.ovl.show .ovl-card{transform:none}
+.ovl-cover{height:240px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative}
+.ovl-x{position:absolute;top:18px;left:18px;width:38px;height:38px;border-radius:50%;border:none;background:rgba(255,255,255,.85);color:var(--dark);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;backdrop-filter:blur(6px)}
+.ovl-x:hover{background:#fff;transform:scale(1.08)}
+.ovl-body{padding:38px 42px 48px}
+.ovl-cat{display:inline-block;font-size:.72rem;font-weight:600;color:var(--sage-d);background:var(--sage-xl);padding:4px 14px;border-radius:20px;margin-bottom:16px}
+.ovl-body h2{font-size:1.6rem;font-weight:700;line-height:1.5;color:var(--dark);margin-bottom:14px}
+.ovl-meta{display:flex;align-items:center;gap:16px;font-size:.8rem;color:var(--txt-l);margin-bottom:26px;padding-bottom:24px;border-bottom:1px solid var(--bg2)}
+.ovl-meta span{display:flex;align-items:center;gap:6px}
+.ovl-text p{font-size:.93rem;color:var(--txt-m);line-height:2;margin-bottom:18px}
+.ovl-foot{margin-top:30px;padding-top:26px;border-top:1px solid var(--bg2);text-align:center}
+
+/* ── FOOTER (shared) ── */
+.footer{background:var(--dark);color:rgba(255,255,255,.7);padding:64px 0 28px}
+.footer-inner{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:44px}
+.f-brand .f-en{font-family:var(--en);font-size:1.75rem;font-weight:700;color:#fff;display:block;margin-bottom:10px}
+.f-brand p{font-size:.82rem;color:rgba(255,255,255,.4);line-height:1.75;max-width:240px}
+.f-soc-row{display:flex;gap:8px;margin-top:16px}
+.f-soc{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:.78rem;color:rgba(255,255,255,.5);text-decoration:none;transition:all .25s}
+.f-soc:hover{background:var(--gold);border-color:var(--gold);color:#fff}
+.f-col h4{font-size:.8rem;font-weight:700;color:#fff;margin-bottom:16px;text-transform:uppercase;letter-spacing:.1em}
+.f-col ul{list-style:none}
+.f-col li{margin-bottom:10px}
+.f-col a{font-size:.81rem;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s}
+.f-col a:hover{color:var(--gold-l)}
+.footer-bot{border-top:1px solid rgba(255,255,255,.07);padding-top:22px;display:flex;justify-content:space-between;align-items:center}
+.footer-bot p,.footer-bot span{font-size:.75rem;color:rgba(255,255,255,.28)}
+
+.floats{position:fixed;bottom:28px;left:22px;display:flex;flex-direction:column;gap:10px;z-index:888}
+.float-btn{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;font-size:1.1rem;transition:transform .25s,box-shadow .25s;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.float-btn:hover{transform:scale(1.1)}
+.f-wa{background:#25D366;color:#fff}
+.f-top{background:var(--white);color:var(--dark);border:1px solid var(--bdr)}
+
+@media(max-width:1024px){
+  .footer-inner{grid-template-columns:1fr 1fr}
+  .blog-grid{grid-template-columns:1fr 1fr}
+  .bhead{padding:152px 0 70px}
+  .bhead h1{font-size:2.4rem}
+}
+@media(max-width:768px){
+  .nav-links,.nav-act .btn-d,.nav-act .btn-o{display:none}
+  .hamburger{display:flex}
+  .nav-mobile.open{display:block;position:absolute;top:76px;right:0;left:0;background:rgba(250,250,246,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--bdr);padding:16px 24px}
+  .nav-mobile ul{list-style:none;display:flex;flex-direction:column;gap:2px}
+  .nav-mobile a{display:block;padding:12px 0;border-bottom:1px solid var(--bdr);color:var(--txt-m);text-decoration:none;font-size:.95rem}
+  .footer-inner{grid-template-columns:1fr}
+  .blog-grid{grid-template-columns:1fr}
+  .ovl-body{padding:28px 24px 36px}
+  .ovl-meta{flex-wrap:wrap;gap:10px}
+  .footer-bot{flex-direction:column;gap:10px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="lumiere-clinic.html" class="nav-logo">
+      <img src="Noba%20clinic-03.png" alt="NOBA Clinic" style="height:54px;width:auto;display:block">
+    </a>
+    <ul class="nav-links">
+      <li><a href="lumiere-clinic.html#services">خدمات</a></li>
+      <li><a href="lumiere-clinic.html#about">درباره ما</a></li>
+      <li><a href="lumiere-clinic.html#team">پزشکان</a></li>
+      <li><a href="lumiere-clinic.html#gallery">نمونه‌کارها</a></li>
+      <li><a href="blog.html" class="cur">وبلاگ</a></li>
+      <li><a href="lumiere-clinic.html#contact">تماس</a></li>
+    </ul>
+    <div class="nav-act">
+      <button class="btn-o" onclick="location.href='lumiere-clinic.html#contact'">مشاوره رایگان</button>
+      <button class="btn-d" onclick="location.href='lumiere-clinic.html#contact'">رزرو نوبت ←</button>
+    </div>
+    <button class="hamburger" id="menuBtn"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="nav-mobile" id="mobileMenu">
+    <ul>
+      <li><a href="lumiere-clinic.html#services">خدمات</a></li><li><a href="lumiere-clinic.html#about">درباره ما</a></li>
+      <li><a href="lumiere-clinic.html#team">پزشکان</a></li><li><a href="lumiere-clinic.html#gallery">نمونه‌کارها</a></li>
+      <li><a href="blog.html">وبلاگ</a></li><li><a href="lumiere-clinic.html#contact">تماس</a></li>
+    </ul>
+  </nav>
+</nav>
+
+<!-- HEADER -->
+<header class="bhead">
+  <svg aria-hidden="true" style="position:absolute;top:30px;right:6%;width:90px;pointer-events:none;opacity:.1;z-index:0" viewBox="0 0 60 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="30" y1="0" x2="28" y2="170" stroke="#6B9E7A" stroke-width="2" opacity=".35"/>
+    <path d="M30 22 Q13 30 7 52 Q26 43 30 22Z" fill="#6B9E7A"/>
+    <path d="M30 22 Q47 30 53 52 Q34 43 30 22Z" fill="#6B9E7A"/>
+    <path d="M29 72 Q12 80 6 102 Q25 93 29 72Z" fill="#6B9E7A"/>
+    <path d="M29 72 Q46 80 52 102 Q33 93 29 72Z" fill="#6B9E7A"/>
+  </svg>
+  <svg aria-hidden="true" style="position:absolute;bottom:10px;left:7%;width:64px;pointer-events:none;opacity:.08;z-index:0;transform:rotate(180deg)" viewBox="0 0 60 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="30" y1="0" x2="28" y2="130" stroke="#6B9E7A" stroke-width="2" opacity=".35"/>
+    <path d="M30 18 Q13 26 7 48 Q26 39 30 18Z" fill="#6B9E7A"/>
+    <path d="M30 18 Q47 26 53 48 Q34 39 30 18Z" fill="#6B9E7A"/>
+  </svg>
+  <div class="container">
+    <span class="eyebrow">مجله نوبا</span>
+    <h1>یادداشت‌هایی درباره <em>زیبایی</em> و سلامت پوست</h1>
+    <p>راهنماها، تجربه‌ها و آخرین یافته‌های علمی دنیای زیبایی، نوشته‌شده توسط تیم متخصص کلینیک نوبا</p>
+    <div class="bhead-crumb"><a href="lumiere-clinic.html">صفحه اصلی</a><span>/</span><span>وبلاگ</span></div>
+  </div>
+</header>
+
+<!-- BLOG LIST -->
+<section class="sp" style="padding-top:64px">
+  <div class="container">
+    <div class="bfilters" id="bfilters"></div>
+    <div class="blog-grid" id="blogGrid"></div>
+  </div>
+</section>
+
+<!-- DETAIL OVERLAY -->
+<div class="ovl" id="ovl">
+  <div class="ovl-card">
+    <div class="ovl-cover" id="ovlCover">
+      <button class="ovl-x" id="ovlX">✕</button>
+      <span id="ovlIcon"></span>
+    </div>
+    <div class="ovl-body">
+      <span class="ovl-cat" id="ovlCat"></span>
+      <h2 id="ovlTitle"></h2>
+      <div class="ovl-meta">
+        <span>📅 <em id="ovlDate" style="font-style:normal"></em></span>
+        <span>✍️ <em id="ovlAuthor" style="font-style:normal"></em></span>
+        <span>⏱ <em id="ovlRead" style="font-style:normal"></em></span>
+      </div>
+      <div class="ovl-text" id="ovlText"></div>
+      <div class="ovl-foot">
+        <button class="btn-d" onclick="location.href='lumiere-clinic.html#contact'">رزرو مشاوره رایگان ←</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="f-brand">
+        <span class="f-en">NOBA</span>
+        <p>کلینیک تخصصی زیبایی نوبا — علم، هنر و مراقبت در خدمت طبیعی‌ترین نسخه شما.</p>
+        <div class="f-soc-row"><a class="f-soc" href="#">📸</a><a class="f-soc" href="#">✈️</a><a class="f-soc" href="#">💬</a></div>
+      </div>
+      <div class="f-col"><h4>خدمات</h4><ul><li><a href="lumiere-clinic.html#services">بوتاکس</a></li><li><a href="lumiere-clinic.html#services">فیلر</a></li><li><a href="lumiere-clinic.html#services">لیزر</a></li><li><a href="lumiere-clinic.html#services">کاشت مو</a></li><li><a href="lumiere-clinic.html#services">مزوتراپی</a></li></ul></div>
+      <div class="f-col"><h4>کلینیک</h4><ul><li><a href="lumiere-clinic.html#about">درباره ما</a></li><li><a href="lumiere-clinic.html#team">تیم پزشکان</a></li><li><a href="lumiere-clinic.html#gallery">نمونه‌کارها</a></li><li><a href="blog.html">وبلاگ</a></li></ul></div>
+      <div class="f-col"><h4>پشتیبانی</h4><ul><li><a href="#">سوالات متداول</a></li><li><a href="#">حریم خصوصی</a></li><li><a href="#">شرایط استفاده</a></li><li><a href="lumiere-clinic.html#contact">تماس</a></li></ul></div>
+    </div>
+    <div class="footer-bot"><p>© ۱۴۰۳ کلینیک نوبا — تمامی حقوق محفوظ است</p><span>طراحی با ❤️</span></div>
+  </div>
+</footer>
+
+<div class="floats">
+  <button class="float-btn f-wa" onclick="window.open('https://wa.me/989120000000')" title="واتساپ">💬</button>
+  <button class="float-btn f-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="بالا">↑</button>
+</div>
+
+<script>
+// ─── Default posts (used if admin hasn't customized) ──────────────────
+const DEFAULT_POSTS = [
+  {
+    id:'p1', cat:'مراقبت از پوست', icon:'☀️', grad:'linear-gradient(135deg,#C4DCC8,#6B9E7A)',
+    title:'۷ نکته طلایی برای مراقبت از پوست در تابستان',
+    excerpt:'راهکارهای ساده و مؤثر برای محافظت از پوست شما در برابر گرما، آفتاب و چالش‌های فصل تابستان.',
+    date:'۱۴۰۳/۰۳/۱۸', author:'تیم نوبا', read:'۴ دقیقه',
+    body:[
+      'تابستان فصل نور و گرماست؛ اما همین ویژگی‌ها می‌توانند برای پوست چالش‌برانگیز باشند. افزایش دما، تعریق بیشتر و تابش مستقیم نور خورشید، پوست را در معرض خشکی، تیرگی و پیری زودرس قرار می‌دهند. خبر خوب این است که با چند تغییر کوچک در روتین روزانه، می‌توانید در تمام طول تابستان از پوستی شاداب و سالم لذت ببرید.',
+      'مهم‌ترین قدم، استفاده مداوم از ضدآفتاب با SPF حداقل ۳۰ است؛ حتی در روزهای ابری. ضدآفتاب را ۲۰ دقیقه پیش از خروج از منزل بزنید و هر ۲ تا ۳ ساعت یک‌بار، به‌خصوص بعد از شنا یا تعریق زیاد، آن را تجدید کنید. علاوه بر این، استفاده از کلاه و عینک آفتابی نیز محافظت مضاعفی ایجاد می‌کند.',
+      'در گرما، پوست آب بیشتری از دست می‌دهد؛ بنابراین نوشیدن آب کافی و استفاده از مرطوب‌کننده‌های سبک و فاقد چربی اهمیت زیادی دارد. به‌جای کرم‌های غلیظ زمستانی، از ژل‌ها یا لوسیون‌های آب‌رسان حاوی هیالورونیک اسید استفاده کنید تا پوست بدون احساس سنگینی، رطوبت لازم را دریافت کند.',
+      'لایه‌برداری را به یکی دو بار در هفته محدود کنید تا از تحریک پوست در برابر گرما جلوگیری شود؛ و فراموش نکنید که آنتی‌اکسیدان‌هایی مانند ویتامین C می‌توانند به مقابله با آسیب‌های ناشی از تابش کمک کنند. در نهایت، شست‌وشوی صورت با ژل‌های ملایم و خنک، احساس طراوت را در طول روزهای گرم تابستان برای شما به ارمغان می‌آورد.'
+    ]
+  },
+  {
+    id:'p2', cat:'تزریقات زیبایی', icon:'💉', grad:'linear-gradient(135deg,#F0E2C0,#C4A26A)',
+    title:'بوتاکس یا فیلر؛ کدام برای شما مناسب‌تر است؟',
+    excerpt:'تفاوت‌های کلیدی این دو روش محبوب، کاربردها و راهنمای انتخاب گزینه مناسب برای نیاز شما.',
+    date:'۱۴۰۳/۰۳/۱۰', author:'دکتر مریم نوری', read:'۵ دقیقه',
+    body:[
+      'بوتاکس و فیلر، دو محبوب‌ترین روش غیرجراحی جوان‌سازی صورت هستند که گاهی به‌اشتباه به‌جای یکدیگر به کار می‌روند؛ در حالی‌که هر یک، مکانیسم و کاربرد مشخصی دارند. بوتاکس با ریلکس‌کردن موقت عضلات، چین‌و‌چروک‌های دینامیک—یعنی خطوطی که هنگام حرکات صورت مانند اخم‌کردن یا خندیدن ایجاد می‌شوند—را کاهش می‌دهد. فیلر، در مقابل، با تزریق ژل هیالورونیک اسید، حجم از‌دست‌رفته را جبران کرده و به کانتورسازی نواحی مختلف صورت کمک می‌کند.',
+      'بوتاکس معمولاً برای نواحی پیشانی، اطراف چشم (خطوط خنده) و میان ابروها استفاده می‌شود، در حالی‌که فیلر بیشتر برای حجم‌دهی به لب‌ها، گونه‌ها، زیر چشم و نرم‌کردن خطوط اطراف دهان به‌کار می‌رود. انتخاب میان این دو—یا حتی ترکیب هر دو—به ساختار صورت، نوع نگرانی و هدف فرد از انجام درمان بستگی دارد.',
+      'از نظر ماندگاری نیز تفاوت‌هایی وجود دارد: نتایج بوتاکس معمولاً ۴ تا ۶ ماه باقی می‌مانند، در حالی‌که فیلرهای مدرن هیالورونیک اسید می‌توانند بین ۹ تا ۱۸ ماه دوام داشته باشند. هر دو روش، تزریقی، سرپایی و با حداقل زمان ریکاوری هستند و افراد معمولاً بلافاصله پس از جلسه می‌توانند به فعالیت‌های روزمره بازگردند.',
+      'بهترین راه برای انتخاب، مشاوره با پزشک متخصص است. در کلینیک نوبا، پیش از هر اقدامی، ساختار صورت شما به‌دقت بررسی شده و پروتکلی متناسب با اهداف و انتظارات شما طراحی می‌شود تا نتیجه‌ای کاملاً طبیعی و هماهنگ با چهره‌تان به دست آید.'
+    ]
+  },
+  {
+    id:'p3', cat:'کاشت مو', icon:'🌱', grad:'linear-gradient(135deg,#D4E8D8,#8DB89A)',
+    title:'همه‌چیز درباره کاشت مو به روش FUE',
+    excerpt:'از مراحل انجام عمل تا دوران نقاهت؛ پاسخ به پرتکرارترین سوالات متقاضیان کاشت مو.',
+    date:'۱۴۰۳/۰۲/۲۸', author:'دکتر علی رضایی', read:'۶ دقیقه',
+    body:[
+      'روش FUE (Follicular Unit Extraction) یکی از پیشرفته‌ترین و محبوب‌ترین تکنیک‌های کاشت مو در جهان است که بدون نیاز به برش یا بخیه انجام می‌شود. در این روش، فولیکول‌های مو به‌صورت تکی از نواحی پُرپشت (معمولاً پشت سر) استخراج و در ناحیه مورد نظر کاشته می‌شوند. نتیجه نهایی، ظاهری کاملاً طبیعی و خط رویش مویی هماهنگ با ساختار صورت است.',
+      'فرایند درمان از یک جلسه مشاوره دقیق آغاز می‌شود؛ جایی که پزشک تراکم مو، ساختار پوست سر و انتظارات فرد را بررسی کرده و طرحی شخصی‌سازی‌شده ارائه می‌دهد. روز عمل، ابتدا ناحیه اهداکننده بی‌حس شده، فولیکول‌ها به‌دقت استخراج و سپس در کانال‌های از‌پیش‌طراحی‌شده با زاویه و جهتی طبیعی کاشته می‌شوند.',
+      'دوران نقاهت معمولاً کوتاه و کم‌دردسر است. ممکن است طی چند روز اول کمی قرمزی یا تورم خفیف مشاهده شود که به‌سرعت برطرف می‌گردد. حدود دو تا سه هفته پس از عمل، موهای کاشته‌شده می‌ریزند—که کاملاً طبیعی است—و فولیکول‌ها وارد مرحله استراحت می‌شوند تا رویش نهایی آغاز شود.',
+      'نتیجه نهایی معمولاً بین ۸ تا ۱۲ ماه پس از عمل به‌طور کامل نمایان می‌شود: موهایی غیرقابل‌تشخیص از موهای طبیعی که به‌صورت دائمی رشد می‌کنند. اگر به فکر بازگرداندن تراکم و اعتمادبه‌نفس از‌دست‌رفته خود هستید، مشاوره با تیم متخصص، نخستین قدم درست است.'
+    ]
+  },
+  {
+    id:'p4', cat:'لیزر', icon:'⚡', grad:'linear-gradient(135deg,#EAF0EA,#A4C0A4)',
+    title:'راهنمای کامل لیزر موهای زائد',
+    excerpt:'لیزر چگونه کار می‌کند، چند جلسه نیاز دارید و چه نکاتی پیش و پس از آن باید رعایت شود؟',
+    date:'۱۴۰۳/۰۲/۱۴', author:'دکتر سارا احمدی', read:'۴ دقیقه',
+    body:[
+      'لیزر موهای زائد با هدف‌قراردادن ملانین موجود در فولیکول مو عمل می‌کند: نور لیزر جذب فولیکول شده، به گرما تبدیل می‌شود و رشد مو را در درازمدت کاهش می‌دهد. برخلاف روش‌های سنتی مانند اپیلاسیون یا وکس که نتیجه‌ای موقتی دارند، لیزر در طول چند جلسه به کاهش چشمگیر و پایدار موهای زائد منجر می‌شود.',
+      'از آن‌جا که موها در چرخه‌های رشدی متفاوتی قرار دارند، یک جلسه برای از‌بین‌بردن کامل آن‌ها کافی نیست. معمولاً ۶ تا ۸ جلسه با فاصله ۴ تا ۶ هفته توصیه می‌شود تا لیزر بتواند فولیکول‌ها را در مراحل مختلف رشد هدف قرار دهد. دستگاه‌های نسل جدید با قابلیت تنظیم برای انواع پوست و مو، جلسات را برای اکثر افراد بدون‌درد و سریع می‌کنند.',
+      'پیش از هر جلسه، بهتر است از تابش مستقیم آفتاب و استفاده از کرم‌های ضدآفتاب با SPF بالا غافل نشوید؛ ناحیه مورد نظر را نیز ۲۴ ساعت قبل با تیغ (نه وکس یا اپیلاسیون) آماده کنید. بعد از جلسه نیز ممکن است قرمزی خفیفی مشاهده شود که طی چند ساعت برطرف می‌شود.',
+      'این روش برای اغلب رنگ‌های پوست و مو مناسب است؛ با این حال، بهترین نتیجه معمولاً در ترکیب پوست روشن و موی تیره مشاهده می‌شود. مشاوره اولیه با متخصص به شما کمک می‌کند بدانید این روش تا چه اندازه برای نوع پوست و موی شما مؤثر خواهد بود.'
+    ]
+  },
+  {
+    id:'p5', cat:'راهنما', icon:'💭', grad:'linear-gradient(135deg,#FDF9F3,#D8BA88)',
+    title:'۵ افسانه رایج درباره جراحی‌های زیبایی',
+    excerpt:'باورهای نادرستی که ممکن است مانع تصمیم‌گیری آگاهانه شما درباره درمان‌های زیبایی شوند.',
+    date:'۱۴۰۳/۰۲/۰۲', author:'تیم نوبا', read:'۵ دقیقه',
+    body:[
+      'با وجود محبوبیت روزافزون درمان‌های زیبایی، همچنان باورهای نادرست بسیاری درباره آن‌ها رواج دارد که می‌تواند تصمیم‌گیری افراد را تحت‌تاثیر قرار دهد. در این مطلب به بررسی پنج افسانه رایج می‌پردازیم.',
+      '«نتیجه همیشه غیرطبیعی به نظر می‌رسد»: با پیشرفت تکنیک‌ها و موادی مانند فیلرهای نسل جدید، نتایج امروزی کاملاً طبیعی و متناسب با ساختار صورت هر فرد طراحی می‌شوند. هدف اصلی یک متخصص خوب، حفظ هویت چهره و تقویت زیبایی طبیعی است، نه تغییر اساسی آن.',
+      '«فقط مخصوص افراد مسن است»: بسیاری از درمان‌ها مانند مزوتراپی، لیزر یا فیلرهای سبک، برای پیشگیری از علائم پیری در سنین جوانی نیز کاربرد دارند و افراد در دهه‌های ۲۰ و ۳۰ زندگی نیز از آن‌ها بهره می‌برند.',
+      '«دوران نقاهت طولانی و دردناک است»: اغلب درمان‌های مدرن غیرجراحی، سرپایی بوده و فرد می‌تواند به‌سرعت به فعالیت‌های روزمره بازگردد. حتی در روش‌های جراحی مانند کاشت مو نیز پیشرفت تکنیک‌ها، روند بهبودی را به‌طور چشمگیری کوتاه‌تر کرده است.',
+      'و در نهایت، «همه روش‌ها بازگشت‌ناپذیرند»: بسیاری از محبوب‌ترین درمان‌های امروزی—از بوتاکس تا فیلرهای هیالورونیک اسید—موقتی و کاملاً قابل کنترل هستند. مشاوره با متخصص مجرب، بهترین راه برای جدا‌کردن واقعیت از افسانه و تصمیم‌گیری آگاهانه است.'
+    ]
+  },
+  {
+    id:'p6', cat:'مراقبت از پوست', icon:'✨', grad:'linear-gradient(135deg,#F0E2C0,#8DB89A)',
+    title:'یک روتین ساده برای پوستی شاداب در طول روز',
+    excerpt:'دو روتین کوتاه صبحگاهی و شامگاهی که با رعایت مداوم آن‌ها، تحول پوست خود را خواهید دید.',
+    date:'۱۴۰۳/۰۱/۲۰', author:'دکتر مریم نوری', read:'۳ دقیقه',
+    body:[
+      'داشتن پوستی شاداب نیازمند یک رژیم پیچیده و چندمرحله‌ای نیست؛ بلکه نتیجه رعایت مداوم چند قدم ساده و درست در طول روز است. در این مطلب، یک روتین کوتاه صبحگاهی و شامگاهی را با شما در میان می‌گذاریم.',
+      'روتین صبحگاهی: روز را با شست‌وشوی ملایم صورت آغاز کنید تا چربی و آلودگی شبانه پاک شود. سپس از یک سرم آنتی‌اکسیدان (مانند ویتامین C) استفاده کنید که به محافظت از پوست در برابر آلودگی و اشعه کمک می‌کند، و در پایان، مرطوب‌کننده و ضدآفتاب را فراموش نکنید—این آخرین و مهم‌ترین قدم صبحگاهی شماست.',
+      'روتین شامگاهی: شب، زمان مناسبی برای پاک‌سازی کامل و بازسازی پوست است. ابتدا آرایش و آلودگی روز را با یک پاک‌کننده مناسب از بین ببرید، سپس (در صورت نیاز، یکی دو بار در هفته) از لایه‌بردار ملایم استفاده کنید. در پایان، سرم شب و مرطوب‌کننده‌ای غنی‌تر، فرصت بازسازی را در طول خواب به پوست شما می‌دهد.',
+      'نکته پایانی اینکه، نتیجه هیچ روتینی یک‌شبه ظاهر نمی‌شود. ثبات و صبر، کلید اصلی موفقیت در مراقبت از پوست است؛ معمولاً بعد از ۴ تا ۶ هفته رعایت منظم، تغییرات محسوسی در شفافیت و طراوت پوست خود مشاهده خواهید کرد.'
+    ]
+  }
+];
+
+// ─── Load config (admin overrides) ─────────────────────────
+let cfg = {};
+try{ cfg = JSON.parse(localStorage.getItem('noba_cfg')||'{}'); }catch(e){}
+const POSTS = (cfg.blog_posts && cfg.blog_posts.length) ? cfg.blog_posts.map((p,i)=>({
+  id:p.id||('c'+i), cat:p.cat||'عمومی', icon:p.icon||'📝',
+  grad:p.grad||DEFAULT_POSTS[i % DEFAULT_POSTS.length].grad,
+  title:p.title||'', excerpt:p.excerpt||'', date:p.date||'', author:p.author||'تیم نوبا',
+  read:p.read||'۳ دقیقه',
+  body: Array.isArray(p.body) ? p.body : (p.body ? String(p.body).split(/\n\s*\n+/).map(function(s){return s.trim();}).filter(Boolean) : [p.excerpt||''])
+})) : DEFAULT_POSTS;
+
+// ─── Render filter pills ────────────────────────────────────
+const cats = ['همه', ...Array.from(new Set(POSTS.map(p=>p.cat)))];
+const $filters = document.getElementById('bfilters');
+let activeCat = 'همه';
+$filters.innerHTML = cats.map(c=>`<button class="bf-pill${c===activeCat?' act':''}" data-cat="${c}">${c}</button>`).join('');
+$filters.addEventListener('click', e=>{
+  const b = e.target.closest('.bf-pill'); if(!b) return;
+  activeCat = b.dataset.cat;
+  $filters.querySelectorAll('.bf-pill').forEach(p=>p.classList.toggle('act', p===b));
+  renderGrid();
+});
+
+// ─── Render grid ────────────────────────────────────────────
+const $grid = document.getElementById('blogGrid');
+function renderGrid(){
+  const list = activeCat==='همه' ? POSTS : POSTS.filter(p=>p.cat===activeCat);
+  if(!list.length){ $grid.innerHTML = '<div class="bp-empty">مطلبی در این دسته‌بندی یافت نشد.</div>'; return; }
+  $grid.innerHTML = list.map((p,i)=>`
+    <button class="bp-card rv in" data-id="${p.id}" style="animation-delay:${i*60}ms">
+      <div class="bp-cover" style="background:${p.grad}"><span>${p.icon}</span></div>
+      <div class="bp-body">
+        <span class="bp-cat">${p.cat}</span>
+        <h3>${p.title}</h3>
+        <p>${p.excerpt}</p>
+        <div class="bp-meta"><span>${p.date}</span><span class="bp-arrow">ادامه مطلب ←</span></div>
+      </div>
+    </button>`).join('');
+  $grid.querySelectorAll('.bp-card').forEach(card=>{
+    card.addEventListener('click', ()=> openPost(card.dataset.id));
+  });
+}
+renderGrid();
+
+// ─── Detail overlay ─────────────────────────────────────────
+const $ovl = document.getElementById('ovl');
+function openPost(id){
+  const p = POSTS.find(x=>x.id===id); if(!p) return;
+  document.getElementById('ovlCover').style.background = p.grad;
+  document.getElementById('ovlIcon').textContent = p.icon;
+  document.getElementById('ovlCat').textContent = p.cat;
+  document.getElementById('ovlTitle').textContent = p.title;
+  document.getElementById('ovlDate').textContent = p.date;
+  document.getElementById('ovlAuthor').textContent = p.author;
+  document.getElementById('ovlRead').textContent = p.read;
+  document.getElementById('ovlText').innerHTML = p.body.map(par=>`<p>${par}</p>`).join('');
+  $ovl.classList.add('show');
+  document.body.style.overflow='hidden';
+  $ovl.querySelector('.ovl-card').scrollTop = 0;
+  $ovl.scrollTop = 0;
+}
+function closePost(){
+  $ovl.classList.remove('show');
+  document.body.style.overflow='';
+}
+document.getElementById('ovlX').addEventListener('click', closePost);
+$ovl.addEventListener('click', e=>{ if(e.target===$ovl) closePost(); });
+window.addEventListener('keydown', e=>{ if(e.key==='Escape') closePost(); });
+
+// ─── Navbar / mobile menu ───────────────────────────────────
+window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>30));
+document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('mobileMenu').classList.toggle('open'));
+document.querySelectorAll('#mobileMenu a').forEach(a=>a.addEventListener('click',()=>document.getElementById('mobileMenu').classList.remove('open')));
+
+// ─── Reveal on scroll (re-trigger for cards rendered after load) ───
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+},{threshold:.08});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
