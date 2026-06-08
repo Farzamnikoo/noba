@@ -323,85 +323,86 @@ const DEFAULT_POSTS = [
   }
 ];
 
-// ─── Load config (admin overrides) ─────────────────────────
-let cfg = {};
-try{ cfg = JSON.parse(localStorage.getItem('noba_cfg')||'{}'); }catch(e){}
-const POSTS = (cfg.blog_posts && cfg.blog_posts.length) ? cfg.blog_posts.map((p,i)=>({
-  id:p.id||('c'+i), cat:p.cat||'عمومی', icon:p.icon||'📝',
-  grad:p.grad||DEFAULT_POSTS[i % DEFAULT_POSTS.length].grad,
-  title:p.title||'', excerpt:p.excerpt||'', date:p.date||'', author:p.author||'تیم نوبا',
-  read:p.read||'۳ دقیقه',
-  body: Array.isArray(p.body) ? p.body : (p.body ? String(p.body).split(/\n\s*\n+/).map(function(s){return s.trim();}).filter(Boolean) : [p.excerpt||''])
-})) : DEFAULT_POSTS;
-
-// ─── Render filter pills ────────────────────────────────────
-const cats = ['همه', ...Array.from(new Set(POSTS.map(p=>p.cat)))];
-const $filters = document.getElementById('bfilters');
-let activeCat = 'همه';
-$filters.innerHTML = cats.map(c=>`<button class="bf-pill${c===activeCat?' act':''}" data-cat="${c}">${c}</button>`).join('');
-$filters.addEventListener('click', e=>{
-  const b = e.target.closest('.bf-pill'); if(!b) return;
-  activeCat = b.dataset.cat;
-  $filters.querySelectorAll('.bf-pill').forEach(p=>p.classList.toggle('act', p===b));
-  renderGrid();
-});
-
-// ─── Render grid ────────────────────────────────────────────
-const $grid = document.getElementById('blogGrid');
-function renderGrid(){
-  const list = activeCat==='همه' ? POSTS : POSTS.filter(p=>p.cat===activeCat);
-  if(!list.length){ $grid.innerHTML = '<div class="bp-empty">مطلبی در این دسته‌بندی یافت نشد.</div>'; return; }
-  $grid.innerHTML = list.map((p,i)=>`
-    <button class="bp-card rv in" data-id="${p.id}" style="animation-delay:${i*60}ms">
-      <div class="bp-cover" style="background:${p.grad}"><span>${p.icon}</span></div>
-      <div class="bp-body">
-        <span class="bp-cat">${p.cat}</span>
-        <h3>${p.title}</h3>
-        <p>${p.excerpt}</p>
-        <div class="bp-meta"><span>${p.date}</span><span class="bp-arrow">ادامه مطلب ←</span></div>
-      </div>
-    </button>`).join('');
-  $grid.querySelectorAll('.bp-card').forEach(card=>{
-    card.addEventListener('click', ()=> openPost(card.dataset.id));
-  });
-}
-renderGrid();
-
-// ─── Detail overlay ─────────────────────────────────────────
-const $ovl = document.getElementById('ovl');
-function openPost(id){
-  const p = POSTS.find(x=>x.id===id); if(!p) return;
-  document.getElementById('ovlCover').style.background = p.grad;
-  document.getElementById('ovlIcon').textContent = p.icon;
-  document.getElementById('ovlCat').textContent = p.cat;
-  document.getElementById('ovlTitle').textContent = p.title;
-  document.getElementById('ovlDate').textContent = p.date;
-  document.getElementById('ovlAuthor').textContent = p.author;
-  document.getElementById('ovlRead').textContent = p.read;
-  document.getElementById('ovlText').innerHTML = p.body.map(par=>`<p>${par}</p>`).join('');
-  $ovl.classList.add('show');
-  document.body.style.overflow='hidden';
-  $ovl.querySelector('.ovl-card').scrollTop = 0;
-  $ovl.scrollTop = 0;
-}
-function closePost(){
-  $ovl.classList.remove('show');
-  document.body.style.overflow='';
-}
-document.getElementById('ovlX').addEventListener('click', closePost);
-$ovl.addEventListener('click', e=>{ if(e.target===$ovl) closePost(); });
-window.addEventListener('keydown', e=>{ if(e.key==='Escape') closePost(); });
-
-// ─── Navbar / mobile menu ───────────────────────────────────
+// ─── Navbar / mobile menu (bind immediately; independent of config) ─
 window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>30));
 document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('mobileMenu').classList.toggle('open'));
 document.querySelectorAll('#mobileMenu a').forEach(a=>a.addEventListener('click',()=>document.getElementById('mobileMenu').classList.remove('open')));
 
-// ─── Reveal on scroll (re-trigger for cards rendered after load) ───
-const io = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
-},{threshold:.08});
-document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+// ─── Load config (admin overrides) from the backend, then render ───
+fetch('api/config.php').then(function(r){ return r.json(); }).catch(function(){ return {}; }).then(function(cfg){
+  if(!cfg || typeof cfg!=='object' || Array.isArray(cfg)) cfg = {};
+  const POSTS = (cfg.blog_posts && cfg.blog_posts.length) ? cfg.blog_posts.map((p,i)=>({
+    id:p.id||('c'+i), cat:p.cat||'عمومی', icon:p.icon||'📝',
+    grad:p.grad||DEFAULT_POSTS[i % DEFAULT_POSTS.length].grad,
+    title:p.title||'', excerpt:p.excerpt||'', date:p.date||'', author:p.author||'تیم نوبا',
+    read:p.read||'۳ دقیقه',
+    body: Array.isArray(p.body) ? p.body : (p.body ? String(p.body).split(/\n\s*\n+/).map(function(s){return s.trim();}).filter(Boolean) : [p.excerpt||''])
+  })) : DEFAULT_POSTS;
+
+  // ─── Render filter pills ──────────────────────────────────
+  const cats = ['همه', ...Array.from(new Set(POSTS.map(p=>p.cat)))];
+  const $filters = document.getElementById('bfilters');
+  let activeCat = 'همه';
+  $filters.innerHTML = cats.map(c=>`<button class="bf-pill${c===activeCat?' act':''}" data-cat="${c}">${c}</button>`).join('');
+  $filters.addEventListener('click', e=>{
+    const b = e.target.closest('.bf-pill'); if(!b) return;
+    activeCat = b.dataset.cat;
+    $filters.querySelectorAll('.bf-pill').forEach(p=>p.classList.toggle('act', p===b));
+    renderGrid();
+  });
+
+  // ─── Render grid ──────────────────────────────────────────
+  const $grid = document.getElementById('blogGrid');
+  function renderGrid(){
+    const list = activeCat==='همه' ? POSTS : POSTS.filter(p=>p.cat===activeCat);
+    if(!list.length){ $grid.innerHTML = '<div class="bp-empty">مطلبی در این دسته‌بندی یافت نشد.</div>'; return; }
+    $grid.innerHTML = list.map((p,i)=>`
+      <button class="bp-card rv in" data-id="${p.id}" style="animation-delay:${i*60}ms">
+        <div class="bp-cover" style="background:${p.grad}"><span>${p.icon}</span></div>
+        <div class="bp-body">
+          <span class="bp-cat">${p.cat}</span>
+          <h3>${p.title}</h3>
+          <p>${p.excerpt}</p>
+          <div class="bp-meta"><span>${p.date}</span><span class="bp-arrow">ادامه مطلب ←</span></div>
+        </div>
+      </button>`).join('');
+    $grid.querySelectorAll('.bp-card').forEach(card=>{
+      card.addEventListener('click', ()=> openPost(card.dataset.id));
+    });
+  }
+  renderGrid();
+
+  // ─── Detail overlay ───────────────────────────────────────
+  const $ovl = document.getElementById('ovl');
+  function openPost(id){
+    const p = POSTS.find(x=>x.id===id); if(!p) return;
+    document.getElementById('ovlCover').style.background = p.grad;
+    document.getElementById('ovlIcon').textContent = p.icon;
+    document.getElementById('ovlCat').textContent = p.cat;
+    document.getElementById('ovlTitle').textContent = p.title;
+    document.getElementById('ovlDate').textContent = p.date;
+    document.getElementById('ovlAuthor').textContent = p.author;
+    document.getElementById('ovlRead').textContent = p.read;
+    document.getElementById('ovlText').innerHTML = p.body.map(par=>`<p>${par}</p>`).join('');
+    $ovl.classList.add('show');
+    document.body.style.overflow='hidden';
+    $ovl.querySelector('.ovl-card').scrollTop = 0;
+    $ovl.scrollTop = 0;
+  }
+  function closePost(){
+    $ovl.classList.remove('show');
+    document.body.style.overflow='';
+  }
+  document.getElementById('ovlX').addEventListener('click', closePost);
+  $ovl.addEventListener('click', e=>{ if(e.target===$ovl) closePost(); });
+  window.addEventListener('keydown', e=>{ if(e.key==='Escape') closePost(); });
+
+  // ─── Reveal on scroll (re-trigger for cards rendered after load) ──
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+  },{threshold:.08});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+});
 </script>
 </body>
 </html>

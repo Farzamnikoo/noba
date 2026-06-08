@@ -772,6 +772,10 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
             </div>
             <div class="fg"><label>خدمات مورد نظر</label><select><option value="">انتخاب کنید...</option><option>بوتاکس</option><option>فیلر</option><option>لیزر</option><option>جوان‌سازی</option><option>کاشت مو</option><option>مزوتراپی</option></select></div>
             <div class="fg"><label>پیام (اختیاری)</label><textarea placeholder="توضیحاتی که می‌خواهید پزشک بداند..."></textarea></div>
+            <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+              <label>این فیلد را خالی بگذارید</label>
+              <input type="text" tabindex="-1" autocomplete="off" data-hp>
+            </div>
             <button class="btn-d" type="submit" style="width:100%;justify-content:center;padding:15px;margin-top:4px;border-radius:var(--r-sm)">ثبت درخواست مشاوره رایگان ←</button>
           </form>
         </div>
@@ -847,35 +851,40 @@ document.querySelectorAll('[data-ba]').forEach(w=>{
 document.querySelectorAll('.proc-it').forEach(s=>{s.addEventListener('mouseenter',()=>{document.querySelectorAll('.proc-it').forEach(x=>x.classList.remove('active'));s.classList.add('active');});});
 setTimeout(()=>document.getElementById('promo').classList.add('show'),5000);
 document.getElementById('promoX').addEventListener('click',()=>document.getElementById('promo').classList.remove('show'));
-function sf(e){
+async function sf(e){
   e.preventDefault();
   const f=e.target;
   const ins=f.querySelectorAll('input');
   const now=new Date();
-  const appt={
+  const payload={
+    action:'create',
     name:(ins[0]&&ins[0].value)||'',
     phone:(ins[1]&&ins[1].value)||'',
     service:(f.querySelector('select')||{}).value||'',
     message:(f.querySelector('textarea')||{}).value||'',
     date:now.toLocaleDateString('fa-IR'),
     time:now.toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'}),
-    ts:now.getTime(),
-    status:'جدید'
+    hp_field:(f.querySelector('[data-hp]')||{}).value||''
   };
-  let list=[];
-  try{list=JSON.parse(localStorage.getItem('noba_appointments')||'[]');}catch(err){}
-  list.unshift(appt);
-  localStorage.setItem('noba_appointments',JSON.stringify(list));
-  const b=e.target.querySelector('button[type=submit]');b.textContent='✓ درخواست شما ثبت شد!';b.style.background='#4A8A60';setTimeout(()=>{b.textContent='ثبت درخواست مشاوره رایگان ←';b.style.background='';e.target.reset();},3500);
+  const b=f.querySelector('button[type=submit]');
+  const origTxt=b.textContent, origBg=b.style.background;
+  b.disabled=true;
+  const reset=(txt,bg,doFormReset)=>{ b.textContent=txt; b.style.background=bg; setTimeout(()=>{ b.disabled=false; b.textContent=origTxt; b.style.background=origBg; if(doFormReset)f.reset(); },3500); };
+  try{
+    const res=await fetch('api/appointments.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(r=>r.json());
+    if(res&&res.ok) reset('✓ درخواست شما ثبت شد!','#4A8A60',true);
+    else reset((res&&res.error)||'خطا — لطفاً دوباره تلاش کنید','#C0594A',false);
+  }catch(err){
+    reset('ارتباط با سرور برقرار نشد — بعداً تلاش کنید','#C0594A',false);
+  }
 }
 </script>
 
 <!-- ═══ NOBA CONFIG LOADER ═══ -->
 <script>
 (function(){
-  var c={};
-  try{c=JSON.parse(localStorage.getItem('noba_cfg')||'{}');}catch(e){}
-  if(!Object.keys(c).length)return;
+  fetch('api/config.php').then(function(r){ return r.json(); }).then(function(c){
+  if(!c || typeof c!=='object' || Array.isArray(c) || !Object.keys(c).length) return;
 
   var q=function(sel){return document.querySelector(sel);};
   var qa=function(sel){return document.querySelectorAll(sel);};
@@ -1045,6 +1054,7 @@ function sf(e){
     }
   }
 
+  }).catch(function(){});
 })();
 </script>
 </body>

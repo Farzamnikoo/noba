@@ -144,3 +144,25 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# ─────────────────────────────────────────────────────────────
+# NOBA clinic backend — live runtime data (PHP + flat-file JSON)
+# ─────────────────────────────────────────────────────────────
+# These files are CREATED AND OVERWRITTEN by the site itself while it runs
+# (admin panel saves, visitor appointment submissions, the password set up
+# on first login). They hold this particular site's real content, real
+# visitors' names/phone numbers, and a bcrypt hash of the admin password —
+# never generic template data, never something to share between machines.
+#
+# Keeping them out of git means:
+#   • a `git pull`/redeploy on the live server can never overwrite real
+#     site content or wipe out appointment requests with a developer's
+#     empty/test copy, and
+#   • the admin password hash never ends up in version-control history.
+#
+# The matching *.example.json files (data/config.example.json,
+# data/appointments.example.json) ARE tracked — they're empty templates
+# the live files are seeded from on first run. Keep those.
+data/config.json
+data/appointments.json
+data/admin.json

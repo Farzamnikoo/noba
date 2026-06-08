@@ -95,6 +95,26 @@ hr.sep{border:none;border-top:1px solid #EBF2EB;margin:18px 0}
 /* ── Toast ── */
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:#1E2B1E;color:#8DB89A;padding:11px 22px;border-radius:10px;font-size:.85rem;transition:.25s;z-index:9999;opacity:0;pointer-events:none;display:flex;align-items:center;gap:7px}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.err{background:#5A2B24;color:#E8B3AA}
+
+/* ── Login / setup gate ── */
+.lg-wrap{position:fixed;inset:0;background:#EEF3EE;display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
+.lg-box{width:100%;max-width:368px;background:#fff;border-radius:18px;padding:34px 28px;box-shadow:0 8px 36px rgba(0,0,0,.09);text-align:center}
+.lg-logo{font-size:1.5rem;font-weight:700;color:#1E2B1E;letter-spacing:.07em}
+.lg-sub{font-size:.8rem;color:#7A9080;margin-top:4px;margin-bottom:24px}
+.lg-form{text-align:right}
+.lg-hint{font-size:.78rem;color:#4A5E50;background:#F0F6F1;border-radius:10px;padding:11px 13px;margin-bottom:18px;line-height:1.85}
+.lg-btn{width:100%;padding:11px;background:#6B9E7A;color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:.88rem;font-weight:600;cursor:pointer;transition:.2s;margin-top:6px}
+.lg-btn:hover{background:#4A7A5C}
+.lg-btn:disabled{opacity:.55;cursor:default}
+.lg-err{font-size:.78rem;color:#C0594A;margin-top:11px;min-height:1.2em;line-height:1.6}
+.lg-status{font-size:.82rem;color:#7A9080}
+
+/* ── Account-security mini card (inside general settings) ── */
+.sec-card{background:#FAFCFA;border:1.5px solid #E3ECE3;border-radius:12px;padding:18px;margin-top:6px}
+.sec-card .lg-err{color:#C0594A}
+.sec-card .lg-ok{font-size:.78rem;color:#4A8A60;margin-top:11px;min-height:1.2em}
+.sec-card .lg-btn{width:auto;padding:9px 22px}
 
 /* ── Scroll indicator ── */
 ::-webkit-scrollbar{width:5px}
@@ -104,8 +124,32 @@ hr.sep{border:none;border-top:1px solid #EBF2EB;margin:18px 0}
 </head>
 <body>
 
+<!-- ═══ Login / first-run setup gate ═══ -->
+<div class="lg-wrap" id="loginGate">
+  <div class="lg-box">
+    <div class="lg-logo">NOBA</div>
+    <div class="lg-sub">پنل مدیریت محتوا</div>
+
+    <div class="lg-status" id="lgStatus">در حال بررسی…</div>
+
+    <form class="lg-form" id="setupForm" style="display:none">
+      <p class="lg-hint">این اولین ورود به پنل است. یک رمز عبور برای مدیریت سایت بسازید و آن را جایی امن نگه دارید — این رمز، تنها راه ورود به پنل خواهد بود.</p>
+      <div class="fg"><label>رمز عبور</label><input type="password" id="setupPass" minlength="6" required autocomplete="new-password"></div>
+      <div class="fg"><label>تکرار رمز عبور</label><input type="password" id="setupPass2" minlength="6" required autocomplete="new-password"></div>
+      <button type="submit" class="lg-btn">ساخت حساب و ورود به پنل</button>
+      <div class="lg-err" id="setupErr"></div>
+    </form>
+
+    <form class="lg-form" id="loginForm" style="display:none">
+      <div class="fg"><label>رمز عبور پنل مدیریت</label><input type="password" id="loginPass" required autocomplete="current-password"></div>
+      <button type="submit" class="lg-btn">ورود به پنل</button>
+      <div class="lg-err" id="loginErr"></div>
+    </form>
+  </div>
+</div>
+
 <!-- Sidebar -->
-<aside class="sb">
+<aside class="sb" id="sbAside" style="display:none">
   <div class="sb-logo">
     <div class="sb-logo-en">NOBA</div>
     <div class="sb-logo-fa">پنل مدیریت محتوا</div>
@@ -125,10 +169,11 @@ hr.sep{border:none;border-top:1px solid #EBF2EB;margin:18px 0}
   <div class="sb-bottom">
     <button class="sb-save" onclick="saveAll()">💾 ذخیره تغییرات</button>
     <a href="lumiere-clinic.html" target="_blank" class="sb-preview">👁 پیش‌نمایش سایت</a>
+    <a href="#" id="logoutLink" class="sb-preview">🚪 خروج از حساب</a>
   </div>
 </aside>
 
-<main class="main">
+<main class="main" id="mainArea" style="display:none">
 <div class="toast" id="toast">✓ تغییرات ذخیره شد</div>
 
 <!-- ═══════════ GENERAL ═══════════ -->
@@ -154,6 +199,21 @@ hr.sep{border:none;border-top:1px solid #EBF2EB;margin:18px 0}
   <div class="frow">
     <div class="fg"><label>لینک واتساپ</label><input id="wa_link" value="https://wa.me/989120000000"></div>
     <div class="fg"><label>لینک اینستاگرام</label><input id="ig_link" value="#"></div>
+  </div>
+  <hr class="sep">
+  <div class="sec-label">امنیت حساب</div>
+  <div class="sec-card">
+    <p style="font-size:.78rem;color:#7A9080;margin-bottom:14px;line-height:1.85">رمز عبور ورودِ همین پنل مدیریت. آن را جایی امن نگه دارید — اگر فراموش شود، باید از طریق فایل‌منیجر هاست، فایل <code style="background:#EEF3EE;padding:1px 6px;border-radius:5px">data/admin.json</code> حذف شود تا بتوانید رمز تازه‌ای بسازید.</p>
+    <form id="pwForm">
+      <div class="frow">
+        <div class="fg"><label>رمز عبور فعلی</label><input type="password" id="pw_cur" autocomplete="current-password"></div>
+        <div class="fg"><label>رمز عبور جدید</label><input type="password" id="pw_new" minlength="6" autocomplete="new-password"></div>
+      </div>
+      <div class="fg" style="max-width:calc(50% - 7px)"><label>تکرار رمز عبور جدید</label><input type="password" id="pw_new2" minlength="6" autocomplete="new-password"></div>
+      <button type="submit" class="lg-btn">🔐 تغییر رمز عبور</button>
+      <div class="lg-err" id="pwErr"></div>
+      <div class="lg-ok" id="pwOk"></div>
+    </form>
   </div>
 </div>
 
@@ -379,9 +439,9 @@ const DEF = {
   ]
 };
 
-// ─── State ────────────────────────────────────────────────
+// ─── State (loaded from the server after login — see API/boot below) ──
 let cfg = {};
-try { cfg = JSON.parse(localStorage.getItem('noba_cfg')||'{}'); } catch(e){}
+let appointments = [];
 
 const g = id => document.getElementById(id);
 const val = id => { const e=g(id); return e?e.value:''; };
@@ -453,13 +513,15 @@ function buildRev(){
 }
 
 // ─── Appointments (read from contact-form submissions) ────
-function loadAppointments(){
-  let list = [];
-  try{ list = JSON.parse(localStorage.getItem('noba_appointments')||'[]'); }catch(e){}
-  return Array.isArray(list) ? list : [];
+async function refreshAppointments(){
+  try{
+    const res = await fetch('api/appointments.php').then(r=>r.json());
+    appointments = Array.isArray(res) ? res : [];
+  }catch(e){ appointments = []; }
+  buildAppointments();
 }
 function buildAppointments(){
-  const list = loadAppointments();
+  const list = appointments;
   g('apt-total').textContent = toFa(list.length);
   const badge = g('apptBadge');
   if(list.length){ badge.style.display='inline-flex'; badge.textContent = list.length>99?'99+':toFa(list.length); }
@@ -484,18 +546,19 @@ function buildAppointments(){
       <div class="apt-actions"><button class="apt-del" onclick="delAppointment(${i})">🗑 حذف این درخواست</button></div>
     </div>`).join('');
 }
-function delAppointment(i){
-  const list = loadAppointments();
-  list.splice(i,1);
-  localStorage.setItem('noba_appointments', JSON.stringify(list));
-  buildAppointments();
+async function delAppointment(i){
+  try{
+    await fetch('api/appointments.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'delete',index:i})});
+  }catch(e){}
+  await refreshAppointments();
 }
-function clearAppointments(){
-  const list = loadAppointments();
-  if(!list.length) return;
+async function clearAppointments(){
+  if(!appointments.length) return;
   if(!confirm('همهٔ درخواست‌های نوبت برای همیشه حذف شوند؟ این عملیات قابل بازگشت نیست.')) return;
-  localStorage.setItem('noba_appointments','[]');
-  buildAppointments();
+  try{
+    await fetch('api/appointments.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'clear'})});
+  }catch(e){}
+  await refreshAppointments();
 }
 
 // ─── Blog management ──────────────────────────────────────
@@ -519,7 +582,7 @@ function buildBlog(){
         <div class="fg"><label>نویسنده</label><input id="bp_a${i}" value="${esc(p.author)}"></div>
       </div>
       <div class="fg"><label>متن کامل مقاله — هر پاراگراف را با یک خط خالی از پاراگراف بعدی جدا کنید</label>
-        <textarea id="bp_body${i}" style="min-height:140px">${esc((p.body||[]).join('\n\n'))}</textarea>
+        <textarea id="bp_body${i}" style="min-height:140px">${esc((Array.isArray(p.body)?p.body:(p.body?String(p.body).split(/\n\s*\n+/).map(s=>s.trim()).filter(Boolean):[])).join('\n\n'))}</textarea>
       </div>
     </div>`).join('');
   updateFeatCount();
@@ -558,8 +621,8 @@ function hookPreviews(){
 // ─── Load saved values ────────────────────────────────────
 function loadFields(){
   document.querySelectorAll('input[id],textarea[id]').forEach(el=>{
-    // skip dynamic-list fields (they're built from cfg arrays already)
-    if(/^(sv_|ba_|tm_|rv_|bp_)/.test(el.id)) return;
+    // skip dynamic-list fields (they're built from cfg arrays already) and the password form
+    if(/^(sv_|ba_|tm_|rv_|bp_|pw_)/.test(el.id)) return;
     if(cfg[el.id]!==undefined) el.value = cfg[el.id];
   });
 }
@@ -568,7 +631,7 @@ function loadFields(){
 function collectAll(){
   // simple fields
   document.querySelectorAll('input[id],textarea[id]').forEach(el=>{
-    if(/^(sv_|ba_|tm_|rv_|bp_)/.test(el.id)) return;
+    if(/^(sv_|ba_|tm_|rv_|bp_|pw_)/.test(el.id)) return;
     cfg[el.id] = el.value;
   });
   // services
@@ -624,12 +687,24 @@ function collectAll(){
   });
 }
 
-function saveAll(){
+const TOAST_OK = '✓ تغییرات ذخیره شد';
+let toastTimer;
+async function saveAll(){
   collectAll();
-  localStorage.setItem('noba_cfg', JSON.stringify(cfg));
   const t=g('toast');
+  let ok=false, msg=TOAST_OK;
+  try{
+    const res = await fetch('api/config.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(cfg)}).then(r=>r.json());
+    ok = !!(res && res.ok);
+    if(!ok) msg = '✗ ' + ((res && res.error) || 'ذخیره‌سازی ناموفق بود');
+  }catch(e){
+    msg = '✗ خطا در ارتباط با سرور — تغییرات ذخیره نشد';
+  }
+  t.textContent = msg;
+  t.classList.toggle('err', !ok);
   t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2400);
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), ok ? 2400 : 4200);
 }
 
 // ─── Navigation ───────────────────────────────────────────
@@ -639,7 +714,7 @@ function show(id){
   document.querySelectorAll('.sb-a').forEach(a=>{
     a.classList.toggle('act', a.getAttribute('onclick')===`show('${id}')`);
   });
-  if(id==='appointments') buildAppointments(); // always show freshest submissions
+  if(id==='appointments') refreshAppointments(); // always show freshest submissions
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -647,19 +722,108 @@ function show(id){
 function esc(s){ return String(s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
 function toFa(n){ return String(n).replace(/[0-9]/g, d=>'۰۱۲۳۴۵۶۷۸۹'[+d]); }
 
-// ─── Init ─────────────────────────────────────────────────
-buildSvc();
-buildBA();
-buildTeam();
-buildRev();
-buildBlog();
-buildAppointments();
-loadFields();
-hookPreviews();
+// ─── Auth gate & boot ─────────────────────────────────────
+let dbt; // auto-save debounce timer (armed once logged in)
+const lgStatus = g('lgStatus'), setupForm = g('setupForm'), loginForm = g('loginForm');
 
-// auto-save with debounce
-let dbt;
-document.addEventListener('input', ()=>{ clearTimeout(dbt); dbt=setTimeout(saveAll,1800); });
+function showGateForm(which){
+  lgStatus.style.display = 'none';
+  setupForm.style.display = which==='setup' ? 'block' : 'none';
+  loginForm.style.display = which==='login' ? 'block' : 'none';
+}
+
+async function boot(){
+  let status;
+  try{
+    status = await fetch('api/auth.php').then(r=>r.json());
+  }catch(e){
+    lgStatus.textContent = 'اتصال به بک‌اند برقرار نشد. مطمئن شوید پوشه‌های «api» و «data» را هم روی هاست آپلود کرده‌اید.';
+    lgStatus.style.color = '#C0594A';
+    return;
+  }
+  if(status && status.loggedIn){ await enterPanel(); return; }
+  showGateForm(status && status.needsSetup ? 'setup' : 'login');
+}
+
+setupForm.addEventListener('submit', async function(e){
+  e.preventDefault();
+  const p1=g('setupPass').value, p2=g('setupPass2').value;
+  const err=g('setupErr'); err.textContent='';
+  if(p1.length<6){ err.textContent='رمز عبور باید حداقل ۶ کاراکتر باشد.'; return; }
+  if(p1!==p2){ err.textContent='تکرار رمز عبور با رمز عبور یکسان نیست.'; return; }
+  const btn=setupForm.querySelector('button'); btn.disabled=true; btn.textContent='در حال ساخت حساب…';
+  try{
+    const res=await fetch('api/auth.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'setup',password:p1})}).then(r=>r.json());
+    if(res&&res.ok){ await enterPanel(); return; }
+    err.textContent=(res&&res.error)||'خطایی رخ داد. دوباره تلاش کنید.';
+  }catch(e2){ err.textContent='اتصال به سرور برقرار نشد.'; }
+  btn.disabled=false; btn.textContent='ساخت حساب و ورود به پنل';
+});
+
+loginForm.addEventListener('submit', async function(e){
+  e.preventDefault();
+  const pass=g('loginPass').value;
+  const err=g('loginErr'); err.textContent='';
+  const btn=loginForm.querySelector('button'); btn.disabled=true; btn.textContent='در حال بررسی…';
+  try{
+    const res=await fetch('api/auth.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'login',password:pass})}).then(r=>r.json());
+    if(res&&res.ok){ await enterPanel(); return; }
+    err.textContent=(res&&res.error)||'رمز عبور اشتباه است.';
+    g('loginPass').value='';
+  }catch(e2){ err.textContent='اتصال به سرور برقرار نشد.'; }
+  btn.disabled=false; btn.textContent='ورود به پنل';
+});
+
+g('logoutLink').addEventListener('click', async function(e){
+  e.preventDefault();
+  try{ await fetch('api/auth.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'logout'})}); }catch(e2){}
+  location.reload();
+});
+
+async function enterPanel(){
+  g('loginGate').style.display='none';
+  g('sbAside').style.display='flex';
+  g('mainArea').style.display='block';
+
+  try{ cfg = await fetch('api/config.php').then(r=>r.json()); }catch(e){ cfg={}; }
+  if(!cfg || typeof cfg!=='object' || Array.isArray(cfg)) cfg={};
+
+  // each section builds independently — a malformed value in one section's data
+  // must never lock the owner out of the rest of the panel (incl. login/password)
+  [buildSvc, buildBA, buildTeam, buildRev, buildBlog].forEach(function(fn){
+    try{ fn(); }catch(e){ console.error('[admin] failed to build section:', fn.name, e); }
+  });
+  await refreshAppointments();
+  loadFields();
+  hookPreviews();
+  initSecurityForm();
+
+  // auto-save with debounce
+  document.addEventListener('input', ()=>{ clearTimeout(dbt); dbt=setTimeout(saveAll,1800); });
+}
+
+function initSecurityForm(){
+  const f = g('pwForm');
+  if(f.dataset.bound) return; // enterPanel runs again after re-login; don't double-bind
+  f.dataset.bound = '1';
+  const err=g('pwErr'), ok=g('pwOk');
+  f.addEventListener('submit', async function(e){
+    e.preventDefault();
+    err.textContent=''; ok.textContent='';
+    const cur=g('pw_cur').value, n1=g('pw_new').value, n2=g('pw_new2').value;
+    if(n1.length<6){ err.textContent='رمز عبور جدید باید حداقل ۶ کاراکتر باشد.'; return; }
+    if(n1!==n2){ err.textContent='تکرار رمز عبور جدید با رمز یکسان نیست.'; return; }
+    const btn=f.querySelector('button'); btn.disabled=true; btn.textContent='در حال تغییر…';
+    try{
+      const res=await fetch('api/auth.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'change-password',current:cur,next:n1})}).then(r=>r.json());
+      if(res&&res.ok){ ok.textContent='✓ رمز عبور با موفقیت تغییر کرد.'; f.reset(); }
+      else{ err.textContent=(res&&res.error)||'تغییر رمز ناموفق بود.'; }
+    }catch(e2){ err.textContent='اتصال به سرور برقرار نشد.'; }
+    btn.disabled=false; btn.textContent='🔐 تغییر رمز عبور';
+  });
+}
+
+boot();
 </script>
 </body>
 </html>

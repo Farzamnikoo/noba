@@ -1,0 +1,22 @@
+# Block all direct web access to this folder — it holds the live site's
+# content, appointment requests (visitor names/phones), and admin password
+# hash. Only the PHP scripts in ../api/ should ever read these files.
+# Covers both modern Apache (2.4+) and older configurations.
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>
+
+# Belt-and-suspenders in case .htaccess is ignored: refuse to even serve these as static files.
+<FilesMatch "\.(json)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
