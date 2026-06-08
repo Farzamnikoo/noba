@@ -1,0 +1,9 @@
+# NOBA Clinic — site root configuration
+#
+# The homepage file is named "lumiere-clinic.html" (kept as-is because
+# admin.html and blog.html link back to it by that exact name, e.g.
+# "lumiere-clinic.html#about", "lumiere-clinic.html#contact", ...).
+# This line tells Apache to serve it when a visitor requests "/" or
+# "https://nobaclinic.com" — exactly like a normal index.html would be
+# served — without renaming the file or touching any internal links.
+DirectoryIndex lumiere-clinic.html index.html
