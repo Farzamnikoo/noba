@@ -1,0 +1,38 @@
+User-agent: *
+Allow: /
+Disallow: /data/
+Disallow: /api/
+Disallow: /admin.html
+
+# LLM crawlers — welcome to read the public content
+User-agent: GPTBot
+Allow: /
+Disallow: /data/
+Disallow: /api/
+Disallow: /admin.html
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /data/
+Disallow: /api/
+Disallow: /admin.html
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /data/
+Disallow: /api/
+Disallow: /admin.html
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /data/
+Disallow: /api/
+Disallow: /admin.html
+
+User-agent: Googlebot
+Allow: /
+Disallow: /data/
+Disallow: /api/
+Disallow: /admin.html
+
+Sitemap: https://nobaclinic.com/sitemap.xml
