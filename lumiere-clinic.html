@@ -243,6 +243,17 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
 .team-exp::before{content:'';width:14px;height:1px;background:var(--gold)}
 .team-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
 .team-tag{font-size:.71rem;padding:3px 10px;border:1px solid var(--bdr);border-radius:3px;color:var(--txt-m);background:var(--bg)}
+.team-photo img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .55s cubic-bezier(.22,.61,.36,1),filter .55s}
+.team-bio{max-height:0;opacity:0;overflow:hidden;margin:0;transition:max-height .6s ease,opacity .5s ease .1s,margin .6s ease;font-size:.78rem;line-height:1.9;color:var(--txt-m)}
+.team-bio p{margin:0 0 10px}
+.team-bio p:last-child{margin-bottom:0}
+@media(hover:hover){
+  .team-card:hover .team-photo img{transform:scale(1.08) rotate(3deg);filter:brightness(1.06) saturate(1.1)}
+  .team-card:hover .team-bio{max-height:640px;opacity:1;margin:0 0 16px}
+}
+@media(hover:none){
+  .team-bio{max-height:none;opacity:1;margin:0 0 16px}
+}
 
 /* ── PROCESS ── */
 .process{background:var(--bg2);position:relative;overflow:hidden}
@@ -579,43 +590,17 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
       <!-- Doctor 1 -->
       <div class="team-card rv">
         <div class="team-photo">
-          <svg viewBox="0 0 300 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <radialGradient id="d1bg" cx="50%" cy="25%" r="72%"><stop offset="0%" stop-color="#E0E8F0"/><stop offset="100%" stop-color="#C4D0DC"/></radialGradient>
-              <radialGradient id="d1sk" cx="50%" cy="40%" r="56%"><stop offset="0%" stop-color="#F0D8C0"/><stop offset="100%" stop-color="#DEC0A0"/></radialGradient>
-            </defs>
-            <rect width="300" height="400" fill="url(#d1bg)"/>
-            <circle cx="240" cy="60" r="50" fill="rgba(255,255,255,.08)"/>
-            <path d="M20 400 Q80 355 150 360 Q220 355 280 400Z" fill="#2C2438"/>
-            <path d="M128 362 Q148 335 150 325 Q152 335 172 362" fill="#2C2438"/>
-            <rect x="136" y="295" width="28" height="44" rx="8" fill="url(#d1sk)"/>
-            <ellipse cx="150" cy="100" rx="90" ry="96" fill="#2A1A0C"/>
-            <path d="M68 92 Q50 160 56 240" stroke="#1A0E06" stroke-width="20" fill="none" stroke-linecap="round" opacity=".92"/>
-            <path d="M232 92 Q250 160 244 240" stroke="#1A0E06" stroke-width="20" fill="none" stroke-linecap="round" opacity=".92"/>
-            <ellipse cx="150" cy="200" rx="90" ry="108" fill="url(#d1sk)"/>
-            <ellipse cx="150" cy="168" rx="48" ry="34" fill="rgba(255,250,240,.38)"/>
-            <ellipse cx="100" cy="218" rx="28" ry="18" fill="rgba(220,148,138,.12)"/>
-            <ellipse cx="200" cy="218" rx="28" ry="18" fill="rgba(220,148,138,.12)"/>
-            <ellipse cx="110" cy="192" rx="20" ry="12" fill="#FFF8F2"/>
-            <circle cx="110" cy="192" r="9" fill="#28140C"/><circle cx="115" cy="188" r="2.8" fill="rgba(255,255,255,.95)"/>
-            <path d="M92 183 Q110 175 128 183" stroke="#1A0C06" stroke-width="4" fill="none" stroke-linecap="round"/>
-            <ellipse cx="190" cy="192" rx="20" ry="12" fill="#FFF8F2"/>
-            <circle cx="190" cy="192" r="9" fill="#28140C"/><circle cx="195" cy="188" r="2.8" fill="rgba(255,255,255,.95)"/>
-            <path d="M172 183 Q190 175 208 183" stroke="#1A0C06" stroke-width="4" fill="none" stroke-linecap="round"/>
-            <path d="M90 170 Q110 161 130 170" stroke="#1A0C06" stroke-width="5" fill="none" stroke-linecap="round"/>
-            <path d="M170 170 Q190 161 210 170" stroke="#1A0C06" stroke-width="5" fill="none" stroke-linecap="round"/>
-            <ellipse cx="141" cy="222" rx="8" ry="5.5" fill="rgba(175,125,90,.2)"/>
-            <ellipse cx="159" cy="222" rx="8" ry="5.5" fill="rgba(175,125,90,.2)"/>
-            <path d="M124 248 Q137 240 150 242 Q163 240 176 248" stroke="#C06878" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-            <path d="M122 252 Q150 272 178 252" fill="rgba(195,102,115,.52)" stroke="#C87888" stroke-width="3" stroke-linecap="round"/>
-            <!-- White coat -->
-            <path d="M10 400 Q65 360 130 364 Q150 366 170 364 Q235 360 290 400" fill="rgba(238,240,250,.94)" stroke="rgba(200,205,220,.5)" stroke-width="1"/>
-          </svg>
-          <div class="team-overlay"><div class="team-nm">دکتر مریم نوری</div><div class="team-sp">متخصص پوست و مو</div></div>
+          <img src="dr-negar-jahbin.jpg" alt="دکتر نگار جاه‌بین - پزشک زیبایی" loading="lazy">
+          <div class="team-overlay"><div class="team-nm">دکتر نگار جاه‌بین</div><div class="team-sp">پزشک زیبایی</div></div>
         </div>
         <div class="team-body">
-          <div class="team-exp">۱۵ سال تجربه · فلوشیپ آمریکا</div>
-          <div class="team-tags"><span class="team-tag">بوتاکس</span><span class="team-tag">فیلر</span><span class="team-tag">لیزر</span></div>
+          <div class="team-exp">بیش از ۴ سال تجربه · ایران و کانادا</div>
+          <div class="team-tags"><span class="team-tag">جوان‌سازی</span><span class="team-tag">زیبایی چهره</span><span class="team-tag">فیلر</span></div>
+          <div class="team-bio">
+            <p>پزشک زیبایی با سابقه فعالیت حرفه‌ای در ایران و کانادا و بیش از چهار سال تجربه در حوزه جوان‌سازی و زیبایی چهره.</p>
+            <p>فلسفه درمانی ایشان بر پایه «Natural Beauty Enhancement» یا ارتقای زیبایی طبیعی است؛ رویکردی که در آن حفظ هویت چهره، تناسب اجزا و دستیابی به نتایج ظریف و طبیعی در اولویت قرار دارد.</p>
+            <p>تعهد به کیفیت، دقت در جزئیات و استفاده از تکنیک‌های نوین پزشکی زیبایی، از ارکان اصلی خدمات ارائه‌شده توسط دکتر جاه‌بین است.</p>
+          </div>
           <button class="btn-o" style="width:100%;justify-content:center;font-size:.82rem;padding:10px">مشاهده پروفایل</button>
         </div>
       </div>
