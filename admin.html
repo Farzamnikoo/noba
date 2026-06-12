@@ -56,6 +56,20 @@ hr.sep{border:none;border-top:1px solid #EBF2EB;margin:18px 0}
 .img-row{display:flex;gap:10px;align-items:center}
 .img-row input{flex:1}
 .img-thumb{width:50px;height:50px;border-radius:8px;object-fit:cover;border:1.5px solid #CDD9CC;background:#F0F4F0;flex-shrink:0}
+.img-up-btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:0 13px;height:42px;border:1.5px solid #CDD9CC;border-radius:9px;background:#FAFCFA;cursor:pointer;font-size:.78rem;color:#4A7A5C;white-space:nowrap;flex-shrink:0;transition:.18s;font-family:inherit}
+.img-up-btn:hover{background:#E8F4EC;border-color:#6B9E7A}
+.img-up-btn.busy{opacity:.6;pointer-events:none}
+.img-del-btn{display:flex;align-items:center;justify-content:center;padding:0 11px;height:42px;border:1.5px solid #F0D6D1;border-radius:9px;background:#FBEAE7;cursor:pointer;font-size:.85rem;color:#C0594A;flex-shrink:0;transition:.18s}
+.img-del-btn:hover{background:#C0594A;color:#fff;border-color:#C0594A}
+
+/* ── Media library ── */
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px}
+.media-item{border:1.5px solid #DCE9DC;border-radius:10px;overflow:hidden;background:#FAFCFA}
+.media-item img{width:100%;height:95px;object-fit:cover;display:block;background:#F0F4F0}
+.media-item .mi-name{font-size:.66rem;color:#7A9080;padding:6px 8px;word-break:break-all;line-height:1.4}
+.media-item .mi-del{width:100%;border:none;background:#FBEAE7;color:#C0594A;font-size:.72rem;padding:6px;cursor:pointer;transition:.2s;font-family:inherit}
+.media-item .mi-del:hover{background:#C0594A;color:#fff}
+.media-empty{text-align:center;padding:40px 20px;color:#9CB0A2;font-size:.85rem;line-height:1.9}
 
 /* ── Card list ── */
 .card-list{display:flex;flex-direction:column;gap:14px}
@@ -166,6 +180,7 @@ hr.sep{border:none;border-top:1px solid #EBF2EB;margin:18px 0}
     <div class="sb-a" onclick="show('reviews')"><span class="ico">⭐</span>نظرات</div>
     <div class="sb-a" onclick="show('blog')"><span class="ico">📝</span>مدیریت وبلاگ</div>
     <div class="sb-a" onclick="show('contact')"><span class="ico">📞</span>تماس و فوتر</div>
+    <div class="sb-a" onclick="show('media')"><span class="ico">🖼️</span>کتابخانه تصاویر</div>
   </nav>
   <div class="sb-bottom">
     <button class="sb-save" onclick="saveAll()">💾 ذخیره تغییرات</button>
@@ -185,7 +200,7 @@ hr.sep{border:none;border-top:1px solid #EBF2EB;margin:18px 0}
     <div class="fg"><label>نام کلینیک (انگلیسی)</label><input id="clinic_name_en" value="NOBA"></div>
   </div>
   <div class="fg"><label>فایل لوگو (نام فایل در پوشه پروژه)</label>
-    <div class="img-row"><input id="logo_src" value="Noba clinic-03.png"><img class="img-thumb" id="logo_prev"></div>
+    <div class="img-row"><input id="logo_src" value="Noba clinic-03.png"><img class="img-thumb" id="logo_prev"><label class="img-up-btn">📤 آپلود<input type="file" accept="image/*" hidden data-target="logo_src" data-prev="logo_prev"></label></div>
   </div>
   <hr class="sep">
   <div class="sec-label">اطلاعات تماس</div>
@@ -242,7 +257,7 @@ hr.sep{border:none;border-top:1px solid #EBF2EB;margin:18px 0}
     <div class="fg"><label>دکمه ثانویه</label><input id="hero_btn2" value="نمونه‌کارها"></div>
   </div>
   <div class="fg"><label>عکس هرو (نام فایل)</label>
-    <div class="img-row"><input id="hero_img" value="noba.landing (1).png"><img class="img-thumb" id="hero_img_prev"></div>
+    <div class="img-row"><input id="hero_img" value="noba.landing (1).png"><img class="img-thumb" id="hero_img_prev"><label class="img-up-btn">📤 آپلود<input type="file" accept="image/*" hidden data-target="hero_img" data-prev="hero_img_prev"></label></div>
   </div>
   <hr class="sep">
   <div class="sec-label">آمار زیر عنوان</div>
@@ -288,10 +303,10 @@ hr.sep{border:none;border-top:1px solid #EBF2EB;margin:18px 0}
   <div class="sec-label">تصاویر</div>
   <div class="frow">
     <div class="fg"><label>عکس اصلی</label>
-      <div class="img-row"><input id="about_img1" value="IMG_0047.PNG"><img class="img-thumb" id="about_img1_prev"></div>
+      <div class="img-row"><input id="about_img1" value="IMG_0047.PNG"><img class="img-thumb" id="about_img1_prev"><label class="img-up-btn">📤 آپلود<input type="file" accept="image/*" hidden data-target="about_img1" data-prev="about_img1_prev"></label></div>
     </div>
     <div class="fg"><label>عکس کوچک</label>
-      <div class="img-row"><input id="about_img2" value="IMG_0050.PNG"><img class="img-thumb" id="about_img2_prev"></div>
+      <div class="img-row"><input id="about_img2" value="IMG_0050.PNG"><img class="img-thumb" id="about_img2_prev"><label class="img-up-btn">📤 آپلود<input type="file" accept="image/*" hidden data-target="about_img2" data-prev="about_img2_prev"></label></div>
     </div>
   </div>
   <hr class="sep">
@@ -346,6 +361,12 @@ hr.sep{border:none;border-top:1px solid #EBF2EB;margin:18px 0}
     <div class="fg"><label>عنوان</label><input id="promo_title" value="تخفیف ویژه اولین مراجعه"></div>
   </div>
   <div class="fg"><label>متن</label><input id="promo_text" value="فرم رزرو را پر کنید و ۲۰٪ تخفیف بگیرید"></div>
+</div>
+
+<!-- ═══════════ MEDIA LIBRARY ═══════════ -->
+<div id="sec-media" class="panel" style="display:none">
+  <div class="panel-hd"><div class="ph-icon">🖼️</div><div><div class="ph-title">کتابخانه تصاویر</div><div class="ph-sub">عکس‌هایی که با دکمه «📤 آپلود» در بخش‌های مختلف بارگذاری کرده‌اید</div></div></div>
+  <div id="media-grid" class="media-grid"></div>
 </div>
 
 </main>
@@ -471,10 +492,10 @@ function buildBA(){
       <div class="fg"><label>توضیح</label><input id="ba_d${i}" value="${esc(b.desc)}"></div>
       <div class="frow">
         <div class="fg"><label>عکس قبل</label>
-          <div class="img-row"><input id="ba_bf${i}" value="${esc(b.before_img)}"><img class="img-thumb" id="ba_bfp${i}"></div>
+          <div class="img-row"><input id="ba_bf${i}" value="${esc(b.before_img)}"><img class="img-thumb" id="ba_bfp${i}"><label class="img-up-btn">📤 آپلود<input type="file" accept="image/*" hidden data-target="ba_bf${i}" data-prev="ba_bfp${i}"></label></div>
         </div>
         <div class="fg"><label>عکس بعد</label>
-          <div class="img-row"><input id="ba_af${i}" value="${esc(b.after_img)}"><img class="img-thumb" id="ba_afp${i}"></div>
+          <div class="img-row"><input id="ba_af${i}" value="${esc(b.after_img)}"><img class="img-thumb" id="ba_afp${i}"><label class="img-up-btn">📤 آپلود<input type="file" accept="image/*" hidden data-target="ba_af${i}" data-prev="ba_afp${i}"></label></div>
         </div>
       </div>
     </div>`).join('');
@@ -493,7 +514,7 @@ function buildTeam(){
       <div class="fg"><label>تجربه</label><input id="tm_e${i}" value="${esc(t.exp)}"></div>
       <div class="fg"><label>برچسب‌ها (با کاما)</label><input id="tm_g${i}" value="${esc(t.tags)}"></div>
       <div class="fg"><label>عکس پروفایل</label>
-        <div class="img-row"><input id="tm_i${i}" value="${esc(t.img||'')}"><img class="img-thumb" id="tm_ip${i}"></div>
+        <div class="img-row"><input id="tm_i${i}" value="${esc(t.img||'')}"><img class="img-thumb" id="tm_ip${i}"><label class="img-up-btn">📤 آپلود<input type="file" accept="image/*" hidden data-target="tm_i${i}" data-prev="tm_ip${i}"></label></div>
       </div>
     </div>`).join('');
   d.forEach((_,i)=> prev(`tm_i${i}`,`tm_ip${i}`));
@@ -619,6 +640,67 @@ function hookPreviews(){
   ].forEach(([a,b])=> prev(a,b));
 }
 
+// ─── Image upload (delegated — works for static & dynamically-built rows) ──
+document.addEventListener('change', async function(e){
+  const inp = e.target;
+  if(inp.tagName!=='INPUT' || inp.type!=='file' || !inp.dataset.target) return;
+  const file = inp.files && inp.files[0];
+  if(!file) return;
+
+  const targetInput = g(inp.dataset.target);
+  const prevImg = inp.dataset.prev ? g(inp.dataset.prev) : null;
+  const label = inp.closest('.img-up-btn');
+  const origTxt = label ? label.textContent.trim() : '';
+  if(label){ label.classList.add('busy'); label.firstChild.textContent = '⏳ در حال آپلود…'; }
+
+  try{
+    const fd = new FormData();
+    fd.append('file', file);
+    const res = await fetch('api/upload.php',{method:'POST',body:fd}).then(r=>r.json());
+    if(res && res.ok){
+      if(targetInput){
+        targetInput.value = res.filename;
+        targetInput.dispatchEvent(new Event('input',{bubbles:true}));
+      }
+      if(prevImg) prevImg.src = res.filename;
+    }else{
+      alert((res && res.error) || 'آپلود ناموفق بود.');
+    }
+  }catch(err){
+    alert('اتصال به سرور برقرار نشد.');
+  }
+
+  if(label){ label.classList.remove('busy'); label.firstChild.textContent = origTxt; }
+  inp.value = '';
+});
+
+// ─── Media library ────────────────────────────────────────
+async function buildMedia(){
+  let files = [];
+  try{
+    const res = await fetch('api/media.php').then(r=>r.json());
+    files = (res && res.files) || [];
+  }catch(e){}
+  const grid = g('media-grid');
+  if(!files.length){
+    grid.innerHTML = '<div class="media-empty">هنوز هیچ عکسی آپلود نشده است.<br>از دکمه «📤 آپلود» در بخش‌های مختلف (لوگو، هرو، درباره ما، قبل و بعد، تیم پزشکان) برای افزودن عکس استفاده کنید.</div>';
+    return;
+  }
+  grid.innerHTML = files.map(f=>`
+    <div class="media-item">
+      <img src="${esc(f.name)}" loading="lazy">
+      <div class="mi-name">${esc(f.name.replace('uploads/',''))}</div>
+      <button class="mi-del" onclick="deleteMedia('${esc(f.name)}')">🗑 حذف</button>
+    </div>`).join('');
+}
+async function deleteMedia(name){
+  if(!confirm('این عکس برای همیشه حذف شود؟ اگر در جایی از سایت استفاده شده باشد، دیگر نمایش داده نخواهد شد.')) return;
+  try{
+    await fetch('api/media.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'delete',filename:name})});
+  }catch(e){}
+  buildMedia();
+}
+
 // ─── Load saved values ────────────────────────────────────
 function loadFields(){
   document.querySelectorAll('input[id],textarea[id]').forEach(el=>{
@@ -709,13 +791,14 @@ async function saveAll(){
 }
 
 // ─── Navigation ───────────────────────────────────────────
-const SECTIONS = ['general','appointments','hero','about','services','gallery','team','reviews','blog','contact'];
+const SECTIONS = ['general','appointments','hero','about','services','gallery','team','reviews','blog','contact','media'];
 function show(id){
   SECTIONS.forEach(s=>{ g('sec-'+s).style.display = s===id?'block':'none'; });
   document.querySelectorAll('.sb-a').forEach(a=>{
     a.classList.toggle('act', a.getAttribute('onclick')===`show('${id}')`);
   });
   if(id==='appointments') refreshAppointments(); // always show freshest submissions
+  if(id==='media') buildMedia();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
