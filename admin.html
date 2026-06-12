@@ -387,9 +387,9 @@ const DEF = {
     {service:'لیزر و جوان‌سازی',desc:'از بین بردن لک، یکنواختی و شفافیت پوست',before_img:'IMG_0051_before.png',after_img:'IMG_0051_after.png'}
   ],
   team:[
-    {name:'دکتر مریم نوری',role:'متخصص پوست و مو',exp:'۱۵ سال تجربه · فلوشیپ آمریکا',tags:'بوتاکس,فیلر,لیزر',img:''},
-    {name:'دکتر علی رضایی',role:'جراح پلاستیک',exp:'۱۲ سال تجربه · بورد تخصصی',tags:'جراحی,کاشت مو,جوان‌سازی',img:''},
-    {name:'دکتر سارا احمدی',role:'متخصص لیزر',exp:'۱۰ سال تجربه · PhD پوست',tags:'لیزر,مزوتراپی,RF',img:''}
+    {name:'دکتر نگار جاه‌بین',role:'پزشک زیبایی',exp:'بیش از ۴ سال تجربه · ایران و کانادا',tags:'جوان‌سازی,زیبایی چهره,فیلر',img:'dr-negar-jahbin.jpg',bio:'پزشک زیبایی با سابقه فعالیت حرفه‌ای در ایران و کانادا و بیش از چهار سال تجربه در حوزه جوان‌سازی و زیبایی چهره.\n\nفلسفه درمانی ایشان بر پایه «Natural Beauty Enhancement» یا ارتقای زیبایی طبیعی است؛ رویکردی که در آن حفظ هویت چهره، تناسب اجزا و دستیابی به نتایج ظریف و طبیعی در اولویت قرار دارد.\n\nتعهد به کیفیت، دقت در جزئیات و استفاده از تکنیک‌های نوین پزشکی زیبایی، از ارکان اصلی خدمات ارائه‌شده توسط دکتر جاه‌بین است.'},
+    {name:'دکتر علی رضایی',role:'جراح پلاستیک',exp:'۱۲ سال تجربه · بورد تخصصی',tags:'جراحی,کاشت مو,جوان‌سازی',img:'',bio:''},
+    {name:'دکتر سارا احمدی',role:'متخصص لیزر',exp:'۱۰ سال تجربه · PhD پوست',tags:'لیزر,مزوتراپی,RF',img:'',bio:''}
   ],
   reviews:[
     {name:'مریم صادقی',service:'بوتاکس',date:'۴ ماه پیش',text:'بعد از بوتاکس انگار ۱۰ سال جوون‌تر شدم. دکتر نوری با دقت فوق‌العاده کار کرد. نتیجه کاملاً طبیعی بود و هیچ‌کس متوجه نشد!'},
@@ -513,6 +513,7 @@ function buildTeam(){
       </div>
       <div class="fg"><label>تجربه</label><input id="tm_e${i}" value="${esc(t.exp)}"></div>
       <div class="fg"><label>برچسب‌ها (با کاما)</label><input id="tm_g${i}" value="${esc(t.tags)}"></div>
+      <div class="fg"><label>بیوگرافی (اختیاری — هر پاراگراف را در یک خط جدید بنویسید)</label><textarea id="tm_b${i}" rows="4">${esc(t.bio||'')}</textarea></div>
       <div class="fg"><label>عکس پروفایل</label>
         <div class="img-row"><input id="tm_i${i}" value="${esc(t.img||'')}"><img class="img-thumb" id="tm_ip${i}"><label class="img-up-btn">📤 آپلود<input type="file" accept="image/*" hidden data-target="tm_i${i}" data-prev="tm_ip${i}"></label></div>
       </div>
@@ -738,7 +739,8 @@ function collectAll(){
     role: val(`tm_r${i}`)||t.role,
     exp:  val(`tm_e${i}`)||t.exp,
     tags: val(`tm_g${i}`)||t.tags,
-    img:  val(`tm_i${i}`)
+    bio:  val(`tm_b${i}`),
+    img:  val(`tm_i${i}`)||t.img
   }));
   // reviews
   cfg.reviews = DEF.reviews.map((r,i)=>({

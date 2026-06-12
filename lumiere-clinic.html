@@ -1058,6 +1058,20 @@ async function sf(e){
           }
         }
       }
+      if(t.bio!==undefined){
+        var bio=el.querySelector('.team-bio');
+        if(t.bio && t.bio.trim()){
+          if(!bio){
+            bio=document.createElement('div');
+            bio.className='team-bio';
+            var body=el.querySelector('.team-body');
+            body.insertBefore(bio, body.querySelector('.btn-o'));
+          }
+          bio.innerHTML=t.bio.split(/\n\s*\n/).map(function(p){return'<p>'+p.trim()+'</p>';}).join('');
+        }else if(bio){
+          bio.remove();
+        }
+      }
     });
   }
 
