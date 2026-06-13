@@ -213,8 +213,15 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
 
 /* ── BEFORE / AFTER ── */
 .gallery{background:var(--bg2);position:relative;overflow:hidden}
-.ba-row{display:grid;grid-template-columns:1fr 1fr;gap:32px}
-.ba-card{border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-lg);background:var(--white)}
+.ba-slideshow{position:relative;overflow:hidden}
+.ba-row{display:flex;transition:transform .5s cubic-bezier(.22,.61,.36,1)}
+.ba-card{flex:0 0 100%;max-width:520px;margin:0 auto;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-lg);background:var(--white)}
+.ba-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:24px}
+.ba-nav-btn{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--bdr2);background:var(--white);cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:.2s;color:var(--dark)}
+.ba-nav-btn:hover{background:var(--sage);color:#fff;border-color:var(--sage)}
+.ba-dots{display:flex;gap:8px;align-items:center}
+.ba-dot{width:9px;height:9px;border-radius:50%;background:var(--bdr2);cursor:pointer;transition:.25s;border:none;padding:0}
+.ba-dot.active{background:var(--sage);width:24px;border-radius:5px}
 .ba-wrap{position:relative;cursor:col-resize;user-select:none;aspect-ratio:3/4;overflow:hidden}
 .ba-side{position:absolute;inset:0;overflow:hidden}
 .ba-side svg{width:100%;height:100%}
@@ -364,7 +371,7 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
   .nav-mobile ul{list-style:none;display:flex;flex-direction:column;gap:2px}
   .nav-mobile a{display:block;padding:12px 0;border-bottom:1px solid var(--bdr);color:var(--txt-m);text-decoration:none;font-size:.95rem}
   .hero-h1{font-size:2.2rem}.hero-h1 .cursive{font-size:2.8rem}
-  .svc-grid,.team-grid,.rev-grid,.ba-row,.proc-row,.blog-prev-grid{grid-template-columns:1fr}
+  .svc-grid,.team-grid,.rev-grid,.proc-row,.blog-prev-grid{grid-template-columns:1fr}
   .proc-row::before{display:none}
   .footer-inner{grid-template-columns:1fr}
   .frow{grid-template-columns:1fr}
@@ -536,43 +543,50 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
       <p>نوار وسط را بکشید تا تفاوت قبل و بعد از درمان را ببینید</p>
       <div class="gd"><i></i></div>
     </div>
-    <div class="ba-row">
-      <!-- Card 1 -->
-      <div class="ba-card rv">
-        <div class="ba-wrap" data-ba>
-          <!-- BEFORE -->
-          <div class="ba-side">
-            <img src="IMG_0049_before.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
+    <div class="ba-slideshow">
+      <div class="ba-row" id="baRow">
+        <!-- Card 1 -->
+        <div class="ba-card rv">
+          <div class="ba-wrap" data-ba>
+            <!-- BEFORE -->
+            <div class="ba-side">
+              <img src="IMG_0049_before.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
+            </div>
+            <!-- AFTER -->
+            <div class="ba-side after-side" data-overlay>
+              <img src="IMG_0049_after.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
+            </div>
+            <div class="ba-handle" data-handle><div class="ba-knob">⟺</div></div>
           </div>
-          <!-- AFTER -->
-          <div class="ba-side after-side" data-overlay>
-            <img src="IMG_0049_after.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
+          <div class="ba-labels">
+            <div class="ba-lbl-it before"><span style="background:var(--txt-l)"></span>قبل</div>
+            <div class="ba-lbl-it after"><span style="background:var(--sage)"></span>بعد</div>
           </div>
-          <div class="ba-handle" data-handle><div class="ba-knob">⟺</div></div>
+          <div class="ba-service-row"><div class="ba-sname">بوتاکس + فیلر لب</div><div class="ba-sdesc">جوان‌سازی صورت، ناحیه چشم و لب</div></div>
         </div>
-        <div class="ba-labels">
-          <div class="ba-lbl-it before"><span style="background:var(--txt-l)"></span>قبل</div>
-          <div class="ba-lbl-it after"><span style="background:var(--sage)"></span>بعد</div>
+        <!-- Card 2 -->
+        <div class="ba-card rv">
+          <div class="ba-wrap" data-ba>
+            <div class="ba-side">
+              <img src="IMG_0051_before.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
+            </div>
+            <div class="ba-side after-side" data-overlay>
+              <img src="IMG_0051_after.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
+            </div>
+            <div class="ba-handle" data-handle><div class="ba-knob">⟺</div></div>
+          </div>
+          <div class="ba-labels">
+            <div class="ba-lbl-it before"><span style="background:var(--txt-l)"></span>قبل</div>
+            <div class="ba-lbl-it after"><span style="background:var(--sage)"></span>بعد</div>
+          </div>
+          <div class="ba-service-row"><div class="ba-sname">لیزر و جوان‌سازی</div><div class="ba-sdesc">از بین بردن لک، یکنواختی و شفافیت پوست</div></div>
         </div>
-        <div class="ba-service-row"><div class="ba-sname">بوتاکس + فیلر لب</div><div class="ba-sdesc">جوان‌سازی صورت، ناحیه چشم و لب</div></div>
       </div>
-      <!-- Card 2 -->
-      <div class="ba-card rv">
-        <div class="ba-wrap" data-ba>
-          <div class="ba-side">
-            <img src="IMG_0051_before.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
-          </div>
-          <div class="ba-side after-side" data-overlay>
-            <img src="IMG_0051_after.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
-          </div>
-          <div class="ba-handle" data-handle><div class="ba-knob">⟺</div></div>
-        </div>
-        <div class="ba-labels">
-          <div class="ba-lbl-it before"><span style="background:var(--txt-l)"></span>قبل</div>
-          <div class="ba-lbl-it after"><span style="background:var(--sage)"></span>بعد</div>
-        </div>
-        <div class="ba-service-row"><div class="ba-sname">لیزر و جوان‌سازی</div><div class="ba-sdesc">از بین بردن لک، یکنواختی و شفافیت پوست</div></div>
-      </div>
+    </div>
+    <div class="ba-nav">
+      <button class="ba-nav-btn" id="baNext" aria-label="بعدی">‹</button>
+      <div class="ba-dots" id="baDots"></div>
+      <button class="ba-nav-btn" id="baPrev" aria-label="قبلی">›</button>
     </div>
   </div>
 </section>
@@ -894,7 +908,7 @@ const co=new IntersectionObserver(entries=>{
 },{threshold:.5});
 document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
 
-document.querySelectorAll('[data-ba]').forEach(w=>{
+function bindBaSlider(w){
   const h=w.querySelector('[data-handle]'),ov=w.querySelector('[data-overlay]');
   let on=false;
   const mv=x=>{const r=w.getBoundingClientRect(),p=Math.max(2,Math.min(98,(x-r.left)/r.width*100));h.style.left=p+'%';ov.style.clipPath=`inset(0 ${100-p}% 0 0)`;};
@@ -904,7 +918,54 @@ document.querySelectorAll('[data-ba]').forEach(w=>{
   h.addEventListener('touchstart',e=>{on=true;e.preventDefault();},{passive:false});
   window.addEventListener('touchend',()=>on=false);
   window.addEventListener('touchmove',e=>on&&mv(e.touches[0].clientX));
-});
+}
+document.querySelectorAll('[data-ba]').forEach(bindBaSlider);
+
+function baCardHTML(b){
+  var esc=function(s){return String(s||'').replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
+  return '<div class="ba-card rv in">'+
+    '<div class="ba-wrap" data-ba>'+
+      '<div class="ba-side"><img src="'+esc(b.before_img||'')+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block"></div>'+
+      '<div class="ba-side after-side" data-overlay><img src="'+esc(b.after_img||'')+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block"></div>'+
+      '<div class="ba-handle" data-handle><div class="ba-knob">⟺</div></div>'+
+    '</div>'+
+    '<div class="ba-labels">'+
+      '<div class="ba-lbl-it before"><span style="background:var(--txt-l)"></span>قبل</div>'+
+      '<div class="ba-lbl-it after"><span style="background:var(--sage)"></span>بعد</div>'+
+    '</div>'+
+    '<div class="ba-service-row"><div class="ba-sname">'+esc(b.service)+'</div><div class="ba-sdesc">'+esc(b.desc)+'</div></div>'+
+  '</div>';
+}
+
+// ── BA slideshow nav ──
+(function(){
+  const row=document.getElementById('baRow'), prevBtn=document.getElementById('baPrev'),
+        nextBtn=document.getElementById('baNext'), dots=document.getElementById('baDots');
+  if(!row) return;
+  let idx=0;
+  function render(){
+    dots.innerHTML=[...row.children].map((_,i)=>'<button class="ba-dot'+(i===idx?' active':'')+'" data-i="'+i+'" aria-label="اسلاید '+(i+1)+'"></button>').join('');
+    row.style.transform='translateX('+(-idx*100)+'%)';
+  }
+  function go(i){
+    const max=row.children.length-1;
+    idx=Math.max(0,Math.min(max,i));
+    render();
+  }
+  prevBtn.addEventListener('click',()=>go(idx-1));
+  nextBtn.addEventListener('click',()=>go(idx+1));
+  dots.addEventListener('click',e=>{
+    const d=e.target.closest('.ba-dot');
+    if(d)go(+d.dataset.i);
+  });
+  render();
+  window.__baRebuild=function(items){
+    row.innerHTML=items.map(baCardHTML).join('');
+    row.querySelectorAll('[data-ba]').forEach(bindBaSlider);
+    idx=0;
+    render();
+  };
+})();
 
 document.querySelectorAll('.proc-it').forEach(s=>{s.addEventListener('mouseenter',()=>{document.querySelectorAll('.proc-it').forEach(x=>x.classList.remove('active'));s.classList.add('active');});});
 setTimeout(()=>document.getElementById('promo').classList.add('show'),5000);
@@ -1020,20 +1081,7 @@ async function sf(e){
   }
 
   // ── BA cards ──
-  if(c.ba){
-    var baNames=qa('.ba-sname');
-    var baDescs=qa('.ba-sdesc');
-    var baWraps=qa('.ba-wrap');
-    c.ba.forEach(function(b,i){
-      if(baNames[i]&&b.service)baNames[i].textContent=b.service;
-      if(baDescs[i]&&b.desc)baDescs[i].textContent=b.desc;
-      if(baWraps[i]){
-        var imgs=baWraps[i].querySelectorAll('img');
-        if(imgs[0]&&b.before_img)imgs[0].src=b.before_img;
-        if(imgs[1]&&b.after_img)imgs[1].src=b.after_img;
-      }
-    });
-  }
+  if(c.ba && c.ba.length && window.__baRebuild) window.__baRebuild(c.ba);
 
   // ── Team ──
   if(c.team){

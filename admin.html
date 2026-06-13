@@ -325,8 +325,9 @@ hr.sep{border:none;border-top:1px solid #EBF2EB;margin:18px 0}
 
 <!-- ═══════════ GALLERY ═══════════ -->
 <div id="sec-gallery" class="panel" style="display:none">
-  <div class="panel-hd"><div class="ph-icon">📸</div><div><div class="ph-title">نمونه‌کارها — قبل و بعد</div><div class="ph-sub">۲ کارت اسلایدر</div></div></div>
+  <div class="panel-hd"><div class="ph-icon">📸</div><div><div class="ph-title">نمونه‌کارها — قبل و بعد</div><div class="ph-sub" id="ba-count">۲ کارت اسلایدر</div></div></div>
   <div id="ba-list"></div>
+  <button class="img-up-btn" style="margin-top:8px" onclick="addBA()">➕ افزودن کارت جدید</button>
 </div>
 
 <!-- ═══════════ TEAM ═══════════ -->
@@ -484,10 +485,12 @@ function buildSvc(){
 }
 
 function buildBA(){
-  const d = cfg.ba||DEF.ba;
+  if(!cfg.ba) cfg.ba = JSON.parse(JSON.stringify(DEF.ba));
+  const d = cfg.ba;
+  g('ba-count').textContent = toFa(d.length)+' کارت اسلایدر';
   g('ba-list').innerHTML = d.map((b,i)=>`
     <div class="ci" style="margin-bottom:14px">
-      <div class="ci-hd">کارت ${i+1} — ${b.service}</div>
+      <div class="ci-hd">کارت ${i+1} — ${esc(b.service)} ${d.length>1?`<button class="img-del-btn" style="float:left" onclick="removeBA(${i})">🗑 حذف کارت</button>`:''}</div>
       <div class="fg"><label>نام سرویس</label><input id="ba_s${i}" value="${esc(b.service)}"></div>
       <div class="fg"><label>توضیح</label><input id="ba_d${i}" value="${esc(b.desc)}"></div>
       <div class="frow">
@@ -500,6 +503,17 @@ function buildBA(){
       </div>
     </div>`).join('');
   d.forEach((_,i)=>{ prev(`ba_bf${i}`,`ba_bfp${i}`); prev(`ba_af${i}`,`ba_afp${i}`); });
+}
+
+function addBA(){
+  cfg.ba.push({service:'سرویس جدید',desc:'توضیح سرویس',before_img:'',after_img:''});
+  buildBA();
+  saveAll();
+}
+function removeBA(i){
+  cfg.ba.splice(i,1);
+  buildBA();
+  saveAll();
 }
 
 function buildTeam(){
@@ -727,7 +741,7 @@ function collectAll(){
     desc:  val(`sv_d${i}`)||s.desc
   }));
   // ba
-  cfg.ba = DEF.ba.map((b,i)=>({
+  cfg.ba = (cfg.ba||DEF.ba).map((b,i)=>({
     service:    val(`ba_s${i}`)||b.service,
     desc:       val(`ba_d${i}`)||b.desc,
     before_img: val(`ba_bf${i}`)||b.before_img,
