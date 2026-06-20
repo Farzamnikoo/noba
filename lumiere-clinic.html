@@ -80,6 +80,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
 <style>
+@font-face{
+  font-family:'IRANSans';
+  src:url('fonts/IRANSans.ttf') format('truetype');
+  font-weight:100 900;
+  font-display:swap;
+}
 :root{
   --bg:#F7FAF7;--bg2:#EAF0EA;--white:#FFFFFF;--cream:#FDF9F3;
   --dark:#1A201A;--dark2:#2C382C;
@@ -90,7 +96,7 @@
   --bdr:#C4D8C4;--bdr2:#A4C0A4;
   --shadow:0 4px 24px rgba(0,0,0,.06);--shadow-lg:0 16px 48px rgba(0,0,0,.1);
   --r:20px;--r-sm:12px;
-  --fa:'Vazirmatn',Tahoma,sans-serif;
+  --fa:'IRANSans','Vazirmatn',Tahoma,sans-serif;
   --en:'Cormorant Garamond',Georgia,serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -142,9 +148,9 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
 .nav-mobile{display:none}
 
 /* ── HERO ── */
-.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding-top:76px;background:var(--white);position:relative;overflow:hidden}
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:stretch;padding-top:76px;background:var(--white);position:relative;overflow:hidden}
 .hero-dot-bg{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(107,158,122,.09) 1px,transparent 0);background-size:38px 38px;pointer-events:none}
-.hero-text{padding:80px 56px 80px 40px;position:relative;z-index:1}
+.hero-text{padding:40px 56px 40px 40px;position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center}
 .hero-badge-pill{display:inline-flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--bdr);border-radius:50px;padding:6px 14px;font-size:.76rem;color:var(--txt-m);margin-bottom:28px}
 .hero-dot{width:7px;height:7px;border-radius:50%;background:var(--sage);flex-shrink:0}
 .hero-h1{font-size:3.8rem;font-weight:700;line-height:1.12;color:var(--dark);margin-bottom:8px}
@@ -157,7 +163,7 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
 .sl{font-size:.75rem;color:var(--txt-l);margin-top:4px}
 
 /* Hero photo side — CSS portrait */
-.hero-photo{position:relative;height:100vh;overflow:hidden;background:linear-gradient(160deg,#1A1814 0%,#2C2420 60%,#3A3028 100%)}
+.hero-photo{position:relative;height:auto;min-height:calc(100vh - 76px);overflow:hidden;background:linear-gradient(160deg,#1A1814 0%,#2C2420 60%,#3A3028 100%)}
 .hero-photo-skin{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:left top}
 .hero-photo-chip{position:absolute;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-radius:var(--r);padding:14px 18px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-lg);border:1px solid var(--bdr)}
 .chip-ico{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
@@ -213,7 +219,7 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
 
 /* ── BEFORE / AFTER ── */
 .gallery{background:var(--bg2);position:relative;overflow:hidden}
-.ba-slideshow{position:relative;overflow:hidden;max-width:520px;margin:0 auto}
+.ba-slideshow{position:relative;overflow:hidden;max-width:640px;margin:0 auto}
 .ba-row{display:flex;transition:transform .5s cubic-bezier(.22,.61,.36,1)}
 .ba-card{flex:0 0 100%;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-lg);background:var(--white)}
 .ba-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:24px}
@@ -222,15 +228,12 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
 .ba-dots{display:flex;gap:8px;align-items:center}
 .ba-dot{width:9px;height:9px;border-radius:50%;background:var(--bdr2);cursor:pointer;transition:.25s;border:none;padding:0}
 .ba-dot.active{background:var(--sage);width:24px;border-radius:5px}
-.ba-wrap{position:relative;cursor:col-resize;user-select:none;aspect-ratio:3/4;overflow:hidden}
-.ba-side{position:absolute;inset:0;overflow:hidden}
-.ba-side svg{width:100%;height:100%}
-.ba-side.after-side{clip-path:inset(0 50% 0 0)}
-.ba-handle{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:2px;background:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;z-index:10}
-.ba-knob{width:38px;height:38px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.25);cursor:col-resize;font-size:.88rem;border:2px solid var(--gold);color:var(--gold-d)}
-.ba-labels{display:flex;justify-content:space-between;padding:12px 16px;background:var(--white)}
-.ba-lbl-it{display:flex;align-items:center;gap:6px;font-size:.77rem;color:var(--txt-m)}
-.ba-lbl-it span{width:8px;height:8px;border-radius:50%;display:block}
+/* before & after shown side-by-side */
+.ba-pair{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--white)}
+.ba-fig{position:relative;aspect-ratio:3/4;overflow:hidden;margin:0;background:var(--bg2)}
+.ba-fig img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.ba-fig figcaption{position:absolute;top:10px;inset-inline-end:10px;background:rgba(20,24,20,.6);color:#fff;font-size:.72rem;font-weight:600;padding:3px 13px;border-radius:20px;backdrop-filter:blur(4px)}
+.ba-fig.after figcaption{background:var(--sage)}
 .ba-service-row{padding:12px 16px 16px;border-top:1px solid var(--bdr)}
 .ba-sname{font-size:.88rem;font-weight:700;color:var(--dark)}
 .ba-sdesc{font-size:.77rem;color:var(--txt-l);margin-top:2px}
@@ -261,6 +264,27 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
 @media(hover:none){
   .team-bio{max-height:none;opacity:1;margin:0 0 16px}
 }
+
+/* ── DOCTOR PROFILE MODAL ── */
+.dr-modal{position:fixed;inset:0;z-index:1200;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(20,24,20,.55);backdrop-filter:blur(4px)}
+.dr-modal.open{display:flex}
+.dr-box{background:var(--white);border-radius:var(--r);max-width:560px;width:100%;max-height:88vh;overflow:auto;box-shadow:var(--shadow-lg);position:relative;animation:drIn .35s cubic-bezier(.22,.61,.36,1)}
+@keyframes drIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.dr-x{position:absolute;top:14px;left:14px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.85);color:var(--dark);font-size:1.1rem;cursor:pointer;z-index:2;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center}
+.dr-x:hover{background:var(--sage);color:#fff}
+.dr-photo{width:100%;height:300px;overflow:hidden;background:var(--bg2);border-radius:var(--r) var(--r) 0 0}
+.dr-photo img,.dr-photo svg{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.dr-body{padding:24px 28px 30px}
+.dr-nm{font-size:1.45rem;font-weight:700;color:var(--dark)}
+.dr-sp{color:var(--gold-d);font-size:.92rem;margin-top:3px;font-weight:600}
+.dr-exp{font-size:.82rem;color:var(--txt-l);margin:12px 0;display:flex;align-items:center;gap:6px}
+.dr-exp::before{content:'';width:16px;height:1px;background:var(--gold)}
+.dr-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+.dr-tags .team-tag{font-size:.74rem;padding:4px 12px;border:1px solid var(--bdr);border-radius:4px;color:var(--txt-m);background:var(--bg)}
+.dr-bio{font-size:.86rem;line-height:2;color:var(--txt-m)}
+.dr-bio p{margin:0 0 12px}
+.dr-bio p:last-child{margin-bottom:0}
+.dr-empty{font-size:.86rem;color:var(--txt-l);line-height:1.9}
 
 /* ── PROCESS ── */
 .process{background:var(--bg2);position:relative;overflow:hidden}
@@ -308,7 +332,8 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
 .c-lbl{font-size:.74rem;color:var(--txt-l);display:block;margin-bottom:2px}
 .c-val{font-size:.91rem;color:var(--dark);font-weight:500}
 .soc-row{display:flex;gap:10px;margin-top:26px}
-.soc-b{width:40px;height:40px;border-radius:50%;border:1px solid var(--bdr);background:var(--white);display:flex;align-items:center;justify-content:center;font-size:.9rem;cursor:pointer;transition:all .25s;box-shadow:var(--shadow)}
+.soc-b{width:40px;height:40px;border-radius:50%;border:1px solid var(--bdr);background:var(--white);display:flex;align-items:center;justify-content:center;color:var(--txt-m);cursor:pointer;transition:all .25s;box-shadow:var(--shadow);text-decoration:none}
+.soc-b svg{width:19px;height:19px}
 .soc-b:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px)}
 .form-card{background:var(--white);border-radius:var(--r);padding:40px;box-shadow:var(--shadow-lg);border:1px solid var(--bdr)}
 .form-ttl{font-size:1.18rem;font-weight:700;margin-bottom:4px;color:var(--dark)}
@@ -320,13 +345,39 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
 .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--sage);box-shadow:0 0 0 3px rgba(107,158,122,.15)}
 .fg textarea{resize:vertical;min-height:92px}
 
+/* ── JALALI CALENDAR ── */
+.date-field{position:relative}
+.date-input{display:flex;align-items:center;gap:8px;background:var(--bg);border:1.5px solid var(--bdr);border-radius:var(--r-sm);padding:11px 14px;font-size:.9rem;color:var(--dark);cursor:pointer;transition:border-color .25s}
+.date-input.open,.date-input:hover{border-color:var(--sage)}
+.date-input .di-ico{font-size:1rem}
+.date-input .di-val{flex:1;color:var(--txt-l)}
+.date-input .di-val.has{color:var(--dark);font-weight:600}
+.date-pop{position:absolute;z-index:20;top:calc(100% + 6px);right:0;left:0;display:none}
+.date-pop.open{display:block}
+.jcal{background:var(--white);border:1px solid var(--bdr);border-radius:var(--r-sm);padding:14px;user-select:none;box-shadow:var(--shadow-lg)}
+.jcal-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.jcal-title{font-size:.9rem;font-weight:700;color:var(--dark)}
+.jcal-nav{width:30px;height:30px;border-radius:8px;border:1px solid var(--bdr);background:var(--bg);cursor:pointer;font-size:1rem;color:var(--dark);display:flex;align-items:center;justify-content:center}
+.jcal-nav:hover{background:var(--sage);color:#fff;border-color:var(--sage)}
+.jcal-wk{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px}
+.jcal-wk span{text-align:center;font-size:.7rem;color:var(--txt-l);padding:4px 0}
+.jcal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.jcal-cell{aspect-ratio:1;border:none;background:transparent;border-radius:8px;font-family:var(--fa);font-size:.8rem;color:var(--dark);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
+.jcal-cell.empty{visibility:hidden;cursor:default}
+.jcal-cell.day:hover{background:var(--sage-xl)}
+.jcal-cell.today{box-shadow:inset 0 0 0 1.5px var(--gold)}
+.jcal-cell.sel{background:var(--sage);color:#fff}
+.jcal-cell.off{color:var(--bdr2);text-decoration:line-through;cursor:not-allowed}
+.jcal-cell.off:hover{background:transparent}
+
 /* ── FOOTER ── */
 .footer{background:var(--dark);color:rgba(255,255,255,.7);padding:64px 0 28px}
 .footer-inner{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:44px}
 .f-brand .f-en{font-family:var(--en);font-size:1.75rem;font-weight:700;color:#fff;display:block;margin-bottom:10px}
 .f-brand p{font-size:.82rem;color:rgba(255,255,255,.4);line-height:1.75;max-width:240px}
 .f-soc-row{display:flex;gap:8px;margin-top:16px}
-.f-soc{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:.78rem;color:rgba(255,255,255,.5);text-decoration:none;transition:all .25s}
+.f-soc{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.55);text-decoration:none;transition:all .25s}
+.f-soc svg{width:16px;height:16px}
 .f-soc:hover{background:var(--gold);border-color:var(--gold);color:#fff}
 .f-col h4{font-size:.8rem;font-weight:700;color:#fff;margin-bottom:16px;text-transform:uppercase;letter-spacing:.1em}
 .f-col ul{list-style:none}
@@ -340,8 +391,18 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
 .floats{position:fixed;bottom:28px;left:22px;display:flex;flex-direction:column;gap:10px;z-index:888}
 .float-btn{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;font-size:1.1rem;transition:transform .25s,box-shadow .25s;box-shadow:0 4px 18px rgba(0,0,0,.18)}
 .float-btn:hover{transform:scale(1.1)}
-.f-wa{background:#25D366;color:#fff}
+.f-chat{background:#25D366;color:#fff}
 .f-top{background:var(--white);color:var(--dark);border:1px solid var(--bdr)}
+/* contact-choice fab */
+.cfab{position:relative;display:flex;flex-direction:column;align-items:center}
+.cfab-menu{position:absolute;bottom:58px;left:0;display:flex;flex-direction:column;gap:8px;opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .22s,transform .22s,visibility .22s}
+.cfab.open .cfab-menu{opacity:1;visibility:visible;transform:none}
+.cfab-opt{display:flex;align-items:center;gap:9px;background:var(--white);border:1px solid var(--bdr);border-radius:50px;padding:8px 16px 8px 10px;font-size:.82rem;font-weight:600;color:var(--dark);text-decoration:none;box-shadow:var(--shadow-lg);white-space:nowrap;transition:transform .2s}
+.cfab-opt:hover{transform:translateX(-3px)}
+.cfab-opt .cfab-ico{display:flex;width:24px;height:24px;border-radius:50%;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.cfab-opt .cfab-ico svg{width:15px;height:15px}
+.cfab-opt.wa .cfab-ico{background:#25D366}
+.cfab-opt.bale .cfab-ico{background:#1FA89A}
 .promo{position:fixed;bottom:28px;right:22px;background:var(--white);border:1px solid var(--bdr);border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow-lg);z-index:888;max-width:290px;transform:translateY(120%);opacity:0;transition:all .5s cubic-bezier(.34,1.56,.64,1)}
 .promo.show{transform:none;opacity:1}
 .promo-x{position:absolute;top:10px;left:12px;background:none;border:none;font-size:.88rem;cursor:pointer;color:var(--txt-l)}
@@ -353,9 +414,9 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
 .promo-cta:hover{background:var(--dark2)}
 
 @media(max-width:1024px){
-  .hero{grid-template-columns:1fr}
-  .hero-photo{height:480px;grid-row:1}
-  .hero-text{padding:40px 32px}
+  .hero{grid-template-columns:1fr;min-height:0}
+  .hero-photo{height:auto;min-height:0;aspect-ratio:4/5;max-height:70vh;grid-row:1}
+  .hero-text{padding:32px 28px}
   .hero-h1{font-size:2.8rem}
   .hero-h1 .cursive{font-size:3.4rem}
   .about-grid{grid-template-columns:1fr;gap:48px}
@@ -380,6 +441,16 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
   .strip-sep{display:none}
   .portrait-small{display:none}
   .about-award-badge{display:none}
+  .container{padding:0 20px}
+  .sp{padding:64px 0}
+  .sh{margin-bottom:40px}
+  .sh h2{font-size:1.9rem}
+  .ba-pair{gap:3px}
+  .ba-fig figcaption{font-size:.66rem;padding:2px 9px;top:7px;inset-inline-end:7px}
+}
+@media(max-width:380px){
+  .hero-h1{font-size:1.95rem}.hero-h1 .cursive{font-size:2.5rem}
+  .container{padding:0 16px}
 }
 </style>
 </head>
@@ -540,44 +611,24 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
     <div class="sh rv">
       <span class="eyebrow">نمونه کارها</span>
       <h2>نتایج <em>واقعی</em></h2>
-      <p>نوار وسط را بکشید تا تفاوت قبل و بعد از درمان را ببینید</p>
+      <p>تصاویر قبل و بعد از درمان را در کنار هم ببینید</p>
       <div class="gd"><i></i></div>
     </div>
     <div class="ba-slideshow">
       <div class="ba-row" id="baRow">
         <!-- Card 1 -->
         <div class="ba-card rv">
-          <div class="ba-wrap" data-ba>
-            <!-- BEFORE -->
-            <div class="ba-side">
-              <img src="IMG_0049_before.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
-            </div>
-            <!-- AFTER -->
-            <div class="ba-side after-side" data-overlay>
-              <img src="IMG_0049_after.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
-            </div>
-            <div class="ba-handle" data-handle><div class="ba-knob">⟺</div></div>
-          </div>
-          <div class="ba-labels">
-            <div class="ba-lbl-it before"><span style="background:var(--txt-l)"></span>قبل</div>
-            <div class="ba-lbl-it after"><span style="background:var(--sage)"></span>بعد</div>
+          <div class="ba-pair">
+            <figure class="ba-fig before"><img src="IMG_0049_before.png" alt="قبل"><figcaption>قبل</figcaption></figure>
+            <figure class="ba-fig after"><img src="IMG_0049_after.png" alt="بعد"><figcaption>بعد</figcaption></figure>
           </div>
           <div class="ba-service-row"><div class="ba-sname">بوتاکس + فیلر لب</div><div class="ba-sdesc">جوان‌سازی صورت، ناحیه چشم و لب</div></div>
         </div>
         <!-- Card 2 -->
         <div class="ba-card rv">
-          <div class="ba-wrap" data-ba>
-            <div class="ba-side">
-              <img src="IMG_0051_before.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
-            </div>
-            <div class="ba-side after-side" data-overlay>
-              <img src="IMG_0051_after.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block">
-            </div>
-            <div class="ba-handle" data-handle><div class="ba-knob">⟺</div></div>
-          </div>
-          <div class="ba-labels">
-            <div class="ba-lbl-it before"><span style="background:var(--txt-l)"></span>قبل</div>
-            <div class="ba-lbl-it after"><span style="background:var(--sage)"></span>بعد</div>
+          <div class="ba-pair">
+            <figure class="ba-fig before"><img src="IMG_0051_before.png" alt="قبل"><figcaption>قبل</figcaption></figure>
+            <figure class="ba-fig after"><img src="IMG_0051_after.png" alt="بعد"><figcaption>بعد</figcaption></figure>
           </div>
           <div class="ba-service-row"><div class="ba-sname">لیزر و جوان‌سازی</div><div class="ba-sdesc">از بین بردن لک، یکنواختی و شفافیت پوست</div></div>
         </div>
@@ -831,7 +882,12 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
         <div class="c-item"><div class="c-ico">📍</div><div><span class="c-lbl">آدرس</span><span class="c-val">تهران، خیابان ولیعصر، پلاک ۱۲۳</span></div></div>
         <div class="c-item"><div class="c-ico">🕐</div><div><span class="c-lbl">ساعات کاری</span><span class="c-val">شنبه–چهارشنبه: ۹ تا ۲۰ | پنجشنبه: ۹ تا ۱۴</span></div></div>
         <div class="c-item"><div class="c-ico">📧</div><div><span class="c-lbl">ایمیل</span><span class="c-val">info@noba.clinic</span></div></div>
-        <div class="soc-row"><button class="soc-b">📸</button><button class="soc-b">✈️</button><button class="soc-b">💬</button></div>
+        <div class="soc-row">
+          <a class="soc-b" id="socIg" href="#" target="_blank" rel="noopener" aria-label="اینستاگرام"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2.7 0 3 0 4.1.1 1 .04 1.6.2 2 .3.5.2.9.4 1.3.8.4.4.6.8.8 1.3.1.4.3 1 .3 2 .1 1.1.1 1.4.1 4.1s0 3-.1 4.1c0 1-.2 1.6-.3 2-.2.5-.4.9-.8 1.3-.4.4-.8.6-1.3.8-.4.1-1 .3-2 .3-1.1.1-1.4.1-4.1.1s-3 0-4.1-.1c-1 0-1.6-.2-2-.3-.5-.2-.9-.4-1.3-.8-.4-.4-.6-.8-.8-1.3-.1-.4-.3-1-.3-2C2.1 15 2 14.7 2 12s0-3 .1-4.1c0-1 .2-1.6.3-2 .2-.5.4-.9.8-1.3.4-.4.8-.6 1.3-.8.4-.1 1-.3 2-.3C9 2.1 9.3 2 12 2Zm0 1.8c-2.7 0-3 0-4 .1-.8 0-1.2.2-1.5.3-.4.1-.6.3-.9.6-.3.3-.5.5-.6.9-.1.3-.3.7-.3 1.5-.1 1-.1 1.3-.1 4s0 3 .1 4c0 .8.2 1.2.3 1.5.1.4.3.6.6.9.3.3.5.5.9.6.3.1.7.3 1.5.3 1 .1 1.3.1 4 .1s3 0 4-.1c.8 0 1.2-.2 1.5-.3.4-.1.6-.3.9-.6.3-.3.5-.5.6-.9.1-.3.3-.7.3-1.5.1-1 .1-1.3.1-4s0-3-.1-4c0-.8-.2-1.2-.3-1.5-.1-.4-.3-.6-.6-.9-.3-.3-.5-.5-.9-.6-.3-.1-.7-.3-1.5-.3-1-.1-1.3-.1-4-.1Zm0 3.1a5.1 5.1 0 1 1 0 10.2 5.1 5.1 0 0 1 0-10.2Zm0 1.8a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6Zm5.3-3.2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4Z"/></svg></a>
+          <a class="soc-b" id="socTg" href="#" target="_blank" rel="noopener" aria-label="تلگرام"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.2.2-.4.4-.9.4l.3-4.6 8.4-7.6c.4-.3-.1-.5-.6-.2L7.4 13.5l-4.5-1.4c-1-.3-1-1 .2-1.5l17.6-6.8c.8-.3 1.5.2 1.2 1.5Z"/></svg></a>
+          <a class="soc-b" id="socWa" href="#" target="_blank" rel="noopener" aria-label="واتساپ"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5L8.9 6c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3ZM12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg></a>
+          <a class="soc-b" id="socBale" href="#" target="_blank" rel="noopener" aria-label="بله"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.2A10 10 0 1 0 12 2Zm4 7.1-1.1 5.2c-.1.4-.3.5-.7.3l-1.9-1.4-.9.9c-.1.1-.2.2-.4.2l.1-2 3.6-3.3c.2-.1 0-.2-.2-.1L9 11.9l-1.9-.6c-.4-.1-.4-.4.1-.6l8-3.1c.3-.1.6.1.7.5Z"/></svg></a>
+        </div>
       </div>
       <div class="rl">
         <div class="form-card">
@@ -843,6 +899,20 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
               <div class="fg"><label>شماره موبایل</label><input type="tel" placeholder="۰۹۱۲..." required></div>
             </div>
             <div class="fg"><label>خدمات مورد نظر</label><select><option value="">انتخاب کنید...</option><option>بوتاکس</option><option>فیلر</option><option>لیزر</option><option>جوان‌سازی</option><option>کاشت مو</option><option>مزوتراپی</option></select></div>
+            <div class="frow">
+              <div class="fg"><label>تاریخ مورد نظر برای نوبت</label>
+                <div class="date-field">
+                  <div class="date-input" id="apptDateInput" tabindex="0">
+                    <span class="di-ico">📅</span><span class="di-val" id="apptDateVal">انتخاب تاریخ از تقویم</span><span style="color:var(--txt-l)">▾</span>
+                  </div>
+                  <input type="hidden" id="apptDate">
+                  <div class="date-pop" id="apptDatePop"></div>
+                </div>
+              </div>
+              <div class="fg"><label>ساعت ترجیحی (اختیاری)</label>
+                <select id="apptTime"><option value="">بدون ترجیح</option><option>۹ تا ۱۱</option><option>۱۱ تا ۱۳</option><option>۱۴ تا ۱۶</option><option>۱۶ تا ۱۸</option><option>۱۸ تا ۲۰</option></select>
+              </div>
+            </div>
             <div class="fg"><label>پیام (اختیاری)</label><textarea placeholder="توضیحاتی که می‌خواهید پزشک بداند..."></textarea></div>
             <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
               <label>این فیلد را خالی بگذارید</label>
@@ -863,7 +933,12 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
       <div class="f-brand">
         <span class="f-en">NOBA</span>
         <p>کلینیک تخصصی زیبایی نوبا — علم، هنر و مراقبت در خدمت طبیعی‌ترین نسخه شما.</p>
-        <div class="f-soc-row"><a class="f-soc" href="#">📸</a><a class="f-soc" href="#">✈️</a><a class="f-soc" href="#">💬</a></div>
+        <div class="f-soc-row">
+          <a class="f-soc" id="fsocIg" href="#" target="_blank" rel="noopener" aria-label="اینستاگرام"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2.7 0 3 0 4.1.1 1 .04 1.6.2 2 .3.5.2.9.4 1.3.8.4.4.6.8.8 1.3.1.4.3 1 .3 2 .1 1.1.1 1.4.1 4.1s0 3-.1 4.1c0 1-.2 1.6-.3 2-.2.5-.4.9-.8 1.3-.4.4-.8.6-1.3.8-.4.1-1 .3-2 .3-1.1.1-1.4.1-4.1.1s-3 0-4.1-.1c-1 0-1.6-.2-2-.3-.5-.2-.9-.4-1.3-.8-.4-.4-.6-.8-.8-1.3-.1-.4-.3-1-.3-2C2.1 15 2 14.7 2 12s0-3 .1-4.1c0-1 .2-1.6.3-2 .2-.5.4-.9.8-1.3.4-.4.8-.6 1.3-.8.4-.1 1-.3 2-.3C9 2.1 9.3 2 12 2Zm0 1.8c-2.7 0-3 0-4 .1-.8 0-1.2.2-1.5.3-.4.1-.6.3-.9.6-.3.3-.5.5-.6.9-.1.3-.3.7-.3 1.5-.1 1-.1 1.3-.1 4s0 3 .1 4c0 .8.2 1.2.3 1.5.1.4.3.6.6.9.3.3.5.5.9.6.3.1.7.3 1.5.3 1 .1 1.3.1 4 .1s3 0 4-.1c.8 0 1.2-.2 1.5-.3.4-.1.6-.3.9-.6.3-.3.5-.5.6-.9.1-.3.3-.7.3-1.5.1-1 .1-1.3.1-4s0-3-.1-4c0-.8-.2-1.2-.3-1.5-.1-.4-.3-.6-.6-.9-.3-.3-.5-.5-.9-.6-.3-.1-.7-.3-1.5-.3-1-.1-1.3-.1-4-.1Zm0 3.1a5.1 5.1 0 1 1 0 10.2 5.1 5.1 0 0 1 0-10.2Zm0 1.8a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6Zm5.3-3.2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4Z"/></svg></a>
+          <a class="f-soc" id="fsocTg" href="#" target="_blank" rel="noopener" aria-label="تلگرام"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.2.2-.4.4-.9.4l.3-4.6 8.4-7.6c.4-.3-.1-.5-.6-.2L7.4 13.5l-4.5-1.4c-1-.3-1-1 .2-1.5l17.6-6.8c.8-.3 1.5.2 1.2 1.5Z"/></svg></a>
+          <a class="f-soc" id="fsocWa" href="#" target="_blank" rel="noopener" aria-label="واتساپ"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5L8.9 6c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3ZM12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg></a>
+          <a class="f-soc" id="fsocBale" href="#" target="_blank" rel="noopener" aria-label="بله"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.2A10 10 0 1 0 12 2Zm4 7.1-1.1 5.2c-.1.4-.3.5-.7.3l-1.9-1.4-.9.9c-.1.1-.2.2-.4.2l.1-2 3.6-3.3c.2-.1 0-.2-.2-.1L9 11.9l-1.9-.6c-.4-.1-.4-.4.1-.6l8-3.1c.3-.1.6.1.7.5Z"/></svg></a>
+        </div>
       </div>
       <div class="f-col"><h4>خدمات</h4><ul><li><a href="#">بوتاکس</a></li><li><a href="#">فیلر</a></li><li><a href="#">لیزر</a></li><li><a href="#">کاشت مو</a></li><li><a href="#">مزوتراپی</a></li></ul></div>
       <div class="f-col"><h4>کلینیک</h4><ul><li><a href="#about">درباره ما</a></li><li><a href="#team">تیم پزشکان</a></li><li><a href="#gallery">نمونه‌کارها</a></li><li><a href="blog.html">وبلاگ</a></li></ul></div>
@@ -874,7 +949,13 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
 </footer>
 
 <div class="floats">
-  <button class="float-btn f-wa" onclick="window.open('https://wa.me/989120000000')" title="واتساپ">💬</button>
+  <div class="cfab" id="cfab">
+    <div class="cfab-menu" id="cfabMenu">
+      <a class="cfab-opt wa" id="fabWa" href="#" target="_blank" rel="noopener"><span class="cfab-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5L8.9 6c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3ZM12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2Z"/></svg></span>واتساپ</a>
+      <a class="cfab-opt bale" id="fabBale" href="#" target="_blank" rel="noopener"><span class="cfab-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.2A10 10 0 1 0 12 2Zm4 7.1-1.1 5.2c-.1.4-.3.5-.7.3l-1.9-1.4-.9.9c-.1.1-.2.2-.4.2l.1-2 3.6-3.3c.2-.1 0-.2-.2-.1L9 11.9l-1.9-.6c-.4-.1-.4-.4.1-.6l8-3.1c.3-.1.6.1.7.5Z"/></svg></span>بله</a>
+    </div>
+    <button class="float-btn f-chat" id="cfabBtn" title="تماس سریع" aria-label="تماس سریع">💬</button>
+  </div>
   <button class="float-btn f-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="بالا">↑</button>
 </div>
 <div class="promo" id="promo">
@@ -883,6 +964,22 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
   <button class="promo-cta" onclick="go('contact');document.getElementById('promo').classList.remove('show')">دریافت تخفیف ←</button>
 </div>
 
+<!-- DOCTOR PROFILE MODAL -->
+<div class="dr-modal" id="drModal" role="dialog" aria-modal="true" aria-label="پروفایل پزشک">
+  <div class="dr-box">
+    <button class="dr-x" id="drClose" aria-label="بستن">✕</button>
+    <div class="dr-photo" id="drPhoto"></div>
+    <div class="dr-body">
+      <div class="dr-nm" id="drName"></div>
+      <div class="dr-sp" id="drRole"></div>
+      <div class="dr-exp" id="drExp"></div>
+      <div class="dr-tags" id="drTags"></div>
+      <div class="dr-bio" id="drBio"></div>
+    </div>
+  </div>
+</div>
+
+<script src="jalali-calendar.js"></script>
 <script>
 function go(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
 window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>30));
@@ -908,30 +1005,12 @@ const co=new IntersectionObserver(entries=>{
 },{threshold:.5});
 document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
 
-function bindBaSlider(w){
-  const h=w.querySelector('[data-handle]'),ov=w.querySelector('[data-overlay]');
-  let on=false;
-  const mv=x=>{const r=w.getBoundingClientRect(),p=Math.max(2,Math.min(98,(x-r.left)/r.width*100));h.style.left=p+'%';ov.style.clipPath=`inset(0 ${100-p}% 0 0)`;};
-  h.addEventListener('mousedown',()=>on=true);
-  window.addEventListener('mouseup',()=>on=false);
-  window.addEventListener('mousemove',e=>on&&mv(e.clientX));
-  h.addEventListener('touchstart',e=>{on=true;e.preventDefault();},{passive:false});
-  window.addEventListener('touchend',()=>on=false);
-  window.addEventListener('touchmove',e=>on&&mv(e.touches[0].clientX));
-}
-document.querySelectorAll('[data-ba]').forEach(bindBaSlider);
-
 function baCardHTML(b){
   var esc=function(s){return String(s||'').replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
   return '<div class="ba-card rv in">'+
-    '<div class="ba-wrap" data-ba>'+
-      '<div class="ba-side"><img src="'+esc(b.before_img||'')+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block"></div>'+
-      '<div class="ba-side after-side" data-overlay><img src="'+esc(b.after_img||'')+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block"></div>'+
-      '<div class="ba-handle" data-handle><div class="ba-knob">⟺</div></div>'+
-    '</div>'+
-    '<div class="ba-labels">'+
-      '<div class="ba-lbl-it before"><span style="background:var(--txt-l)"></span>قبل</div>'+
-      '<div class="ba-lbl-it after"><span style="background:var(--sage)"></span>بعد</div>'+
+    '<div class="ba-pair">'+
+      '<figure class="ba-fig before"><img src="'+esc(b.before_img||'')+'" alt="قبل"><figcaption>قبل</figcaption></figure>'+
+      '<figure class="ba-fig after"><img src="'+esc(b.after_img||'')+'" alt="بعد"><figcaption>بعد</figcaption></figure>'+
     '</div>'+
     '<div class="ba-service-row"><div class="ba-sname">'+esc(b.service)+'</div><div class="ba-sdesc">'+esc(b.desc)+'</div></div>'+
   '</div>';
@@ -961,10 +1040,106 @@ function baCardHTML(b){
   render();
   window.__baRebuild=function(items){
     row.innerHTML=items.map(baCardHTML).join('');
-    row.querySelectorAll('[data-ba]').forEach(bindBaSlider);
     idx=0;
     render();
   };
+})();
+
+// ── Doctor profile modal ──
+(function(){
+  var modal=document.getElementById('drModal');
+  if(!modal) return;
+  function openFromCard(card){
+    var get=function(sel){var e=card.querySelector(sel);return e?e.innerHTML:'';};
+    document.getElementById('drName').textContent=(card.querySelector('.team-nm')||{}).textContent||'';
+    document.getElementById('drRole').textContent=(card.querySelector('.team-sp')||{}).textContent||'';
+    var expEl=card.querySelector('.team-exp');
+    var dExp=document.getElementById('drExp');
+    if(expEl&&expEl.textContent.trim()){dExp.textContent=expEl.textContent;dExp.style.display='';}else{dExp.style.display='none';}
+    document.getElementById('drTags').innerHTML=get('.team-tags');
+    var bioEl=card.querySelector('.team-bio');
+    var dBio=document.getElementById('drBio');
+    if(bioEl&&bioEl.textContent.trim()){dBio.innerHTML=bioEl.innerHTML;}
+    else{dBio.innerHTML='<div class="dr-empty">برای این پزشک هنوز بیوگرافی ثبت نشده است. برای دریافت اطلاعات بیشتر و رزرو نوبت با ما در تماس باشید.</div>';}
+    // clone photo (img or svg) without the overlay
+    var photo=card.querySelector('.team-photo');
+    var dPhoto=document.getElementById('drPhoto');
+    dPhoto.innerHTML='';
+    if(photo){
+      var media=photo.querySelector('img, svg');
+      if(media){var c=media.cloneNode(true);c.style.transform='';dPhoto.appendChild(c);}
+    }
+    modal.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function close(){modal.classList.remove('open');document.body.style.overflow='';}
+  document.addEventListener('click',function(e){
+    var btn=e.target.closest('.team-card .btn-o');
+    if(btn){e.preventDefault();openFromCard(btn.closest('.team-card'));return;}
+  });
+  document.getElementById('drClose').addEventListener('click',close);
+  modal.addEventListener('click',function(e){if(e.target===modal)close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+
+// ── Contact-choice floating button (WhatsApp / Bale) ──
+(function(){
+  var fab=document.getElementById('cfab'), btn=document.getElementById('cfabBtn');
+  if(!fab||!btn) return;
+  btn.addEventListener('click',function(e){e.stopPropagation();fab.classList.toggle('open');});
+  document.addEventListener('click',function(e){if(!fab.contains(e.target))fab.classList.remove('open');});
+  fab.querySelectorAll('.cfab-opt').forEach(function(a){a.addEventListener('click',function(){fab.classList.remove('open');});});
+})();
+
+// ── Apply configurable links (floating fab + social icons). Called once with
+//    defaults, then again by the config loader with admin-set values. ──
+window.nobaApplyLinks=function(c){
+  c=c||{};
+  var wa=c.wa_link||'https://wa.me/989120000000';
+  var map={
+    fabWa:wa, socWa:wa, fsocWa:wa,
+    fabBale:c.bale_link, socBale:c.bale_link, fsocBale:c.bale_link,
+    socIg:c.ig_link, fsocIg:c.ig_link,
+    socTg:c.tg_link, fsocTg:c.tg_link
+  };
+  Object.keys(map).forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    var url=map[id];
+    if(url && url!=='#'){ el.href=url; el.style.display=''; }
+    else{ el.removeAttribute('href'); el.style.display='none'; }
+  });
+  // hide the green fab entirely if neither contact channel is configured
+  var fab=document.getElementById('cfab');
+  if(fab){
+    var any=(wa && wa!=='#') || (c.bale_link && c.bale_link!=='#');
+    fab.style.display = any ? '' : 'none';
+  }
+};
+window.nobaApplyLinks();
+
+// ── Appointment date picker (Jalali calendar) ──
+window.NOBA_BLOCKED=window.NOBA_BLOCKED||{weekdays:[],dates:[]};
+(function(){
+  if(!window.NobaJalali) return;
+  var input=document.getElementById('apptDateInput'),pop=document.getElementById('apptDatePop'),
+      hid=document.getElementById('apptDate'),valEl=document.getElementById('apptDateVal');
+  if(!input||!pop) return;
+  var cal=NobaJalali.build(pop,{
+    mode:'picker',disablePast:true,
+    getBlocked:function(){return window.NOBA_BLOCKED;},
+    onSelect:function(ds){
+      hid.value=ds;
+      var parts=ds.split('/').map(Number);
+      valEl.textContent=NobaJalali.toFa(ds)+' — '+NobaJalali.WDAYS[NobaJalali.weekdayOf(parts[0],parts[1],parts[2])];
+      valEl.classList.add('has');
+      close();
+    }
+  });
+  function open(){pop.classList.add('open');input.classList.add('open');cal.refresh();}
+  function close(){pop.classList.remove('open');input.classList.remove('open');}
+  input.addEventListener('click',function(e){e.stopPropagation();pop.classList.contains('open')?close():open();});
+  input.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
+  document.addEventListener('click',function(e){if(!e.target.closest('.date-field'))close();});
 })();
 
 document.querySelectorAll('.proc-it').forEach(s=>{s.addEventListener('mouseenter',()=>{document.querySelectorAll('.proc-it').forEach(x=>x.classList.remove('active'));s.classList.add('active');});});
@@ -974,21 +1149,23 @@ async function sf(e){
   e.preventDefault();
   const f=e.target;
   const ins=f.querySelectorAll('input');
-  const now=new Date();
+  const chosenDate=(document.getElementById('apptDate')||{}).value||'';
+  const chosenTime=(document.getElementById('apptTime')||{}).value||'';
+  const b=f.querySelector('button[type=submit]');
+  const origTxt=b.textContent, origBg=b.style.background;
+  const reset=(txt,bg,doFormReset)=>{ b.textContent=txt; b.style.background=bg; setTimeout(()=>{ b.disabled=false; b.textContent=origTxt; b.style.background=origBg; if(doFormReset){f.reset(); const dv=document.getElementById('apptDateVal'); if(dv){dv.textContent='انتخاب تاریخ از تقویم';dv.classList.remove('has');} const dh=document.getElementById('apptDate'); if(dh)dh.value='';} },3500); };
+  if(!chosenDate){ reset('لطفاً ابتدا تاریخ نوبت را از تقویم انتخاب کنید','#C0594A',false); return; }
   const payload={
     action:'create',
     name:(ins[0]&&ins[0].value)||'',
     phone:(ins[1]&&ins[1].value)||'',
     service:(f.querySelector('select')||{}).value||'',
     message:(f.querySelector('textarea')||{}).value||'',
-    date:now.toLocaleDateString('fa-IR'),
-    time:now.toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'}),
+    date:chosenDate,
+    time:chosenTime,
     hp_field:(f.querySelector('[data-hp]')||{}).value||''
   };
-  const b=f.querySelector('button[type=submit]');
-  const origTxt=b.textContent, origBg=b.style.background;
   b.disabled=true;
-  const reset=(txt,bg,doFormReset)=>{ b.textContent=txt; b.style.background=bg; setTimeout(()=>{ b.disabled=false; b.textContent=origTxt; b.style.background=origBg; if(doFormReset)f.reset(); },3500); };
   try{
     const res=await fetch('api/appointments.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(r=>r.json());
     if(res&&res.ok) reset('✓ درخواست شما ثبت شد!','#4A8A60',true);
@@ -1014,8 +1191,14 @@ async function sf(e){
     (vals||[]).forEach(function(v,i){if(els[i]&&v!==undefined&&v!=='')els[i][prop||'textContent']=v;});
   };
 
-  // ── General ──
-  if(c.wa_link) q('.float-btn.f-wa') && (q('.float-btn.f-wa').onclick=function(){window.open(c.wa_link);});
+  // ── General ── (floating contact fab + social icon links)
+  if(window.nobaApplyLinks) window.nobaApplyLinks(c);
+
+  // ── Booking calendar: blocked weekdays / specific dates ──
+  window.NOBA_BLOCKED={
+    weekdays:Array.isArray(c.blocked_weekdays)?c.blocked_weekdays.map(Number):[],
+    dates:Array.isArray(c.blocked_dates)?c.blocked_dates:[]
+  };
 
   // ── Logo ──
   if(c.logo_src) src('.nav-logo img', c.logo_src);

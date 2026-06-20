@@ -7,8 +7,9 @@
 <title>پنل ادمین — NOBA Clinic</title>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+@font-face{font-family:'IRANSans';src:url('fonts/IRANSans.ttf') format('truetype');font-weight:100 900;font-display:swap}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Vazirmatn',Tahoma,sans-serif;background:#EEF3EE;display:flex;min-height:100vh;direction:rtl;color:#1A201A}
+body{font-family:'IRANSans','Vazirmatn',Tahoma,sans-serif;background:#EEF3EE;display:flex;min-height:100vh;direction:rtl;color:#1A201A}
 
 /* ── Sidebar ── */
 .sb{width:230px;min-height:100vh;background:#1E2B1E;display:flex;flex-direction:column;position:fixed;right:0;top:0;z-index:100;overflow-y:auto}
@@ -51,6 +52,31 @@ body{font-family:'Vazirmatn',Tahoma,sans-serif;background:#EEF3EE;display:flex;m
 .frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
 hr.sep{border:none;border-top:1px solid #EBF2EB;margin:18px 0}
 .sec-label{font-size:.72rem;font-weight:600;color:#6B9E7A;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+
+/* ── Weekday toggles + Jalali blocker calendar ── */
+.wday-row{display:flex;flex-wrap:wrap;gap:8px}
+.wday{display:flex;align-items:center;gap:6px;border:1.5px solid #CDD9CC;border-radius:9px;padding:8px 13px;cursor:pointer;font-size:.84rem;background:#FAFCFA;transition:.18s}
+.wday input{width:auto;margin:0}
+.wday.on{border-color:#C0594A;background:#FBEAE7;color:#C0594A}
+.jcal{background:#fff;border:1.5px solid #CDD9CC;border-radius:12px;padding:14px;user-select:none;max-width:340px}
+.jcal-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.jcal-title{font-size:.9rem;font-weight:600;color:#1A201A}
+.jcal-nav{width:30px;height:30px;border-radius:8px;border:1.5px solid #CDD9CC;background:#FAFCFA;cursor:pointer;font-size:1rem;color:#1A201A;display:flex;align-items:center;justify-content:center}
+.jcal-nav:hover{background:#6B9E7A;color:#fff;border-color:#6B9E7A}
+.jcal-wk{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px}
+.jcal-wk span{text-align:center;font-size:.7rem;color:#7A9080;padding:4px 0}
+.jcal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.jcal-cell{aspect-ratio:1;border:none;background:transparent;border-radius:8px;font-family:inherit;font-size:.8rem;color:#1A201A;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
+.jcal-cell.empty{visibility:hidden;cursor:default}
+.jcal-cell.day:hover{background:#E8F4EC}
+.jcal-cell.today{box-shadow:inset 0 0 0 1.5px #C4A26A}
+.jcal-cell.blocked{background:#C0594A;color:#fff;text-decoration:line-through}
+.jcal-cell.wk-off{background:repeating-linear-gradient(45deg,transparent,transparent 4px,rgba(192,89,74,.1) 4px,rgba(192,89,74,.1) 8px);color:#C0594A}
+.jcal-cell.dim{opacity:.4}
+.blk-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.blk-chip{display:flex;align-items:center;gap:6px;background:#FBEAE7;color:#C0594A;border:1px solid #F0D6D1;border-radius:20px;padding:4px 6px 4px 12px;font-size:.78rem}
+.blk-chip button{border:none;background:#C0594A;color:#fff;width:18px;height:18px;border-radius:50%;cursor:pointer;font-size:.7rem;line-height:1;display:flex;align-items:center;justify-content:center}
+.blk-empty{font-size:.8rem;color:#9CB0A2;margin-top:12px}
 
 /* ── Image field ── */
 .img-row{display:flex;gap:10px;align-items:center}
@@ -172,6 +198,7 @@ hr.sep{border:none;border-top:1px solid #EBF2EB;margin:18px 0}
   <nav class="sb-nav">
     <div class="sb-a act" onclick="show('general')"><span class="ico">⚙️</span>تنظیمات عمومی</div>
     <div class="sb-a" onclick="show('appointments')"><span class="ico">📋</span>نوبت‌های درخواستی<span class="sb-badge" id="apptBadge" style="display:none">0</span></div>
+    <div class="sb-a" onclick="show('booking')"><span class="ico">📅</span>تنظیمات نوبت‌دهی</div>
     <div class="sb-a" onclick="show('hero')"><span class="ico">🖼️</span>بخش هرو</div>
     <div class="sb-a" onclick="show('about')"><span class="ico">ℹ️</span>درباره ما</div>
     <div class="sb-a" onclick="show('services')"><span class="ico">💼</span>خدمات</div>
@@ -211,10 +238,15 @@ hr.sep{border:none;border-top:1px solid #EBF2EB;margin:18px 0}
   <div class="fg"><label>آدرس</label><input id="contact_address" value="تهران، خیابان ولیعصر، پلاک ۱۲۳"></div>
   <div class="fg"><label>ساعات کاری</label><input id="contact_hours" value="شنبه–چهارشنبه: ۹ تا ۲۰ | پنجشنبه: ۹ تا ۱۴"></div>
   <hr class="sep">
-  <div class="sec-label">شبکه‌های اجتماعی</div>
+  <div class="sec-label">شبکه‌های اجتماعی و راه‌های ارتباطی</div>
+  <p style="font-size:.77rem;color:#7A9080;margin:-4px 0 14px;line-height:1.8">لینک‌هایی که اینجا وارد کنید، هم روی آیکن‌های شبکه‌های اجتماعی (بخش تماس و فوتر) و هم روی دکمه‌ی سبز شناور (واتساپ / بله) اعمال می‌شوند. فیلدهایی که خالی یا «#» بمانند، در سایت نمایش داده نمی‌شوند.</p>
   <div class="frow">
-    <div class="fg"><label>لینک واتساپ</label><input id="wa_link" value="https://wa.me/989120000000"></div>
-    <div class="fg"><label>لینک اینستاگرام</label><input id="ig_link" value="#"></div>
+    <div class="fg"><label>لینک واتساپ</label><input id="wa_link" value="https://wa.me/989120000000" placeholder="https://wa.me/98912..."></div>
+    <div class="fg"><label>لینک بله (Bale)</label><input id="bale_link" value="" placeholder="https://ble.ir/..."></div>
+  </div>
+  <div class="frow">
+    <div class="fg"><label>لینک اینستاگرام</label><input id="ig_link" value="" placeholder="https://instagram.com/..."></div>
+    <div class="fg"><label>لینک تلگرام</label><input id="tg_link" value="" placeholder="https://t.me/..."></div>
   </div>
   <hr class="sep">
   <div class="sec-label">امنیت حساب</div>
@@ -241,6 +273,19 @@ hr.sep{border:none;border-top:1px solid #EBF2EB;margin:18px 0}
     <button class="apt-clear" onclick="clearAppointments()">🗑 پاک‌کردن همه</button>
   </div>
   <div class="card-list" id="apt-list"></div>
+</div>
+
+<!-- ═══════════ BOOKING SETTINGS ═══════════ -->
+<div id="sec-booking" class="panel" style="display:none">
+  <div class="panel-hd"><div class="ph-icon">📅</div><div><div class="ph-title">تنظیمات نوبت‌دهی</div><div class="ph-sub">روزهایی که نمی‌خواهید مراجعان نوبت بگیرند را ببندید</div></div></div>
+  <div class="sec-label">روزهای هفتهٔ تعطیل</div>
+  <p style="font-size:.78rem;color:#7A9080;margin:-4px 0 14px;line-height:1.8">روزهایی که کلینیک تعطیل است را انتخاب کنید. این روزها در تقویم سایت برای همهٔ هفته‌ها غیرقابل‌انتخاب می‌شوند.</p>
+  <div class="wday-row" id="wdayRow"></div>
+  <hr class="sep">
+  <div class="sec-label">بستن روزهای خاص</div>
+  <p style="font-size:.78rem;color:#7A9080;margin:-4px 0 14px;line-height:1.8">روی هر روز در تقویم کلیک کنید تا آن تاریخ مشخص بسته شود (مثلاً تعطیلات رسمی). برای باز کردن دوباره، روی همان روز کلیک کنید یا از فهرست پایین حذفش کنید.</p>
+  <div id="blkCal"></div>
+  <div class="blk-list" id="blkList"></div>
 </div>
 
 <!-- ═══════════ HERO ═══════════ -->
@@ -372,6 +417,7 @@ hr.sep{border:none;border-top:1px solid #EBF2EB;margin:18px 0}
 
 </main>
 
+<script src="jalali-calendar.js"></script>
 <script>
 // ─── Default data ─────────────────────────────────────────
 const DEF = {
@@ -547,6 +593,64 @@ function buildRev(){
       <div class="fg"><label>تاریخ</label><input id="rv_dt${i}" value="${esc(r.date)}"></div>
       <div class="fg"><label>متن نظر</label><textarea id="rv_t${i}">${esc(r.text)}</textarea></div>
     </div>`).join('');
+}
+
+// ─── Booking settings (blocked weekdays + specific dates) ──
+let blkCal = null;
+function buildBooking(){
+  if(!Array.isArray(cfg.blocked_weekdays)) cfg.blocked_weekdays = [];
+  if(!Array.isArray(cfg.blocked_dates)) cfg.blocked_dates = [];
+  cfg.blocked_weekdays = cfg.blocked_weekdays.map(Number);
+  // weekday toggles
+  const names = (window.NobaJalali && NobaJalali.WDAYS) || ['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'];
+  g('wdayRow').innerHTML = names.map((nm,i)=>`
+    <label class="wday${cfg.blocked_weekdays.indexOf(i)!==-1?' on':''}">
+      <input type="checkbox" data-wd="${i}" ${cfg.blocked_weekdays.indexOf(i)!==-1?'checked':''}> ${nm}
+    </label>`).join('');
+  g('wdayRow').querySelectorAll('input[data-wd]').forEach(cb=>{
+    cb.addEventListener('change',()=>{
+      const wd = +cb.dataset.wd;
+      const set = new Set(cfg.blocked_weekdays);
+      cb.checked ? set.add(wd) : set.delete(wd);
+      cfg.blocked_weekdays = [...set].sort((a,b)=>a-b);
+      cb.closest('.wday').classList.toggle('on', cb.checked);
+      if(blkCal) blkCal.refresh();
+      saveAll();
+    });
+  });
+  // blocker calendar
+  if(window.NobaJalali){
+    blkCal = NobaJalali.build(g('blkCal'),{
+      mode:'blocker',
+      getBlocked:()=>({weekdays:cfg.blocked_weekdays, dates:cfg.blocked_dates}),
+      onToggleDate:(ds)=>{
+        const i = cfg.blocked_dates.indexOf(ds);
+        if(i===-1) cfg.blocked_dates.push(ds); else cfg.blocked_dates.splice(i,1);
+        cfg.blocked_dates.sort();
+        buildBlkList();
+        saveAll();
+      }
+    });
+  }
+  buildBlkList();
+}
+function buildBlkList(){
+  const el = g('blkList'); if(!el) return;
+  const d = cfg.blocked_dates||[];
+  if(!d.length){ el.innerHTML = '<div class="blk-empty">هیچ روز خاصی بسته نشده است.</div>'; return; }
+  const faW = (window.NobaJalali&&NobaJalali.WDAYS)||[];
+  el.innerHTML = d.map(ds=>{
+    let label = (window.NobaJalali?NobaJalali.toFa(ds):ds);
+    if(window.NobaJalali){ const p=ds.split('/').map(Number); label += ' — '+faW[NobaJalali.weekdayOf(p[0],p[1],p[2])]; }
+    return `<span class="blk-chip">${label}<button onclick="unblockDate('${ds}')" aria-label="حذف">✕</button></span>`;
+  }).join('');
+}
+function unblockDate(ds){
+  const i = cfg.blocked_dates.indexOf(ds);
+  if(i!==-1) cfg.blocked_dates.splice(i,1);
+  buildBlkList();
+  if(blkCal) blkCal.refresh();
+  saveAll();
 }
 
 // ─── Appointments (read from contact-form submissions) ────
@@ -807,7 +911,7 @@ async function saveAll(){
 }
 
 // ─── Navigation ───────────────────────────────────────────
-const SECTIONS = ['general','appointments','hero','about','services','gallery','team','reviews','blog','contact','media'];
+const SECTIONS = ['general','appointments','booking','hero','about','services','gallery','team','reviews','blog','contact','media'];
 function show(id){
   SECTIONS.forEach(s=>{ g('sec-'+s).style.display = s===id?'block':'none'; });
   document.querySelectorAll('.sb-a').forEach(a=>{
@@ -890,7 +994,7 @@ async function enterPanel(){
 
   // each section builds independently — a malformed value in one section's data
   // must never lock the owner out of the rest of the panel (incl. login/password)
-  [buildSvc, buildBA, buildTeam, buildRev, buildBlog].forEach(function(fn){
+  [buildSvc, buildBA, buildTeam, buildRev, buildBlog, buildBooking].forEach(function(fn){
     try{ fn(); }catch(e){ console.error('[admin] failed to build section:', fn.name, e); }
   });
   await refreshAppointments();
