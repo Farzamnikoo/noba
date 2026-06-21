@@ -219,32 +219,34 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
 
 /* ── BEFORE / AFTER ── */
 .gallery{background:var(--bg2);position:relative;overflow:hidden}
-.ba-slideshow{position:relative;overflow:hidden;max-width:640px;margin:0 auto}
-.ba-row{display:flex;transition:transform .5s cubic-bezier(.22,.61,.36,1)}
-.ba-card{flex:0 0 100%;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-lg);background:var(--white)}
-.ba-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:24px}
-.ba-nav-btn{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--bdr2);background:var(--white);cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:.2s;color:var(--dark)}
-.ba-nav-btn:hover{background:var(--sage);color:#fff;border-color:var(--sage)}
-.ba-dots{display:flex;gap:8px;align-items:center}
-.ba-dot{width:9px;height:9px;border-radius:50%;background:var(--bdr2);cursor:pointer;transition:.25s;border:none;padding:0}
-.ba-dot.active{background:var(--sage);width:24px;border-radius:5px}
-/* before & after shown side-by-side */
-.ba-pair{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--white)}
-.ba-fig{position:relative;aspect-ratio:3/4;overflow:hidden;margin:0;background:var(--bg2)}
-.ba-fig img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
-.ba-fig figcaption{position:absolute;top:10px;inset-inline-end:10px;background:rgba(20,24,20,.6);color:#fff;font-size:.72rem;font-weight:600;padding:3px 13px;border-radius:20px;backdrop-filter:blur(4px)}
-.ba-fig.after figcaption{background:var(--sage)}
+/* two before/after comparison sliders side-by-side */
+.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:760px;margin:0 auto}
+.ba-card{border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-lg);background:var(--white)}
+.ba-wrap{position:relative;cursor:col-resize;user-select:none;aspect-ratio:3/4;overflow:hidden}
+.ba-side{position:absolute;inset:0;overflow:hidden}
+.ba-side img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.ba-side.after-side{clip-path:inset(0 50% 0 0)}
+.ba-handle{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:2px;background:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;z-index:10}
+.ba-knob{width:38px;height:38px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.25);cursor:col-resize;font-size:.88rem;border:2px solid var(--gold);color:var(--gold-d)}
+.ba-labels{display:flex;justify-content:space-between;padding:12px 16px;background:var(--white)}
+.ba-lbl-it{display:flex;align-items:center;gap:6px;font-size:.77rem;color:var(--txt-m)}
+.ba-lbl-it span{width:8px;height:8px;border-radius:50%;display:block}
 .ba-service-row{padding:12px 16px 16px;border-top:1px solid var(--bdr)}
 .ba-sname{font-size:.88rem;font-weight:700;color:var(--dark)}
 .ba-sdesc{font-size:.77rem;color:var(--txt-l);margin-top:2px}
 
-/* ── TEAM ── */
+/* ── TEAM (flip cards) ── */
 .team{background:var(--white)}
 .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
-.team-card{background:var(--white);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;transition:transform .35s,box-shadow .35s}
-.team-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.team-card{perspective:1500px;transition:transform .35s}
+.team-card:hover{transform:translateY(-6px)}
+.team-inner{position:relative;width:100%;transition:transform .75s cubic-bezier(.4,.18,.2,1);transform-style:preserve-3d}
+.team-card.flipped .team-inner{transform:rotateY(180deg)}
+.team-front,.team-back{border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;background:var(--white);-webkit-backface-visibility:hidden;backface-visibility:hidden;box-shadow:var(--shadow)}
 .team-photo{width:100%;aspect-ratio:3/4;overflow:hidden;position:relative}
-.team-photo svg{width:100%;height:100%;display:block}
+.team-photo svg,.team-photo img{width:100%;height:100%;display:block}
+.team-photo img{object-fit:cover;transition:transform .55s cubic-bezier(.22,.61,.36,1),filter .55s}
+@media(hover:hover){.team-card:hover .team-photo img{transform:scale(1.06) rotate(2deg);filter:brightness(1.05) saturate(1.08)}}
 .team-overlay{position:absolute;bottom:0;left:0;right:0;padding:20px;background:linear-gradient(to top,rgba(20,18,16,.72),transparent)}
 .team-nm{color:#fff;font-size:1.02rem;font-weight:700}
 .team-sp{color:rgba(255,255,255,.68);font-size:.77rem;margin-top:2px}
@@ -253,38 +255,16 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
 .team-exp::before{content:'';width:14px;height:1px;background:var(--gold)}
 .team-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
 .team-tag{font-size:.71rem;padding:3px 10px;border:1px solid var(--bdr);border-radius:3px;color:var(--txt-m);background:var(--bg)}
-.team-photo img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .55s cubic-bezier(.22,.61,.36,1),filter .55s}
-.team-bio{max-height:0;opacity:0;overflow:hidden;margin:0;transition:max-height .6s ease,opacity .5s ease .1s,margin .6s ease;font-size:.78rem;line-height:1.9;color:var(--txt-m)}
-.team-bio p{margin:0 0 10px}
+/* back face */
+.team-back{position:absolute;inset:0;transform:rotateY(180deg);display:flex;flex-direction:column;padding:26px 24px;background:linear-gradient(165deg,#FFFFFF 0%,#EFF6EF 100%)}
+.team-back-nm{font-size:1.18rem;font-weight:700;color:var(--dark);flex-shrink:0}
+.team-back-sp{font-size:.84rem;color:var(--gold-d);font-weight:600;margin:3px 0 0;flex-shrink:0}
+.team-back-sp::after{content:'';display:block;width:34px;height:2px;background:var(--gold);border-radius:2px;margin:12px 0 14px}
+.team-bio{flex:1;overflow:auto;font-size:.8rem;line-height:1.95;color:var(--txt-m)}
+.team-bio p{margin:0 0 11px}
 .team-bio p:last-child{margin-bottom:0}
-@media(hover:hover){
-  .team-card:hover .team-photo img{transform:scale(1.08) rotate(3deg);filter:brightness(1.06) saturate(1.1)}
-  .team-card:hover .team-bio{max-height:640px;opacity:1;margin:0 0 16px}
-}
-@media(hover:none){
-  .team-bio{max-height:none;opacity:1;margin:0 0 16px}
-}
-
-/* ── DOCTOR PROFILE MODAL ── */
-.dr-modal{position:fixed;inset:0;z-index:1200;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(20,24,20,.55);backdrop-filter:blur(4px)}
-.dr-modal.open{display:flex}
-.dr-box{background:var(--white);border-radius:var(--r);max-width:560px;width:100%;max-height:88vh;overflow:auto;box-shadow:var(--shadow-lg);position:relative;animation:drIn .35s cubic-bezier(.22,.61,.36,1)}
-@keyframes drIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
-.dr-x{position:absolute;top:14px;left:14px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.85);color:var(--dark);font-size:1.1rem;cursor:pointer;z-index:2;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center}
-.dr-x:hover{background:var(--sage);color:#fff}
-.dr-photo{width:100%;height:300px;overflow:hidden;background:var(--bg2);border-radius:var(--r) var(--r) 0 0}
-.dr-photo img,.dr-photo svg{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
-.dr-body{padding:24px 28px 30px}
-.dr-nm{font-size:1.45rem;font-weight:700;color:var(--dark)}
-.dr-sp{color:var(--gold-d);font-size:.92rem;margin-top:3px;font-weight:600}
-.dr-exp{font-size:.82rem;color:var(--txt-l);margin:12px 0;display:flex;align-items:center;gap:6px}
-.dr-exp::before{content:'';width:16px;height:1px;background:var(--gold)}
-.dr-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
-.dr-tags .team-tag{font-size:.74rem;padding:4px 12px;border:1px solid var(--bdr);border-radius:4px;color:var(--txt-m);background:var(--bg)}
-.dr-bio{font-size:.86rem;line-height:2;color:var(--txt-m)}
-.dr-bio p{margin:0 0 12px}
-.dr-bio p:last-child{margin-bottom:0}
-.dr-empty{font-size:.86rem;color:var(--txt-l);line-height:1.9}
+.team-empty-bio{font-size:.82rem;color:var(--txt-l);line-height:1.9}
+.team-unflip-btn{margin-top:16px;flex-shrink:0}
 
 /* ── PROCESS ── */
 .process{background:var(--bg2);position:relative;overflow:hidden}
@@ -445,8 +425,7 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
   .sp{padding:64px 0}
   .sh{margin-bottom:40px}
   .sh h2{font-size:1.9rem}
-  .ba-pair{gap:3px}
-  .ba-fig figcaption{font-size:.66rem;padding:2px 9px;top:7px;inset-inline-end:7px}
+  .ba-grid{grid-template-columns:1fr;max-width:380px;gap:20px}
 }
 @media(max-width:380px){
   .hero-h1{font-size:1.95rem}.hero-h1 .cursive{font-size:2.5rem}
@@ -614,30 +593,33 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
       <p>تصاویر قبل و بعد از درمان را در کنار هم ببینید</p>
       <div class="gd"><i></i></div>
     </div>
-    <div class="ba-slideshow">
-      <div class="ba-row" id="baRow">
-        <!-- Card 1 -->
-        <div class="ba-card rv">
-          <div class="ba-pair">
-            <figure class="ba-fig before"><img src="IMG_0049_before.png" alt="قبل"><figcaption>قبل</figcaption></figure>
-            <figure class="ba-fig after"><img src="IMG_0049_after.png" alt="بعد"><figcaption>بعد</figcaption></figure>
-          </div>
-          <div class="ba-service-row"><div class="ba-sname">بوتاکس + فیلر لب</div><div class="ba-sdesc">جوان‌سازی صورت، ناحیه چشم و لب</div></div>
+    <div class="ba-grid" id="baGrid">
+      <!-- Card 1 -->
+      <div class="ba-card rv">
+        <div class="ba-wrap" data-ba>
+          <div class="ba-side"><img src="IMG_0049_before.png" alt="قبل"></div>
+          <div class="ba-side after-side" data-overlay><img src="IMG_0049_after.png" alt="بعد"></div>
+          <div class="ba-handle" data-handle><div class="ba-knob">⟺</div></div>
         </div>
-        <!-- Card 2 -->
-        <div class="ba-card rv">
-          <div class="ba-pair">
-            <figure class="ba-fig before"><img src="IMG_0051_before.png" alt="قبل"><figcaption>قبل</figcaption></figure>
-            <figure class="ba-fig after"><img src="IMG_0051_after.png" alt="بعد"><figcaption>بعد</figcaption></figure>
-          </div>
-          <div class="ba-service-row"><div class="ba-sname">لیزر و جوان‌سازی</div><div class="ba-sdesc">از بین بردن لک، یکنواختی و شفافیت پوست</div></div>
+        <div class="ba-labels">
+          <div class="ba-lbl-it"><span style="background:var(--txt-l)"></span>قبل</div>
+          <div class="ba-lbl-it"><span style="background:var(--sage)"></span>بعد</div>
         </div>
+        <div class="ba-service-row"><div class="ba-sname">بوتاکس + فیلر لب</div><div class="ba-sdesc">جوان‌سازی صورت، ناحیه چشم و لب</div></div>
       </div>
-    </div>
-    <div class="ba-nav">
-      <button class="ba-nav-btn" id="baNext" aria-label="بعدی">‹</button>
-      <div class="ba-dots" id="baDots"></div>
-      <button class="ba-nav-btn" id="baPrev" aria-label="قبلی">›</button>
+      <!-- Card 2 -->
+      <div class="ba-card rv">
+        <div class="ba-wrap" data-ba>
+          <div class="ba-side"><img src="IMG_0051_before.png" alt="قبل"></div>
+          <div class="ba-side after-side" data-overlay><img src="IMG_0051_after.png" alt="بعد"></div>
+          <div class="ba-handle" data-handle><div class="ba-knob">⟺</div></div>
+        </div>
+        <div class="ba-labels">
+          <div class="ba-lbl-it"><span style="background:var(--txt-l)"></span>قبل</div>
+          <div class="ba-lbl-it"><span style="background:var(--sage)"></span>بعد</div>
+        </div>
+        <div class="ba-service-row"><div class="ba-sname">لیزر و جوان‌سازی</div><div class="ba-sdesc">از بین بردن لک، یکنواختی و شفافیت پوست</div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -654,6 +636,8 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
     <div class="team-grid">
       <!-- Doctor 1 -->
       <div class="team-card rv">
+        <div class="team-inner">
+        <div class="team-front">
         <div class="team-photo">
           <img src="dr-negar-jahbin.jpg" alt="دکتر نگار جاه‌بین - پزشک زیبایی" loading="lazy">
           <div class="team-overlay"><div class="team-nm">دکتر نگار جاه‌بین</div><div class="team-sp">پزشک زیبایی</div></div>
@@ -661,16 +645,25 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
         <div class="team-body">
           <div class="team-exp">بیش از ۴ سال تجربه · ایران و کانادا</div>
           <div class="team-tags"><span class="team-tag">جوان‌سازی</span><span class="team-tag">زیبایی چهره</span><span class="team-tag">فیلر</span></div>
+          <button class="btn-o team-flip-btn" style="width:100%;justify-content:center;font-size:.82rem;padding:10px">مشاهده پروفایل</button>
+        </div>
+        </div>
+        <div class="team-back">
+          <div class="team-back-nm">دکتر نگار جاه‌بین</div>
+          <div class="team-back-sp">پزشک زیبایی</div>
           <div class="team-bio">
             <p>پزشک زیبایی با سابقه فعالیت حرفه‌ای در ایران و کانادا و بیش از چهار سال تجربه در حوزه جوان‌سازی و زیبایی چهره.</p>
             <p>فلسفه درمانی ایشان بر پایه «Natural Beauty Enhancement» یا ارتقای زیبایی طبیعی است؛ رویکردی که در آن حفظ هویت چهره، تناسب اجزا و دستیابی به نتایج ظریف و طبیعی در اولویت قرار دارد.</p>
             <p>تعهد به کیفیت، دقت در جزئیات و استفاده از تکنیک‌های نوین پزشکی زیبایی، از ارکان اصلی خدمات ارائه‌شده توسط دکتر جاه‌بین است.</p>
           </div>
-          <button class="btn-o" style="width:100%;justify-content:center;font-size:.82rem;padding:10px">مشاهده پروفایل</button>
+          <button class="btn-o team-unflip-btn" style="width:100%;justify-content:center;font-size:.82rem;padding:10px">← بازگشت</button>
+        </div>
         </div>
       </div>
       <!-- Doctor 2 -->
       <div class="team-card rv">
+        <div class="team-inner">
+        <div class="team-front">
         <div class="team-photo">
           <svg viewBox="0 0 300 400" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -706,11 +699,21 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
         <div class="team-body">
           <div class="team-exp">۱۲ سال تجربه · بورد تخصصی</div>
           <div class="team-tags"><span class="team-tag">جراحی</span><span class="team-tag">کاشت مو</span><span class="team-tag">جوان‌سازی</span></div>
-          <button class="btn-o" style="width:100%;justify-content:center;font-size:.82rem;padding:10px">مشاهده پروفایل</button>
+          <button class="btn-o team-flip-btn" style="width:100%;justify-content:center;font-size:.82rem;padding:10px">مشاهده پروفایل</button>
+        </div>
+        </div>
+        <div class="team-back">
+          <div class="team-back-nm">دکتر علی رضایی</div>
+          <div class="team-back-sp">جراح پلاستیک</div>
+          <div class="team-bio"></div>
+          <button class="btn-o team-unflip-btn" style="width:100%;justify-content:center;font-size:.82rem;padding:10px">← بازگشت</button>
+        </div>
         </div>
       </div>
       <!-- Doctor 3 -->
       <div class="team-card rv">
+        <div class="team-inner">
+        <div class="team-front">
         <div class="team-photo">
           <svg viewBox="0 0 300 400" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -747,7 +750,15 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
         <div class="team-body">
           <div class="team-exp">۱۰ سال تجربه · PhD پوست</div>
           <div class="team-tags"><span class="team-tag">لیزر</span><span class="team-tag">مزوتراپی</span><span class="team-tag">RF</span></div>
-          <button class="btn-o" style="width:100%;justify-content:center;font-size:.82rem;padding:10px">مشاهده پروفایل</button>
+          <button class="btn-o team-flip-btn" style="width:100%;justify-content:center;font-size:.82rem;padding:10px">مشاهده پروفایل</button>
+        </div>
+        </div>
+        <div class="team-back">
+          <div class="team-back-nm">دکتر سارا احمدی</div>
+          <div class="team-back-sp">متخصص لیزر</div>
+          <div class="team-bio"></div>
+          <button class="btn-o team-unflip-btn" style="width:100%;justify-content:center;font-size:.82rem;padding:10px">← بازگشت</button>
+        </div>
         </div>
       </div>
     </div>
@@ -964,21 +975,6 @@ body{font-family:var(--fa);background:var(--bg);color:var(--txt);direction:rtl;l
   <button class="promo-cta" onclick="go('contact');document.getElementById('promo').classList.remove('show')">دریافت تخفیف ←</button>
 </div>
 
-<!-- DOCTOR PROFILE MODAL -->
-<div class="dr-modal" id="drModal" role="dialog" aria-modal="true" aria-label="پروفایل پزشک">
-  <div class="dr-box">
-    <button class="dr-x" id="drClose" aria-label="بستن">✕</button>
-    <div class="dr-photo" id="drPhoto"></div>
-    <div class="dr-body">
-      <div class="dr-nm" id="drName"></div>
-      <div class="dr-sp" id="drRole"></div>
-      <div class="dr-exp" id="drExp"></div>
-      <div class="dr-tags" id="drTags"></div>
-      <div class="dr-bio" id="drBio"></div>
-    </div>
-  </div>
-</div>
-
 <script src="jalali-calendar.js"></script>
 <script>
 function go(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
@@ -1005,81 +1001,60 @@ const co=new IntersectionObserver(entries=>{
 },{threshold:.5});
 document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
 
+// ── Before/After comparison slider (draggable divider) ──
+function bindBaSlider(w){
+  var h=w.querySelector('[data-handle]'),ov=w.querySelector('[data-overlay]');
+  if(!h||!ov) return;
+  var on=false;
+  var mv=function(x){var r=w.getBoundingClientRect(),p=Math.max(2,Math.min(98,(x-r.left)/r.width*100));h.style.left=p+'%';ov.style.clipPath='inset(0 '+(100-p)+'% 0 0)';};
+  h.addEventListener('mousedown',function(){on=true;});
+  window.addEventListener('mouseup',function(){on=false;});
+  window.addEventListener('mousemove',function(e){if(on)mv(e.clientX);});
+  h.addEventListener('touchstart',function(e){on=true;e.preventDefault();},{passive:false});
+  window.addEventListener('touchend',function(){on=false;});
+  window.addEventListener('touchmove',function(e){if(on)mv(e.touches[0].clientX);});
+}
+document.querySelectorAll('[data-ba]').forEach(bindBaSlider);
+
 function baCardHTML(b){
   var esc=function(s){return String(s||'').replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
   return '<div class="ba-card rv in">'+
-    '<div class="ba-pair">'+
-      '<figure class="ba-fig before"><img src="'+esc(b.before_img||'')+'" alt="قبل"><figcaption>قبل</figcaption></figure>'+
-      '<figure class="ba-fig after"><img src="'+esc(b.after_img||'')+'" alt="بعد"><figcaption>بعد</figcaption></figure>'+
+    '<div class="ba-wrap" data-ba>'+
+      '<div class="ba-side"><img src="'+esc(b.before_img||'')+'" alt="قبل"></div>'+
+      '<div class="ba-side after-side" data-overlay><img src="'+esc(b.after_img||'')+'" alt="بعد"></div>'+
+      '<div class="ba-handle" data-handle><div class="ba-knob">⟺</div></div>'+
     '</div>'+
+    '<div class="ba-labels"><div class="ba-lbl-it"><span style="background:var(--txt-l)"></span>قبل</div><div class="ba-lbl-it"><span style="background:var(--sage)"></span>بعد</div></div>'+
     '<div class="ba-service-row"><div class="ba-sname">'+esc(b.service)+'</div><div class="ba-sdesc">'+esc(b.desc)+'</div></div>'+
   '</div>';
 }
+window.__baRebuild=function(items){
+  var grid=document.getElementById('baGrid');
+  if(!grid) return;
+  grid.innerHTML=items.map(baCardHTML).join('');
+  grid.querySelectorAll('[data-ba]').forEach(bindBaSlider);
+};
 
-// ── BA slideshow nav ──
+// ── Doctor card flip (reveal bio on the back of the card) ──
 (function(){
-  const row=document.getElementById('baRow'), prevBtn=document.getElementById('baPrev'),
-        nextBtn=document.getElementById('baNext'), dots=document.getElementById('baDots');
-  if(!row) return;
-  let idx=0;
-  function render(){
-    dots.innerHTML=[...row.children].map((_,i)=>'<button class="ba-dot'+(i===idx?' active':'')+'" data-i="'+i+'" aria-label="اسلاید '+(i+1)+'"></button>').join('');
-    row.style.transform='translateX('+(-idx*100)+'%)';
-  }
-  function go(i){
-    const max=row.children.length-1;
-    idx=Math.max(0,Math.min(max,i));
-    render();
-  }
-  prevBtn.addEventListener('click',()=>go(idx-1));
-  nextBtn.addEventListener('click',()=>go(idx+1));
-  dots.addEventListener('click',e=>{
-    const d=e.target.closest('.ba-dot');
-    if(d)go(+d.dataset.i);
-  });
-  render();
-  window.__baRebuild=function(items){
-    row.innerHTML=items.map(baCardHTML).join('');
-    idx=0;
-    render();
-  };
-})();
-
-// ── Doctor profile modal ──
-(function(){
-  var modal=document.getElementById('drModal');
-  if(!modal) return;
-  function openFromCard(card){
-    var get=function(sel){var e=card.querySelector(sel);return e?e.innerHTML:'';};
-    document.getElementById('drName').textContent=(card.querySelector('.team-nm')||{}).textContent||'';
-    document.getElementById('drRole').textContent=(card.querySelector('.team-sp')||{}).textContent||'';
-    var expEl=card.querySelector('.team-exp');
-    var dExp=document.getElementById('drExp');
-    if(expEl&&expEl.textContent.trim()){dExp.textContent=expEl.textContent;dExp.style.display='';}else{dExp.style.display='none';}
-    document.getElementById('drTags').innerHTML=get('.team-tags');
-    var bioEl=card.querySelector('.team-bio');
-    var dBio=document.getElementById('drBio');
-    if(bioEl&&bioEl.textContent.trim()){dBio.innerHTML=bioEl.innerHTML;}
-    else{dBio.innerHTML='<div class="dr-empty">برای این پزشک هنوز بیوگرافی ثبت نشده است. برای دریافت اطلاعات بیشتر و رزرو نوبت با ما در تماس باشید.</div>';}
-    // clone photo (img or svg) without the overlay
-    var photo=card.querySelector('.team-photo');
-    var dPhoto=document.getElementById('drPhoto');
-    dPhoto.innerHTML='';
-    if(photo){
-      var media=photo.querySelector('img, svg');
-      if(media){var c=media.cloneNode(true);c.style.transform='';dPhoto.appendChild(c);}
-    }
-    modal.classList.add('open');
-    document.body.style.overflow='hidden';
-  }
-  function close(){modal.classList.remove('open');document.body.style.overflow='';}
+  var EMPTY='<div class="team-empty-bio">برای این پزشک هنوز بیوگرافی ثبت نشده است. برای اطلاعات بیشتر و رزرو نوبت با ما در تماس باشید.</div>';
   document.addEventListener('click',function(e){
-    var btn=e.target.closest('.team-card .btn-o');
-    if(btn){e.preventDefault();openFromCard(btn.closest('.team-card'));return;}
+    var flip=e.target.closest('.team-flip-btn');
+    if(flip){
+      e.preventDefault();
+      var card=flip.closest('.team-card');
+      var nm=(card.querySelector('.team-nm')||{}).textContent||'';
+      var sp=(card.querySelector('.team-sp')||{}).textContent||'';
+      var bnm=card.querySelector('.team-back-nm'); if(bnm)bnm.textContent=nm;
+      var bsp=card.querySelector('.team-back-sp'); if(bsp)bsp.textContent=sp;
+      var bio=card.querySelector('.team-back .team-bio');
+      if(bio && !bio.textContent.trim()) bio.innerHTML=EMPTY;
+      card.classList.add('flipped');
+      return;
+    }
+    var back=e.target.closest('.team-unflip-btn');
+    if(back){ e.preventDefault(); back.closest('.team-card').classList.remove('flipped'); }
   });
-  document.getElementById('drClose').addEventListener('click',close);
-  modal.addEventListener('click',function(e){if(e.target===modal)close();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
 })();
 
 // ── Contact-choice floating button (WhatsApp / Bale) ──
@@ -1290,19 +1265,18 @@ async function sf(e){
         }
       }
       if(t.bio!==undefined){
-        var bio=el.querySelector('.team-bio');
-        if(t.bio && t.bio.trim()){
-          if(!bio){
-            bio=document.createElement('div');
-            bio.className='team-bio';
-            var body=el.querySelector('.team-body');
-            body.insertBefore(bio, body.querySelector('.btn-o'));
+        var bio=el.querySelector('.team-back .team-bio')||el.querySelector('.team-bio');
+        if(bio){
+          if(t.bio && t.bio.trim()){
+            bio.innerHTML=t.bio.split(/\n\s*\n/).map(function(p){return'<p>'+p.trim()+'</p>';}).join('');
+          }else{
+            bio.innerHTML=''; // keep the element (it lives on the card's back face)
           }
-          bio.innerHTML=t.bio.split(/\n\s*\n/).map(function(p){return'<p>'+p.trim()+'</p>';}).join('');
-        }else if(bio){
-          bio.remove();
         }
       }
+      // keep the flip-card back name/role in sync with config
+      var bnm=el.querySelector('.team-back-nm'); if(bnm && t.name)bnm.textContent=t.name;
+      var bsp=el.querySelector('.team-back-sp'); if(bsp && t.role)bsp.textContent=t.role;
     });
   }
 
